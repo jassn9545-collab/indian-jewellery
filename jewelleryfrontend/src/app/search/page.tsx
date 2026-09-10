@@ -1,0 +1,32 @@
+import { Collection } from "@/components/collection/collection";
+import { products } from "@/lib/catalog";
+export const metadata = { title: "Search jewellery" };
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string }>;
+}) {
+  const { q = "" } = await searchParams;
+  const found = products.filter((p) =>
+    (p.name + " " + p.category + " " + p.material)
+      .toLowerCase()
+      .includes(q.toLowerCase()),
+  );
+  return (
+    <main id="main" className="container page-shell">
+      <div className="page-heading">
+        <h1>Find your next favourite</h1>
+      </div>
+      <form action="/search" className="coupon">
+        <input
+          aria-label="Search jewellery"
+          name="q"
+          defaultValue={q}
+          placeholder="Search jewellery, collections..."
+        />
+        <button className="button">Search</button>
+      </form>
+      <Collection items={found} />
+    </main>
+  );
+}
