@@ -1,0 +1,13 @@
+{
+  "projectId": "00623893-17b3-4abe-b54a-900beffc67eb",
+  "draftId": "d0aa6e54-9ed2-4154-9f06-79ac0e667022",
+  "referenceId": "9de09a7c-0c47-4f6b-af83-7f6be1537c89",
+  "scope": [
+    "AnnouncementBar",
+    "Navbar + MegaMenu",
+    "HeroCarousel",
+    "CategorySection",
+    "FeaturedProducts"
+  ],
+  "status": "awaiting design review"
+}

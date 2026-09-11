@@ -1,3 +1,5 @@
+import { Placeholder } from "@/components/storefront/placeholder";
+import { navigation } from "@/lib/storefront";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
@@ -37,7 +39,21 @@ export default async function Page({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  if (!slugs.includes(slug)) notFound();
+  if (!slugs.includes(slug)) {
+    const known = navigation
+      .flatMap((n) => [
+        n.href,
+        ...(n.columns?.flatMap((c) => c.links.map((l) => l.href)) ?? []),
+      ])
+      .includes("/collections/" + slug);
+    if (!known) notFound();
+    return (
+      <Placeholder
+        title={collectionTitle(slug)}
+        category={collectionTitle(slug)}
+      />
+    );
+  }
   return (
     <main id="main" className="container page-shell">
       <nav className="breadcrumb">
@@ -46,7 +62,7 @@ export default async function Page({
         <span>{collectionTitle(slug)}</span>
       </nav>
       <div className="page-heading">
-        <span className="eyebrow">THE TECHGLOCK COLLECTION</span>
+        <span className="eyebrow">THE INDIAN JEWELLERY COLLECTION</span>
         <h1>{collectionTitle(slug)}</h1>
         <p>Thoughtfully chosen pieces for your everyday and extraordinary.</p>
       </div>

@@ -1,0 +1,445 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Jewellery | Timeless Indian Jewellery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --emerald: #0D3B2E;
+            --deep-emerald: #082C22;
+            --gold: #C69C45;
+            --light-gold: #E8D5A8;
+            --ivory: #FDFCF8;
+            --warm-beige: #F4F0E8;
+            --border: #E7E3DA;
+            --primary-text: #191919;
+            --secondary-text: #666666;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--primary-text);
+            background-color: var(--ivory);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .font-display { font-family: 'Cormorant Garamond', serif; }
+        .text-emerald { color: var(--emerald); }
+        .bg-emerald { background-color: var(--emerald); }
+        .bg-ivory { background-color: var(--ivory); }
+        .border-base { border-color: var(--border); }
+
+        /* Custom Scrollbar */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Mega Menu Transition */
+        .mega-menu {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.2s ease-in-out;
+        }
+        .nav-item:hover .mega-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        /* Hero Animation */
+        .hero-slide {
+            transition: opacity 0.8s ease-in-out;
+        }
+
+        /* Mobile Menu */
+        #mobile-menu-overlay {
+            display: none;
+        }
+        #mobile-menu-overlay.active {
+            display: block;
+        }
+    
+#announcement-slider{height:32px;overflow:hidden;background:#0D3B2E;color:white;flex-shrink:0}.ribbon-track{height:100%;display:flex;transition:transform 500ms ease}.ribbon-message{flex:0 0 100%;display:flex;align-items:center;justify-content:center;white-space:nowrap;font-size:11px;font-weight:500;letter-spacing:.04em}.ribbon-message:hover{text-decoration:underline}
+#jewellery-hero{height:calc(100svh - 104px);min-height:400px;position:relative;overflow:hidden;background:#F4F0E8}.hero-track{height:100%;display:flex;transition:transform 650ms ease}.jewellery-slide{flex:0 0 100%;height:100%;position:relative;overflow:hidden}.jewellery-slide>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}.slide-copy{position:relative;z-index:1;width:50%;height:100%;padding:48px clamp(24px,8vw,128px);display:flex;flex-direction:column;justify-content:center;align-items:flex-start}.slide-copy>span{font-size:11px;letter-spacing:.16em;color:#0D3B2E;margin-bottom:20px}.slide-copy h1,.slide-copy h2{font-family:'Cormorant Garamond',serif;font-size:clamp(38px,4.3vw,64px);font-weight:500;line-height:1.08;letter-spacing:-.02em;color:#0D3B2E;margin:0 0 24px}.slide-copy p{font-size:15px;line-height:1.6;max-width:340px;margin:0 0 28px}.slide-copy>a{background:#0D3B2E;color:white;padding:14px 28px;font-size:11px;letter-spacing:.05em;font-weight:600}.closeup-copy{background:#FDFCF8ed;width:44%}.hero-pagination{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);display:flex;z-index:3;gap:4px}.hero-pagination button{width:32px;height:32px;display:grid;place-items:center}.hero-pagination button:after{content:'';width:8px;height:8px;background:#d2d2cd;border-radius:50%;border:1px solid #fff}.hero-pagination button[aria-pressed=true]:after{background:#0D3B2E}a:focus-visible,button:focus-visible{outline:2px solid #C69C45;outline-offset:4px}
+@media(max-width:767px){.ribbon-message{font-size:9px;letter-spacing:0}#jewellery-hero{min-height:480px}.jewellery-slide>img{object-position:68% center}.slide-copy,.closeup-copy{width:100%;justify-content:flex-end;height:100%;padding:24px 24px 76px;background:transparent}.slide-copy h1,.slide-copy h2{font-size:36px;margin-bottom:12px}.slide-copy>span,.slide-copy h1,.slide-copy h2,.slide-copy p{background:#FDFCF8ed;padding:4px 8px;margin-bottom:8px}.slide-copy p{font-size:13px;max-width:300px}.slide-copy>span{font-size:10px}.slide-copy>a{margin-top:8px}}
+@media(prefers-reduced-motion:reduce){.hero-track,.ribbon-track{transition:none}}
+
+/* Fit the complete hero below the announcement and navigation. */
+#jewellery-hero{height:calc(100svh - var(--store-header-height,104px));min-height:0}
+@media(max-height:700px){.slide-copy{padding-top:16px;padding-bottom:52px}.slide-copy h1,.slide-copy h2{font-size:clamp(28px,6svh,48px);margin-bottom:12px}.slide-copy>span{margin-bottom:8px}.slide-copy p{margin-bottom:12px}.slide-copy>a{padding:10px 24px}.hero-pagination{bottom:8px}}
+@media(max-height:480px){.slide-copy,.closeup-copy{width:65%;justify-content:center;padding:8px 24px 40px}.slide-copy h1,.slide-copy h2{font-size:26px;line-height:1.02;margin-bottom:8px}.slide-copy>span{font-size:9px;margin-bottom:4px}.slide-copy p{font-size:12px;line-height:1.3;margin-bottom:8px}.slide-copy>a{font-size:10px;padding:8px 20px;margin-top:0}}
+
+/* Full-bleed photography and consistent product rhythm. */
+.slide-copy,.closeup-copy{background:transparent;width:50%}.slide-copy>span,.slide-copy h1,.slide-copy h2,.slide-copy p{background:transparent;padding:0}.slide-copy{padding-left:clamp(24px,6vw,96px);padding-right:24px}.slide-copy h1,.slide-copy h2{max-width:520px}.jewellery-slide>img{object-position:65% center}
+#jewellery-categories{padding-top:24px;padding-bottom:20px}#jewellery-categories [data-sd-id="92"]{padding-bottom:4px;gap:24px}
+#featured-products{padding-top:48px;padding-bottom:64px}#featured-products [data-sd-id="135"]{margin-bottom:32px}#featured-products [data-sd-id="139"]{gap:24px;align-items:stretch}
+#featured-products [data-sd-id="139"]>div{border-radius:8px}#featured-products [data-sd-id="139"]>div>div:last-child{display:grid;grid-template-rows:16px 44px 44px 40px;gap:12px;padding:16px;flex:1}#featured-products [data-sd-id="139"]>div>div:last-child>*{margin:0}#featured-products [data-sd-id="139"]>div>div:last-child>a{font-size:14px;font-weight:500;line-height:22px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}#featured-products [data-sd-id="139"]>div>div:last-child>div{display:flex;flex-wrap:wrap;align-content:center;align-items:baseline;gap:4px 8px}#featured-products [data-sd-id="139"]>div>div:last-child>button{height:40px;padding:0 8px;transform:none;border-radius:4px;font-size:11px;letter-spacing:.05em}#featured-products [data-sd-id="153"]{font-size:10px;margin-left:0}
+@media(max-width:767px){.slide-copy,.closeup-copy{width:100%;padding-left:24px;padding-right:24px}.jewellery-slide>img{object-position:35% center}.slide-copy h1,.slide-copy h2{max-width:310px}.slide-copy p{max-width:280px}#jewellery-categories{padding-top:16px;padding-bottom:16px}#featured-products{padding-top:32px;padding-bottom:40px}#featured-products [data-sd-id="139"]{gap:16px}#featured-products [data-sd-id="139"]>div>div:last-child{padding:12px;gap:12px;grid-template-rows:16px 44px 48px 40px}#featured-products [data-sd-id="139"]>div>div:last-child>a{font-size:13px}}
+
+#featured-products{display:block!important;visibility:visible!important;padding-top:32px;border-top:1px solid #E7E3DA;background:#FDFCF8}.local-brand-label{font-size:11px;font-weight:600;letter-spacing:.16em;color:#0D3B2E;margin:0 0 12px}#featured-products h2{font-size:clamp(28px,3vw,34px)}#jewellery-categories [data-sd-id="92"]{gap:16px;justify-content:space-between}#jewellery-categories [data-sd-id="92"]>a{min-width:0;flex:0 0 calc((100% - 144px)/10)}#jewellery-categories [data-sd-id="92"]>a>div{width:clamp(64px,7vw,96px);height:clamp(64px,7vw,96px);margin-bottom:12px}#jewellery-categories [data-sd-id="92"]>a>span{font-size:10px;white-space:nowrap}@media(max-width:1023px){#jewellery-categories [data-sd-id="92"]>a{flex:0 0 88px}}
+
+#local-brand-strip{background:#fcf6f3;padding:32px 24px;color:#34332e}#local-brand-strip ul{max-width:1280px;margin:0 auto;padding:0;list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));align-items:center}#local-brand-strip li{display:flex;align-items:center;justify-content:center;gap:24px;position:relative;min-height:72px;padding:8px 24px}#local-brand-strip li+li:before{content:'';position:absolute;left:0;top:18px;bottom:18px;width:1px;background:#d7cec6}#local-brand-strip iconify-icon{font-size:48px;flex-shrink:0}#local-brand-strip span{font-size:15px;line-height:1.5;text-align:center;font-weight:400}#featured-products{border-top:0}
+@media(max-width:767px){#local-brand-strip{padding:16px}#local-brand-strip ul{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:16px}#local-brand-strip li{gap:12px;padding:8px;min-height:64px}#local-brand-strip li:nth-child(3):before{display:none}#local-brand-strip iconify-icon{font-size:36px}#local-brand-strip span{font-size:12px}}
+</style>
+</head>
+<body>
+    <div class="min-h-screen flex flex-col" data-sd-id="1">
+        
+        <!-- 01: ANNOUNCEMENT RIBBON -->
+        <section id="announcement-slider" aria-label="Store announcements"><div class="ribbon-track"><a id="announcement-sale-link" href="#collections" class="ribbon-message">SUMMER SALE &mdash; UP TO 20% OFF &nbsp; <u>SHOP NOW</u></a><a id="announcement-lab-link" href="#precious-lab-grown-diamonds" class="ribbon-message" inert>INTRODUCING LAB GROWN DIAMONDS &nbsp; <u>SHOP NOW</u></a></div></section>
+
+        <!-- 02: NAVBAR -->
+        <nav class="sticky top-0 z-50 bg-white border-b border-base h-[72px] flex items-center px-4 md:px-8 lg:px-12" data-sd-id="9">
+            <div class="max-w-[1440px] w-full mx-auto flex items-center justify-between" data-sd-id="10">
+                
+                <!-- Left: Logo -->
+                <a href="#home" id="nav-logo-link" class="flex items-center gap-2 group" data-sd-id="11">
+                    <div class="w-10 h-10 flex items-center justify-center border border-base rounded-full group-hover:border-gold transition-colors" data-sd-id="12">
+                        <iconify-icon icon="guidance:jewelry" class="text-2xl text-gold"></iconify-icon>
+                    </div>
+                    <div class="flex flex-col leading-none" data-sd-id="13">
+                        <span class="font-display text-2xl tracking-tighter font-semibold" data-sd-id="14">INDIAN</span>
+                        <span class="text-[9px] tracking-[0.3em] font-medium text-secondary-text uppercase ml-0.5" data-sd-id="15">JEWELLERY</span>
+                    </div>
+                </a>
+
+                <!-- Center: Navigation -->
+                <div class="hidden lg:flex items-center gap-8" data-sd-id="16">
+                    <div class="nav-item relative h-[72px] flex items-center" data-sd-id="17">
+                        <a href="#category-women" id="nav-women-link" class="text-[12px] font-semibold uppercase tracking-wider hover:text-emerald" data-sd-id="18">Women</a>
+                        <!-- Mega Menu Women -->
+                        <div class="mega-menu absolute top-full -left-20 w-[900px] bg-white border border-base shadow-lg p-10 grid grid-cols-4 gap-8" data-sd-id="19">
+                            <div data-sd-id="20">
+                                <h4 class="text-[11px] font-bold uppercase tracking-widest text-secondary-text mb-4" data-sd-id="21">Shop By Category</h4>
+                                <ul class="space-y-3 text-[14px]" data-sd-id="22">
+                                    <li data-sd-id="23"><a id="aurum-link-1" href="#category-earrings" class="hover:text-emerald" data-sd-id="24">Earrings</a></li>
+                                    <li data-sd-id="25"><a id="aurum-link-2" href="#category-rings" class="hover:text-emerald" data-sd-id="26">Rings</a></li>
+                                    <li data-sd-id="27"><a id="aurum-link-3" href="#category-necklaces" class="hover:text-emerald" data-sd-id="28">Necklaces</a></li>
+                                    <li data-sd-id="29"><a id="aurum-link-4" href="#category-bangles" class="hover:text-emerald" data-sd-id="30">Bangles</a></li>
+                                    <li data-sd-id="31"><a id="aurum-link-5" href="#category-bracelets" class="hover:text-emerald" data-sd-id="32">Bracelets</a></li>
+                                </ul>
+                            </div>
+                            <div data-sd-id="33">
+                                <h4 class="text-[11px] font-bold uppercase tracking-widest text-secondary-text mb-4" data-sd-id="34">Shop By Style</h4>
+                                <ul class="space-y-3 text-[14px]" data-sd-id="35">
+                                    <li data-sd-id="36"><a id="aurum-link-6" href="#style-everyday" class="hover:text-emerald" data-sd-id="37">Everyday</a></li>
+                                    <li data-sd-id="38"><a id="aurum-link-7" href="#style-statement" class="hover:text-emerald" data-sd-id="39">Statement</a></li>
+                                    <li data-sd-id="40"><a id="aurum-link-8" href="#style-minimal" class="hover:text-emerald" data-sd-id="41">Minimal</a></li>
+                                    <li data-sd-id="42"><a id="aurum-link-9" href="#style-traditional" class="hover:text-emerald" data-sd-id="43">Traditional</a></li>
+                                </ul>
+                            </div>
+                            <div data-sd-id="44">
+                                <h4 class="text-[11px] font-bold uppercase tracking-widest text-secondary-text mb-4" data-sd-id="45">Shop By Price</h4>
+                                <ul class="space-y-3 text-[14px]" data-sd-id="46">
+                                    <li data-sd-id="47"><a id="aurum-link-10" href="#price-under-2000" class="hover:text-emerald" data-sd-id="48">Under ₹2,000</a></li>
+                                    <li data-sd-id="49"><a id="aurum-link-11" href="#price-2000-5000" class="hover:text-emerald" data-sd-id="50">₹2,000 – ₹5,000</a></li>
+                                    <li data-sd-id="51"><a id="aurum-link-12" href="#price-above-10000" class="hover:text-emerald" data-sd-id="52">Above ₹10,000</a></li>
+                                </ul>
+                            </div>
+                            <div class="relative overflow-hidden rounded-sm h-full group" data-sd-id="53">
+                                <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&amp;fit=crop&amp;w=400&amp;q=80" alt="Promotional" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-sd-id="54">
+                                <div class="absolute inset-0 bg-black/10" data-sd-id="55"></div>
+                                <div class="absolute bottom-4 left-4" data-sd-id="56">
+                                    <span class="text-white text-[12px] font-bold uppercase tracking-widest" data-sd-id="57">New Arrivals</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#category-men" id="nav-men-link" class="text-[12px] font-semibold uppercase tracking-wider hover:text-emerald" data-sd-id="58">Men</a>
+                    <a href="#best-sellers" id="nav-bestsellers-link" class="text-[12px] font-semibold uppercase tracking-wider hover:text-emerald" data-sd-id="59">Best Sellers</a>
+                    <a href="#precious" id="nav-precious-link" class="text-[12px] font-semibold uppercase tracking-wider hover:text-emerald" data-sd-id="60">Precious</a>
+                    <a href="#collections" id="nav-collections-link" class="text-[12px] font-semibold uppercase tracking-wider hover:text-emerald" data-sd-id="61">Collections</a>
+                    <a href="#wedding" id="nav-wedding-link" class="text-[12px] font-semibold uppercase tracking-wider hover:text-emerald" data-sd-id="62">Wedding</a>
+                </div>
+
+                <!-- Right: Icons -->
+                <div class="flex items-center gap-5" data-sd-id="63">
+                    <button class="hover:text-emerald transition-colors p-1" aria-label="Search" data-sd-id="64">
+                        <iconify-icon icon="lucide:search" class="text-[20px]"></iconify-icon>
+                    </button>
+                    <a href="#account" id="nav-account-link" class="hidden sm:block hover:text-emerald transition-colors p-1" aria-label="Account" data-sd-id="65">
+                        <iconify-icon icon="lucide:user" class="text-[20px]"></iconify-icon>
+                    </a>
+                    <a href="#wishlist" id="nav-wishlist-link" class="hidden sm:block hover:text-emerald transition-colors p-1" aria-label="Wishlist" data-sd-id="66">
+                        <iconify-icon icon="lucide:heart" class="text-[20px]"></iconify-icon>
+                    </a>
+                    <a href="#cart" id="nav-cart-link" class="relative hover:text-emerald transition-colors p-1" aria-label="Cart" data-sd-id="67">
+                        <iconify-icon icon="lucide:shopping-bag" class="text-[20px]"></iconify-icon>
+                        <span class="absolute -top-0.5 -right-0.5 w-4 h-4 bg-emerald text-white text-[9px] font-bold flex items-center justify-center rounded-full" data-sd-id="68">2</span>
+                    </a>
+                    <button class="lg:hidden p-1" id="mobile-menu-btn" onclick="document.getElementById('mobile-menu-overlay').classList.add('active')" data-sd-id="69">
+                        <iconify-icon icon="lucide:menu" class="text-2xl"></iconify-icon>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- 03: HERO CAROUSEL -->
+        <main class="flex-1" data-sd-id="70">
+            <section id="jewellery-hero" aria-label="Featured jewellery collections" aria-roledescription="carousel"><div class="hero-track"><article class="jewellery-slide" aria-label="1 of 3" ><img src="https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/projects/00623893-17b3-4abe-b54a-900beffc67eb/content-assets/aurum-hero/hero.webp" alt="Indian woman wearing emerald and kundan jewellery" fetchpriority="high"><div class="slide-copy "><span>TIMELESS ELEGANCE</span><h1>Timeless Jewellery,<br>Crafted for You</h1><p>Discover exquisite designs for every moment of your life.</p><a id="hero-cta-1" href="#collections">SHOP NOW</a></div></article><article class="jewellery-slide" aria-label="2 of 3" inert><img src="https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/projects/00623893-17b3-4abe-b54a-900beffc67eb/content-assets/hero-user-two/ChatGPT_Image_Sep_11__2026__12_02_18_PM.png" alt="Woman in an ivory saree wearing emerald jewellery" loading="eager"><div class="slide-copy closeup-copy"><span>NEW COLLECTION</span><h2>Where Tradition<br>Meets Modern Luxury</h2><p>Discover statement pieces designed for the modern woman.</p><a id="hero-cta-2" href="#collections-new-launch">EXPLORE COLLECTION</a></div></article><article class="jewellery-slide" aria-label="3 of 3" inert><img src="https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/projects/00623893-17b3-4abe-b54a-900beffc67eb/content-assets/hero-user-three/ChatGPT_Image_Sep_11__2026__12_33_06_PM.png" alt="Indian woman wearing emerald and gold jewellery in a sunlit courtyard" loading="eager"><div class="slide-copy closeup-copy"><span>THE PRECIOUS EDIT</span><h2>Brilliance,<br>Beautifully Reimagined</h2><p>Discover timeless jewellery for your everyday moments.</p><a id="hero-cta-3" href="#precious">DISCOVER NOW</a></div></article></div><div class="hero-pagination" role="group" aria-label="Choose hero image"><button type="button" aria-label="Show slide 1" aria-pressed="true" data-slide="0"></button><button type="button" aria-label="Show slide 2" aria-pressed="false" data-slide="1"></button><button type="button" aria-label="Show slide 3" aria-pressed="false" data-slide="2"></button></div></section>
+
+            <!-- 04: JEWELLERY CATEGORY SECTION -->
+            <section class="py-16 md:py-24 bg-white border-b border-base overflow-hidden" id="jewellery-categories" aria-label="Jewellery categories" data-sd-id="87">
+                <div class="max-w-[1440px] mx-auto px-4 md:px-8" data-sd-id="88">
+                    
+                    
+                    <div class="flex items-center gap-6 md:gap-10 overflow-x-auto no-scrollbar pb-4 -mx-4 px-4" data-sd-id="92">
+                        <!-- Category Item 1 -->
+                        <a href="#category-rings" id="cat-rings" class="flex flex-col items-center group min-w-[100px] flex-shrink-0" data-sd-id="93">
+                            <div class="w-20 h-20 md:w-28 md:h-28 rounded-full bg-ivory border border-base flex items-center justify-center mb-4 overflow-hidden transition-all group-hover:border-gold group-hover:scale-105" data-sd-id="94">
+                                <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&amp;fit=crop&amp;w=200&amp;q=80" alt="Rings" class="w-full h-full object-cover" data-sd-id="95">
+                            </div>
+                            <span class="text-[12px] font-semibold uppercase tracking-wider text-primary-text group-hover:text-emerald transition-colors" data-sd-id="96">Rings</span>
+                        </a>
+                        <!-- Category Item 2 -->
+                        <a href="#category-earrings" id="cat-earrings" class="flex flex-col items-center group min-w-[100px] flex-shrink-0" data-sd-id="97">
+                            <div class="w-20 h-20 md:w-28 md:h-28 rounded-full bg-ivory border border-base flex items-center justify-center mb-4 overflow-hidden transition-all group-hover:border-gold group-hover:scale-105" data-sd-id="98">
+                                <img src="https://images.unsplash.com/photo-1635767798638-3e25273a8236?auto=format&amp;fit=crop&amp;w=200&amp;q=80" alt="Earrings" class="w-full h-full object-cover" data-sd-id="99">
+                            </div>
+                            <span class="text-[12px] font-semibold uppercase tracking-wider text-primary-text group-hover:text-emerald transition-colors" data-sd-id="100">Earrings</span>
+                        </a>
+                        <!-- Category Item 3 -->
+                        <a href="#category-necklaces" id="cat-necklaces" class="flex flex-col items-center group min-w-[100px] flex-shrink-0" data-sd-id="101">
+                            <div class="w-20 h-20 md:w-28 md:h-28 rounded-full bg-ivory border border-base flex items-center justify-center mb-4 overflow-hidden transition-all group-hover:border-gold group-hover:scale-105" data-sd-id="102">
+                                <img src="https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/projects/00623893-17b3-4abe-b54a-900beffc67eb/content-assets/hero-necklace/necklace.webp" alt="Necklaces" class="w-full h-full object-cover" data-sd-id="103">
+                            </div>
+                            <span class="text-[12px] font-semibold uppercase tracking-wider text-primary-text group-hover:text-emerald transition-colors" data-sd-id="104">Necklaces</span>
+                        </a>
+                        <!-- Category Item 4 -->
+                        <a href="#category-bangles" id="cat-bangles" class="flex flex-col items-center group min-w-[100px] flex-shrink-0" data-sd-id="105">
+                            <div class="w-20 h-20 md:w-28 md:h-28 rounded-full bg-ivory border border-base flex items-center justify-center mb-4 overflow-hidden transition-all group-hover:border-gold group-hover:scale-105" data-sd-id="106">
+                                <img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&amp;fit=crop&amp;w=200&amp;q=80" alt="Bangles" class="w-full h-full object-cover" data-sd-id="107">
+                            </div>
+                            <span class="text-[12px] font-semibold uppercase tracking-wider text-primary-text group-hover:text-emerald transition-colors" data-sd-id="108">Bangles</span>
+                        </a>
+                        <!-- Category Item 5 -->
+                        <a href="#category-bracelets" id="cat-bracelets" class="flex flex-col items-center group min-w-[100px] flex-shrink-0" data-sd-id="109">
+                            <div class="w-20 h-20 md:w-28 md:h-28 rounded-full bg-ivory border border-base flex items-center justify-center mb-4 overflow-hidden transition-all group-hover:border-gold group-hover:scale-105" data-sd-id="110">
+                                <img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&amp;fit=crop&amp;w=200&amp;q=80" alt="Bracelets" class="w-full h-full object-cover" data-sd-id="111">
+                            </div>
+                            <span class="text-[12px] font-semibold uppercase tracking-wider text-primary-text group-hover:text-emerald transition-colors" data-sd-id="112">Bracelets</span>
+                        </a>
+                        <!-- Category Item 6 -->
+                        <a href="#category-sets" id="cat-sets" class="flex flex-col items-center group min-w-[100px] flex-shrink-0" data-sd-id="113">
+                            <div class="w-20 h-20 md:w-28 md:h-28 rounded-full bg-ivory border border-base flex items-center justify-center mb-4 overflow-hidden transition-all group-hover:border-gold group-hover:scale-105" data-sd-id="114">
+                                <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&amp;fit=crop&amp;w=200&amp;q=80" alt="Sets" class="w-full h-full object-cover" data-sd-id="115">
+                            </div>
+                            <span class="text-[12px] font-semibold uppercase tracking-wider text-primary-text group-hover:text-emerald transition-colors" data-sd-id="116">Sets</span>
+                        </a>
+                        <!-- Category Item 7 -->
+                        <a href="#category-mangalsutra" id="cat-mangalsutra" class="flex flex-col items-center group min-w-[100px] flex-shrink-0" data-sd-id="117">
+                            <div class="w-20 h-20 md:w-28 md:h-28 rounded-full bg-ivory border border-base flex items-center justify-center mb-4 overflow-hidden transition-all group-hover:border-gold group-hover:scale-105" data-sd-id="118">
+                                <img src="https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&amp;fit=crop&amp;w=200&amp;q=80" alt="Mangalsutra" class="w-full h-full object-cover" data-sd-id="119">
+                            </div>
+                            <span class="text-[12px] font-semibold uppercase tracking-wider text-primary-text group-hover:text-emerald transition-colors" data-sd-id="120">Mangalsutra</span>
+                        </a>
+                        <!-- Category Item 8 -->
+                        <a href="#category-watches" id="cat-watches" class="flex flex-col items-center group min-w-[100px] flex-shrink-0" data-sd-id="121">
+                            <div class="w-20 h-20 md:w-28 md:h-28 rounded-full bg-ivory border border-base flex items-center justify-center mb-4 overflow-hidden transition-all group-hover:border-gold group-hover:scale-105" data-sd-id="122">
+                                <span role="img" aria-label="Watches" class="reference-category-image" style="display:block;width:100%;height:100%;background-image:url(https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/projects/00623893-17b3-4abe-b54a-900beffc67eb/reference-assets/aurum-user-reference/2c3e208d-4cbd-4d9a-b826-581beeab3afd.png);background-size:1422.222222% 2133.333333%;background-position:91.38655462184873% 26.775956284153008%;background-repeat:no-repeat"></span>
+                            </div>
+                            <span class="text-[12px] font-semibold uppercase tracking-wider text-primary-text group-hover:text-emerald transition-colors" data-sd-id="124">Watches</span>
+                        </a>
+                        <!-- Category Item 9 -->
+                        <a href="#category-hair-accessories" id="cat-hair" class="flex flex-col items-center group min-w-[100px] flex-shrink-0" data-sd-id="125">
+                            <div class="w-20 h-20 md:w-28 md:h-28 rounded-full bg-ivory border border-base flex items-center justify-center mb-4 overflow-hidden transition-all group-hover:border-gold group-hover:scale-105" data-sd-id="126">
+                                <span role="img" aria-label="Hair Accessories" class="reference-category-image" style="display:block;width:100%;height:100%;background-image:url(https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/projects/00623893-17b3-4abe-b54a-900beffc67eb/reference-assets/aurum-user-reference/2c3e208d-4cbd-4d9a-b826-581beeab3afd.png);background-size:1422.222222% 2133.333333%;background-position:71.21848739495799% 26.775956284153008%;background-repeat:no-repeat"></span>
+                            </div>
+                            <span class="text-[12px] font-semibold uppercase tracking-wider text-primary-text group-hover:text-emerald transition-colors text-center" data-sd-id="128">Hair Accessories</span>
+                        </a>
+                        <!-- Category Item 10 -->
+                        <a href="#category-bags" id="cat-bags" class="flex flex-col items-center group min-w-[100px] flex-shrink-0" data-sd-id="129">
+                            <div class="w-20 h-20 md:w-28 md:h-28 rounded-full bg-ivory border border-base flex items-center justify-center mb-4 overflow-hidden transition-all group-hover:border-gold group-hover:scale-105" data-sd-id="130">
+                                <img src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&amp;fit=crop&amp;w=200&amp;q=80" alt="Bags" class="w-full h-full object-cover" data-sd-id="131">
+                            </div>
+                            <span class="text-[12px] font-semibold uppercase tracking-wider text-primary-text group-hover:text-emerald transition-colors" data-sd-id="132">Bags</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <section id="local-brand-strip" aria-label="Our jewellery craftsmanship"><ul><li><iconify-icon icon="lucide:landmark" aria-hidden="true"></iconify-icon><span>Handcrafted<br>in Jaipur</span></li><li><iconify-icon icon="lucide:feather" aria-hidden="true"></iconify-icon><span>Light<br>Weight</span></li><li><iconify-icon icon="lucide:hand-heart" aria-hidden="true"></iconify-icon><span>Skin<br>Friendly</span></li><li><iconify-icon icon="lucide:gem" aria-hidden="true"></iconify-icon><span>Brass<br>Jewellery</span></li></ul></section>
+<!-- 05: FEATURED PRODUCTS / CRAFTED LOCALLY -->
+            <section class="py-20 md:py-32 px-4 md:px-8 bg-ivory" id="featured-products" data-sd-id="133">
+                <div class="max-w-[1280px] mx-auto" data-sd-id="134">
+                    <div class="text-center mb-16" data-sd-id="135">
+                        <h2 class="font-display text-4xl md:text-5xl text-emerald tracking-tight mb-4 uppercase" data-sd-id="136">Crafted Locally,<br class="md:hidden"> Loved Everywhere</h2>
+                        <div class="w-16 h-px bg-gold mx-auto mb-6" data-sd-id="137"></div>
+                        <p class="text-secondary-text text-sm md:text-base max-w-2xl mx-auto" data-sd-id="138">Discover jewellery inspired by Indian craftsmanship and designed for the modern you.</p>
+                    </div>
+
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8" data-sd-id="139">
+                        <!-- Product Card 1 -->
+                        <div class="group relative flex flex-col bg-white border border-base rounded-[4px] overflow-hidden transition-all duration-300" data-sd-id="140">
+                            <div class="aspect-[4/5] relative overflow-hidden bg-ivory" data-sd-id="141">
+                                <a href="#product-emerald-drop-earrings" id="prod-link-1" data-sd-id="142">
+                                    <img src="https://images.unsplash.com/photo-1635767798638-3e25273a8236?auto=format&amp;fit=crop&amp;w=500&amp;q=80" alt="Emerald Drop Earrings" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-sd-id="143">
+                                </a>
+                                <div class="absolute top-3 left-3" data-sd-id="144">
+                                    <span class="px-2 py-0.5 bg-emerald/10 text-emerald text-[9px] font-bold uppercase tracking-wider border border-emerald/20" data-sd-id="145">Bestseller</span>
+                                </div>
+                                <button class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 flex items-center justify-center text-primary-text hover:text-red-500 transition-colors shadow-sm" data-sd-id="146">
+                                    <iconify-icon icon="lucide:heart"></iconify-icon>
+                                </button>
+                            </div>
+                            <div class="p-4 flex flex-col flex-1" data-sd-id="147">
+                                <span class="text-[10px] uppercase tracking-widest text-secondary-text mb-1" data-sd-id="148">Earrings</span>
+                                <a id="aurum-link-13" href="#product-emerald-drop-earrings" class="text-[14px] font-semibold text-primary-text mb-3 hover:text-emerald transition-colors line-clamp-1" data-sd-id="149">Emerald Drop Earrings</a>
+                                <div class="mt-auto flex items-baseline gap-2 mb-4" data-sd-id="150">
+                                    <span class="text-[15px] font-bold text-emerald" data-sd-id="151">₹2,499</span>
+                                    <span class="text-[12px] text-muted-text line-through opacity-50" data-sd-id="152">₹3,299</span>
+                                    <span class="text-[10px] font-bold text-gold uppercase ml-auto" data-sd-id="153">25% OFF</span>
+                                </div>
+                                <button class="w-full py-2.5 bg-emerald text-white text-[11px] font-bold uppercase tracking-widest rounded-[20px] transition-all group-hover:bg-deep-emerald transform group-hover:translate-y-[-2px]" data-sd-id="154">Add to Cart</button>
+                            </div>
+                        </div>
+
+                        <!-- Product Card 2 -->
+                        <div class="group relative flex flex-col bg-white border border-base rounded-[4px] overflow-hidden transition-all duration-300" data-sd-id="155">
+                            <div class="aspect-[4/5] relative overflow-hidden bg-ivory" data-sd-id="156">
+                                <a href="#product-heritage-gold-ring" id="prod-link-2" data-sd-id="157">
+                                    <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&amp;fit=crop&amp;w=500&amp;q=80" alt="Heritage Gold Ring" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-sd-id="158">
+                                </a>
+                                <button class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 flex items-center justify-center text-primary-text hover:text-red-500 transition-colors shadow-sm" data-sd-id="159">
+                                    <iconify-icon icon="lucide:heart"></iconify-icon>
+                                </button>
+                            </div>
+                            <div class="p-4 flex flex-col flex-1" data-sd-id="160">
+                                <span class="text-[10px] uppercase tracking-widest text-secondary-text mb-1" data-sd-id="161">Rings</span>
+                                <a id="aurum-link-14" href="#product-heritage-gold-ring" class="text-[14px] font-semibold text-primary-text mb-3 hover:text-emerald transition-colors line-clamp-1" data-sd-id="162">Heritage Gold Ring</a>
+                                <div class="mt-auto flex items-baseline gap-2 mb-4" data-sd-id="163">
+                                    <span class="text-[15px] font-bold text-emerald" data-sd-id="164">₹1,799</span>
+                                    <span class="text-[12px] text-muted-text line-through opacity-50" data-sd-id="165">₹2,499</span>
+                                </div>
+                                <button class="w-full py-2.5 bg-emerald text-white text-[11px] font-bold uppercase tracking-widest rounded-[20px] transition-all group-hover:bg-deep-emerald transform group-hover:translate-y-[-2px]" data-sd-id="166">Add to Cart</button>
+                            </div>
+                        </div>
+
+                        <!-- Product Card 3 -->
+                        <div class="group relative flex flex-col bg-white border border-base rounded-[4px] overflow-hidden transition-all duration-300" data-sd-id="167">
+                            <div class="aspect-[4/5] relative overflow-hidden bg-ivory" data-sd-id="168">
+                                <a href="#product-pearl-cluster-necklace" id="prod-link-3" data-sd-id="169">
+                                    <img src="https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/projects/00623893-17b3-4abe-b54a-900beffc67eb/content-assets/hero-necklace/necklace.webp" alt="Pearl Cluster Necklace" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-sd-id="170">
+                                </a>
+                                <div class="absolute top-3 left-3" data-sd-id="171">
+                                    <span class="px-2 py-0.5 bg-gold/10 text-gold text-[9px] font-bold uppercase tracking-wider border border-gold/20" data-sd-id="172">New</span>
+                                </div>
+                                <button class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 flex items-center justify-center text-primary-text hover:text-red-500 transition-colors shadow-sm" data-sd-id="173">
+                                    <iconify-icon icon="lucide:heart"></iconify-icon>
+                                </button>
+                            </div>
+                            <div class="p-4 flex flex-col flex-1" data-sd-id="174">
+                                <span class="text-[10px] uppercase tracking-widest text-secondary-text mb-1" data-sd-id="175">Necklaces</span>
+                                <a id="aurum-link-15" href="#product-pearl-cluster-necklace" class="text-[14px] font-semibold text-primary-text mb-3 hover:text-emerald transition-colors line-clamp-1" data-sd-id="176">Pearl Cluster Necklace</a>
+                                <div class="mt-auto flex items-baseline gap-2 mb-4" data-sd-id="177">
+                                    <span class="text-[15px] font-bold text-emerald" data-sd-id="178">₹3,299</span>
+                                    <span class="text-[12px] text-muted-text line-through opacity-50" data-sd-id="179">₹4,699</span>
+                                </div>
+                                <button class="w-full py-2.5 bg-emerald text-white text-[11px] font-bold uppercase tracking-widest rounded-[20px] transition-all group-hover:bg-deep-emerald transform group-hover:translate-y-[-2px]" data-sd-id="180">Add to Cart</button>
+                            </div>
+                        </div>
+
+                        <!-- Product Card 4 -->
+                        <div class="group relative flex flex-col bg-white border border-base rounded-[4px] overflow-hidden transition-all duration-300" data-sd-id="181">
+                            <div class="aspect-[4/5] relative overflow-hidden bg-ivory" data-sd-id="182">
+                                <a href="#product-emerald-gold-bangle" id="prod-link-4" data-sd-id="183">
+                                    <img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&amp;fit=crop&amp;w=500&amp;q=80" alt="Emerald Gold Bangle" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-sd-id="184">
+                                </a>
+                                <button class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 flex items-center justify-center text-primary-text hover:text-red-500 transition-colors shadow-sm" data-sd-id="185">
+                                    <iconify-icon icon="lucide:heart"></iconify-icon>
+                                </button>
+                            </div>
+                            <div class="p-4 flex flex-col flex-1" data-sd-id="186">
+                                <span class="text-[10px] uppercase tracking-widest text-secondary-text mb-1" data-sd-id="187">Bangles</span>
+                                <a id="aurum-link-16" href="#product-emerald-gold-bangle" class="text-[14px] font-semibold text-primary-text mb-3 hover:text-emerald transition-colors line-clamp-1" data-sd-id="188">Emerald Gold Bangle</a>
+                                <div class="mt-auto flex items-baseline gap-2 mb-4" data-sd-id="189">
+                                    <span class="text-[15px] font-bold text-emerald" data-sd-id="190">₹2,199</span>
+                                    <span class="text-[12px] text-muted-text line-through opacity-50" data-sd-id="191">₹2,999</span>
+                                </div>
+                                <button class="w-full py-2.5 bg-emerald text-white text-[11px] font-bold uppercase tracking-widest rounded-[20px] transition-all group-hover:bg-deep-emerald transform group-hover:translate-y-[-2px]" data-sd-id="192">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-16 text-center" data-sd-id="193">
+                        <a href="#collections" id="featured-view-all" class="inline-flex items-center gap-2 text-[12px] font-bold uppercase tracking-[0.2em] text-emerald hover:text-gold transition-colors" data-sd-id="194">
+                            View All Products <iconify-icon icon="lucide:chevron-right" class="text-lg"></iconify-icon>
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Toast for Cart Interaction -->
+        <div id="cart-toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-emerald text-white px-6 py-3 rounded-[20px] text-[12px] font-bold uppercase tracking-widest shadow-2xl z-[100] transform translate-y-20 opacity-0 transition-all duration-500" data-sd-id="195">
+            Added to Cart
+        </div>
+
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu-overlay" class="fixed inset-0 bg-white z-[60] overflow-y-auto" data-sd-id="196">
+            <div class="p-6 border-b border-base flex items-center justify-between" data-sd-id="197">
+                <div class="flex items-center gap-2" data-sd-id="198">
+                    <iconify-icon icon="guidance:jewelry" class="text-xl text-gold"></iconify-icon>
+                    <span class="font-display text-lg font-semibold tracking-tight uppercase" data-sd-id="199">INDIAN JEWELLERY</span>
+                </div>
+                <button onclick="document.getElementById('mobile-menu-overlay').classList.remove('active')" data-sd-id="200">
+                    <iconify-icon icon="lucide:x" class="text-2xl"></iconify-icon>
+                </button>
+            </div>
+            <div class="p-6" data-sd-id="201">
+                <nav class="space-y-6" data-sd-id="202">
+                    <a id="aurum-link-17" href="#category-women" class="block text-[14px] font-bold uppercase tracking-widest border-b border-base pb-4" data-sd-id="203">Women</a>
+                    <a id="aurum-link-18" href="#category-men" class="block text-[14px] font-bold uppercase tracking-widest border-b border-base pb-4" data-sd-id="204">Men</a>
+                    <a id="aurum-link-19" href="#best-sellers" class="block text-[14px] font-bold uppercase tracking-widest border-b border-base pb-4" data-sd-id="205">Best Sellers</a>
+                    <a id="aurum-link-20" href="#precious" class="block text-[14px] font-bold uppercase tracking-widest border-b border-base pb-4" data-sd-id="206">Precious</a>
+                    <a id="aurum-link-21" href="#collections" class="block text-[14px] font-bold uppercase tracking-widest border-b border-base pb-4" data-sd-id="207">Collections</a>
+                    <a id="aurum-link-22" href="#wedding" class="block text-[14px] font-bold uppercase tracking-widest border-b border-base pb-4" data-sd-id="208">Wedding</a>
+                </nav>
+                <div class="mt-12 space-y-4" data-sd-id="209">
+                    <a id="aurum-link-23" href="#account" class="flex items-center gap-3 text-[14px] text-secondary-text" data-sd-id="210">
+                        <iconify-icon icon="lucide:user"></iconify-icon> My Account
+                    </a>
+                    <a id="aurum-link-24" href="#wishlist" class="flex items-center gap-3 text-[14px] text-secondary-text" data-sd-id="211">
+                        <iconify-icon icon="lucide:heart"></iconify-icon> Wishlist
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Simple Add to Cart Interaction
+        document.querySelectorAll('button').forEach(btn => {
+            if (btn.textContent === 'Add to Cart') {
+                btn.addEventListener('click', () => {
+                    const toast = document.getElementById('cart-toast');
+                    toast.style.transform = 'translateY(0) translateX(-50%)';
+                    toast.style.opacity = '1';
+                    
+                    setTimeout(() => {
+                        toast.style.transform = 'translateY(20px) translateX(-50%)';
+                        toast.style.opacity = '0';
+                    }, 2500);
+                });
+            }
+        });
+
+        
+function setupSlider(rootId,trackSelector,itemSelector,dotsSelector){
+ const root=document.getElementById(rootId),track=root.querySelector(trackSelector),items=[...root.querySelectorAll(itemSelector)],dots=dotsSelector?[...root.querySelectorAll(dotsSelector)]:[];
+ let index=0,timer;const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
+ function show(next){index=next;track.style.transform='translateX(-'+index*100+'%)';items.forEach((item,i)=>{item.inert=i!==index;item.setAttribute('aria-hidden',String(i!==index));});dots.forEach((dot,i)=>dot.setAttribute('aria-pressed',String(i===index)));}
+ function stop(){clearInterval(timer)}function start(){stop();if(!reduced.matches&&!document.hidden&&!root.matches(':hover')&&!root.contains(document.activeElement))timer=setInterval(()=>show((index+1)%items.length),4000)}
+ root.addEventListener('mouseenter',stop);root.addEventListener('mouseleave',start);root.addEventListener('focusin',stop);root.addEventListener('focusout',()=>setTimeout(start,0));document.addEventListener('visibilitychange',start);reduced.addEventListener('change',start);dots.forEach((dot,i)=>dot.addEventListener('click',()=>{show(i);start()}));show(0);start();
+}
+setupSlider('announcement-slider','.ribbon-track','.ribbon-message');setupSlider('jewellery-hero','.hero-track','.jewellery-slide','.hero-pagination button');
+    </script>
+
+<script>
+(function(){const ribbon=document.getElementById('announcement-slider');const nav=document.querySelector('nav.sticky');function fit(){document.documentElement.style.setProperty('--store-header-height',((ribbon?.getBoundingClientRect().height||0)+(nav?.getBoundingClientRect().height||0))+'px')}const observer=new ResizeObserver(fit);if(ribbon)observer.observe(ribbon);if(nav)observer.observe(nav);window.addEventListener('resize',fit);fit()})();
+</script></body></html>

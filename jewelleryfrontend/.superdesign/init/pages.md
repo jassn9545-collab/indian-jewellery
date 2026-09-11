@@ -1,0 +1,198 @@
+## src/app/about/[slug]/page.tsx
+- src/app/about/[slug]/page.tsx
+- src/app/layout.tsx
+  - src/components/layout/navbar.tsx
+    - src/store/shop.ts
+    - src/lib/catalog.ts
+    - src/components/ui/modal.tsx
+    - src/components/cart/bag.tsx
+  - src/components/layout/footer.tsx
+    - src/components/home/newsletter.tsx
+  - src/components/ui/structured-data.tsx
+  - src/app/globals.css
+    - src/app/tokens.css
+    - src/app/home.css
+    - src/app/shop.css
+  - src/app/responsive.css
+
+## src/app/account/page.tsx
+- src/app/account/page.tsx
+- src/app/layout.tsx
+  - src/components/layout/navbar.tsx
+    - src/store/shop.ts
+    - src/lib/catalog.ts
+    - src/components/ui/modal.tsx
+    - src/components/cart/bag.tsx
+  - src/components/layout/footer.tsx
+    - src/components/home/newsletter.tsx
+  - src/components/ui/structured-data.tsx
+  - src/app/globals.css
+    - src/app/tokens.css
+    - src/app/home.css
+    - src/app/shop.css
+  - src/app/responsive.css
+
+## src/app/cart/page.tsx
+- src/app/cart/page.tsx
+  - src/components/cart/bag.tsx
+    - src/store/shop.ts
+    - src/lib/catalog.ts
+- src/app/layout.tsx
+  - src/components/layout/navbar.tsx
+    - src/store/shop.ts
+    - src/lib/catalog.ts
+    - src/components/ui/modal.tsx
+    - src/components/cart/bag.tsx
+  - src/components/layout/footer.tsx
+    - src/components/home/newsletter.tsx
+  - src/components/ui/structured-data.tsx
+  - src/app/globals.css
+    - src/app/tokens.css
+    - src/app/home.css
+    - src/app/shop.css
+  - src/app/responsive.css
+
+## src/app/checkout/page.tsx
+- src/app/checkout/page.tsx
+  - src/store/shop.ts
+  - src/lib/catalog.ts
+- src/app/layout.tsx
+  - src/components/layout/navbar.tsx
+    - src/store/shop.ts
+    - src/lib/catalog.ts
+    - src/components/ui/modal.tsx
+    - src/components/cart/bag.tsx
+  - src/components/layout/footer.tsx
+    - src/components/home/newsletter.tsx
+  - src/components/ui/structured-data.tsx
+  - src/app/globals.css
+    - src/app/tokens.css
+    - src/app/home.css
+    - src/app/shop.css
+  - src/app/responsive.css
+
+## src/app/collections/[slug]/page.tsx
+- src/app/collections/[slug]/page.tsx
+  - src/lib/catalog.ts
+  - src/components/collection/collection.tsx
+    - src/components/product/product-card.tsx
+      - src/store/shop.ts
+      - src/components/ui/modal.tsx
+- src/app/layout.tsx
+  - src/components/layout/navbar.tsx
+    - src/store/shop.ts
+    - src/lib/catalog.ts
+    - src/components/ui/modal.tsx
+    - src/components/cart/bag.tsx
+  - src/components/layout/footer.tsx
+    - src/components/home/newsletter.tsx
+  - src/components/ui/structured-data.tsx
+  - src/app/globals.css
+    - src/app/tokens.css
+    - src/app/home.css
+    - src/app/shop.css
+  - src/app/responsive.css
+
+## src/app/help/[slug]/page.tsx
+- src/app/help/[slug]/page.tsx
+- src/app/layout.tsx
+  - src/components/layout/navbar.tsx
+    - src/store/shop.ts
+    - src/lib/catalog.ts
+    - src/components/ui/modal.tsx
+    - src/components/cart/bag.tsx
+  - src/components/layout/footer.tsx
+    - src/components/home/newsletter.tsx
+  - src/components/ui/structured-data.tsx
+  - src/app/globals.css
+    - src/app/tokens.css
+    - src/app/home.css
+    - src/app/shop.css
+  - src/app/responsive.css
+
+## src/app/page.tsx
+- src/app/page.tsx
+  - src/lib/catalog.ts
+  - src/components/product/product-card.tsx
+    - src/store/shop.ts
+    - src/components/ui/modal.tsx
+  - src/components/home/carousel.tsx
+- src/app/layout.tsx
+  - src/components/layout/navbar.tsx
+    - src/store/shop.ts
+    - src/lib/catalog.ts
+    - src/components/ui/modal.tsx
+    - src/components/cart/bag.tsx
+  - src/components/layout/footer.tsx
+    - src/components/home/newsletter.tsx
+  - src/components/ui/structured-data.tsx
+  - src/app/globals.css
+    - src/app/tokens.css
+    - src/app/home.css
+    - src/app/shop.css
+  - src/app/responsive.css
+
+## src/app/products/[slug]/page.tsx
+- src/app/products/[slug]/page.tsx
+  - src/lib/catalog.ts
+  - src/components/product/product-detail.tsx
+    - src/components/product/product-card.tsx
+      - src/store/shop.ts
+      - src/components/ui/modal.tsx
+- src/app/layout.tsx
+  - src/components/layout/navbar.tsx
+    - src/store/shop.ts
+    - src/lib/catalog.ts
+    - src/components/ui/modal.tsx
+    - src/components/cart/bag.tsx
+  - src/components/layout/footer.tsx
+    - src/components/home/newsletter.tsx
+  - src/components/ui/structured-data.tsx
+  - src/app/globals.css
+    - src/app/tokens.css
+    - src/app/home.css
+    - src/app/shop.css
+  - src/app/responsive.css
+
+## src/app/search/page.tsx
+- src/app/search/page.tsx
+  - src/components/collection/collection.tsx
+    - src/lib/catalog.ts
+    - src/components/product/product-card.tsx
+      - src/store/shop.ts
+      - src/components/ui/modal.tsx
+- src/app/layout.tsx
+  - src/components/layout/navbar.tsx
+    - src/store/shop.ts
+    - src/lib/catalog.ts
+    - src/components/ui/modal.tsx
+    - src/components/cart/bag.tsx
+  - src/components/layout/footer.tsx
+    - src/components/home/newsletter.tsx
+  - src/components/ui/structured-data.tsx
+  - src/app/globals.css
+    - src/app/tokens.css
+    - src/app/home.css
+    - src/app/shop.css
+  - src/app/responsive.css
+
+## src/app/wishlist/page.tsx
+- src/app/wishlist/page.tsx
+  - src/store/shop.ts
+  - src/lib/catalog.ts
+  - src/components/product/product-card.tsx
+    - src/components/ui/modal.tsx
+- src/app/layout.tsx
+  - src/components/layout/navbar.tsx
+    - src/store/shop.ts
+    - src/lib/catalog.ts
+    - src/components/ui/modal.tsx
+    - src/components/cart/bag.tsx
+  - src/components/layout/footer.tsx
+    - src/components/home/newsletter.tsx
+  - src/components/ui/structured-data.tsx
+  - src/app/globals.css
+    - src/app/tokens.css
+    - src/app/home.css
+    - src/app/shop.css
+  - src/app/responsive.css
