@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { storefrontCategories } from "@/lib/storefront";
-import { Placeholder } from "@/components/storefront/placeholder";
+import { collectionProducts } from "@/lib/catalog";
+import { CollectionPage } from "@/components/collection/collection-page";
 export function generateStaticParams() {
   return storefrontCategories.map((c) => ({ slug: c.slug }));
 }
@@ -12,5 +13,7 @@ export default async function Page({
   const { slug } = await params;
   const category = storefrontCategories.find((c) => c.slug === slug);
   if (!category) notFound();
-  return <Placeholder title={category.name} category={category.name} />;
+  return (
+    <CollectionPage title={category.name} items={collectionProducts(slug)} />
+  );
 }

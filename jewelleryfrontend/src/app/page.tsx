@@ -1,3 +1,4 @@
+import { ExistingSections } from "@/components/home/existing-sections";
 import {
   HeroCarousel,
   CategorySection,
@@ -11,6 +12,7 @@ export default function Home() {
       <CategorySection />
       <LocalBrand />
       <FeaturedProducts />
+      <ExistingSections />
     </main>
   );
 }

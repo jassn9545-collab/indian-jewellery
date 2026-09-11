@@ -112,7 +112,7 @@ export function CategoryCard({
             src={imagePath(category.image!)}
             alt={category.name}
             fill
-            sizes="(max-width:767px) 80px, 96px"
+            sizes="(max-width:767px) 104px, 128px"
           />
         )}
       </div>

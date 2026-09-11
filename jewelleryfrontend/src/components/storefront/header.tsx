@@ -9,6 +9,16 @@ import {
   UserRound,
   ChevronDown,
   ArrowRight,
+  Gem,
+  Circle,
+  Sparkles,
+  Heart,
+  Layers,
+  Flower2,
+  IndianRupee,
+  Watch,
+  ShoppingBag,
+  Leaf,
 } from "lucide-react";
 import { navigation, type NavItem } from "@/lib/storefront";
 import { products, money, imagePath } from "@/lib/catalog";
@@ -18,16 +28,28 @@ import { Bag } from "@/components/cart/bag";
 import { Logo, WishlistButton, CartButton } from "./primitives";
 import { useAutoplay } from "./use-autoplay";
 const announcements = [
-  { text: "SUMMER SALE ? UP TO 20% OFF", href: "/collections/offers" },
+  { text: "SUMMER SALE — UP TO 20% OFF", href: "/collections/offers" },
   {
     text: "INTRODUCING LAB GROWN DIAMONDS",
     href: "/precious/lab-grown-diamonds",
   },
 ];
 export function AnnouncementBar() {
-  const { root, index } = useAutoplay(announcements.length);
+  const { root, index, setIndex } = useAutoplay(announcements.length);
   return (
-    <div ref={root} className="sf-ribbon" aria-label="Store announcements">
+    <div
+      ref={root}
+      className="sf-ribbon"
+      tabIndex={0}
+      role="region"
+      aria-label="Store announcements. Use left and right arrow keys to change offer."
+      onKeyDown={(event) => {
+        if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
+          event.preventDefault();
+          setIndex((index + 1) % announcements.length);
+        }
+      }}
+    >
       <div
         className="sf-ribbon-track"
         style={{ transform: "translateX(-" + index * 100 + "%)" }}
@@ -48,6 +70,29 @@ export function AnnouncementBar() {
     </div>
   );
 }
+function MenuIcon({ label }: { label: string }) {
+  const value = label.toLowerCase();
+  const Icon = /price|under|above|,000/.test(value)
+    ? IndianRupee
+    : /ring|bangle|bracelet|kada/.test(value)
+      ? Circle
+      : /watch/.test(value)
+        ? Watch
+        : /bag/.test(value)
+          ? ShoppingBag
+          : /wedding|traditional|set/.test(value)
+            ? Flower2
+            : /best|loved|favourite/.test(value)
+              ? Heart
+              : /collection|category|all/.test(value)
+                ? Layers
+                : /everyday|care|minimal/.test(value)
+                  ? Leaf
+                  : /new|launch|latest|trending/.test(value)
+                    ? Sparkles
+                    : Gem;
+  return <Icon size={16} aria-hidden="true" />;
+}
 export function MegaMenu({
   item,
   onNavigate,
@@ -55,31 +100,66 @@ export function MegaMenu({
   item: NavItem;
   onNavigate: () => void;
 }) {
+  const grouped = item.label === "Precious" || item.label === "Collections";
   return (
-    <div id={"sf-menu-" + item.label} className="sf-mega">
-      <div className="sf-mega-columns">
+    <div
+      id={"sf-menu-" + item.label}
+      className={"sf-mega " + (grouped ? "sf-mega-grouped" : "")}
+      aria-label={item.label + " menu"}
+    >
+      <div
+        className="sf-mega-columns"
+        style={{
+          gridTemplateColumns:
+            "repeat(" + (item.columns?.length || 1) + ", minmax(0, 1fr))",
+        }}
+      >
         {item.columns?.map((column) => (
-          <div key={column.title}>
-            <h3>{column.title}</h3>
+          <div className="sf-menu-column" key={column.title}>
+            <h3>
+              {column.href ? (
+                <Link
+                  className="sf-menu-heading"
+                  href={column.href}
+                  onClick={onNavigate}
+                >
+                  <MenuIcon label={column.title} />
+                  <span>{column.title}</span>
+                </Link>
+              ) : (
+                <span className="sf-menu-heading">
+                  <MenuIcon label={column.title} />
+                  <span>{column.title}</span>
+                </span>
+              )}
+            </h3>
             {column.links.map((link) => (
-              <Link key={link.href} href={link.href} onClick={onNavigate}>
-                {link.label}
+              <Link
+                key={link.label + link.href}
+                className="sf-menu-link"
+                href={link.href}
+                onClick={onNavigate}
+              >
+                <MenuIcon label={link.label} />
+                <span>{link.label}</span>
               </Link>
             ))}
           </div>
         ))}
       </div>
-      <Link href="/wedding" className="sf-menu-feature" onClick={onNavigate}>
-        <Image
-          src="/images/necklace.webp"
-          alt="Pearl and kundan necklace"
-          width={240}
-          height={160}
-        />
-        <span>
-          The Wedding Edit <ArrowRight size={16} />
-        </span>
-      </Link>
+      {!grouped && (
+        <Link href="/wedding" className="sf-menu-feature" onClick={onNavigate}>
+          <Image
+            src="/images/necklace.webp"
+            alt="Pearl and kundan necklace"
+            width={240}
+            height={160}
+          />
+          <span>
+            The Wedding Edit <ArrowRight size={16} />
+          </span>
+        </Link>
+      )}
     </div>
   );
 }
@@ -107,7 +187,7 @@ export function Search({ onClose }: { onClose: () => void }) {
           id="sf-search-input"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search jewellery, collections?"
+          placeholder="Search jewellery, collections..."
           autoFocus
         />
         <button className="sf-icon" aria-label="View search results">
@@ -168,6 +248,20 @@ export function Navbar() {
     measure();
     return () => observer.disconnect();
   }, []);
+  useEffect(() => {
+    if (!active) return;
+    const dismiss = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        const trigger = navRef.current?.querySelector<HTMLButtonElement>(
+          '[aria-expanded="true"]',
+        );
+        setActive(null);
+        trigger?.focus();
+      }
+    };
+    document.addEventListener("keydown", dismiss);
+    return () => document.removeEventListener("keydown", dismiss);
+  }, [active]);
   const selected = navigation.find((item) => item.label === active);
   return (
     <>
@@ -307,14 +401,18 @@ export function Navbar() {
                     </Link>
                     {item.columns.map((col) => (
                       <div key={col.title}>
-                        <h3>{col.title}</h3>
+                        <h3 className="sf-menu-heading">
+                          <MenuIcon label={col.title} />
+                          {col.title}
+                        </h3>
                         {col.links.map((link) => (
                           <Link
                             key={link.href}
                             href={link.href}
                             onClick={close}
                           >
-                            {link.label}
+                            <MenuIcon label={link.label} />
+                            <span>{link.label}</span>
                           </Link>
                         ))}
                       </div>

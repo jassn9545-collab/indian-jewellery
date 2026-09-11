@@ -42,7 +42,7 @@ export function Footer() {
         <div className="container footer-grid">
           <div className="footer-brand">
             <Link href="/" className="wordmark">
-              TECHGLOCK<span>JEWELLERY &amp; YOU</span>
+              INDIAN JEWELLERY<span>JEWELLERY &amp; YOU</span>
             </Link>
             <p>
               Modern Indian jewellery.
@@ -92,7 +92,8 @@ export function Footer() {
         </div>
         <div className="container footer-bottom">
           <span>
-            &copy; {new Date().getFullYear()} TECHGLOCK. All rights reserved.
+            &copy; {new Date().getFullYear()} INDIAN JEWELLERY. All rights
+            reserved.
           </span>
           <div>
             <Link href="/help/privacy">Privacy</Link>

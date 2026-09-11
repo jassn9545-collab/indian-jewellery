@@ -210,6 +210,45 @@ export const money = (value: number) =>
   }).format(value);
 export const imagePath = (key: string) => "/images/" + key + ".webp";
 export function collectionProducts(slug: string) {
+  const aliases: Record<string, string> = {
+    "new-launch": "new-in",
+    "new-launches": "new-in",
+    "new-arrivals": "new-in",
+    "latest-designs": "new-in",
+    "trending-jewellery": "best-sellers",
+    bestsellers: "best-sellers",
+    trending: "best-sellers",
+    "most-loved": "best-sellers",
+    "everyday-essentials": "everyday",
+    traditional: "festive",
+    statement: "party",
+    minimal: "everyday",
+    contemporary: "office",
+    bangles: "bracelets",
+    sets: "gifts",
+    "men-rings": "rings",
+    "men-bracelets": "bracelets",
+    women: "all",
+    men: "mens",
+  };
+  slug = aliases[slug] || slug;
+  if (slug === "under-2000") return products.filter((p) => p.price < 2000);
+  if (slug === "2000-5000")
+    return products.filter((p) => p.price >= 2000 && p.price <= 5000);
+  if (slug === "5000-10000")
+    return products.filter((p) => p.price > 5000 && p.price <= 10000);
+  if (slug === "above-10000") return products.filter((p) => p.price > 10000);
+  if (slug === "precious")
+    return products.filter(
+      (p) =>
+        p.material.includes("sterling silver") ||
+        p.gemstone.toLowerCase().includes("diamond"),
+    );
+  if (slug === "lab-grown-diamonds")
+    return products.filter((p) =>
+      p.gemstone.toLowerCase().includes("lab grown diamond"),
+    );
+
   if (["all", "new-in", "offers", "gifts", "ethnic"].includes(slug))
     return products;
   if (slug === "best-sellers")

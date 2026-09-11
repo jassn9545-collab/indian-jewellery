@@ -41,7 +41,7 @@ export const heroSlides = [
   },
 ];
 type MenuLink = { label: string; href: string };
-export type MenuColumn = { title: string; links: MenuLink[] };
+export type MenuColumn = { title: string; href?: string; links: MenuLink[] };
 export type NavItem = { label: string; href: string; columns?: MenuColumn[] };
 const collection = (label: string): MenuLink => ({
   label,
@@ -54,12 +54,10 @@ export const navigation: NavItem[] = [
     columns: [
       {
         title: "Shop by category",
-        links: storefrontCategories
-          .slice(0, 7)
-          .map((c) => ({
-            label: c.name === "Sets" ? "Jewellery Sets" : c.name,
-            href: "/category/" + c.slug,
-          })),
+        links: storefrontCategories.slice(0, 7).map((c) => ({
+          label: c.name === "Sets" ? "Jewellery Sets" : c.name,
+          href: "/category/" + c.slug,
+        })),
       },
       {
         title: "Shop by style",
@@ -74,10 +72,10 @@ export const navigation: NavItem[] = [
       {
         title: "Shop by price",
         links: [
-          { label: "Under ?2,000", href: "/collections/under-2000" },
-          { label: "?2,000 ? ?5,000", href: "/collections/2000-5000" },
-          { label: "?5,000 ? ?10,000", href: "/collections/5000-10000" },
-          { label: "Above ?10,000", href: "/collections/above-10000" },
+          { label: "Under ₹2,000", href: "/collections/under-2000" },
+          { label: "₹2,000 – ₹5,000", href: "/collections/2000-5000" },
+          { label: "₹5,000 – ₹10,000", href: "/collections/5000-10000" },
+          { label: "Above ₹10,000", href: "/collections/above-10000" },
         ],
       },
       {
@@ -117,13 +115,45 @@ export const navigation: NavItem[] = [
     href: "/precious",
     columns: [
       {
-        title: "Precious jewellery",
+        title: "Lab Grown Diamonds",
+        href: "/precious/lab-grown-diamonds",
         links: [
-          { label: "Lab Grown Diamonds", href: "/precious/lab-grown-diamonds" },
-          { label: "Sterling Silver", href: "/collections/silver" },
-          { label: "New Arrival", href: "/collections/new-launch" },
-          { label: "Best Sellers", href: "/best-sellers" },
-          { label: "Collections", href: "/collections" },
+          { label: "Explore diamonds", href: "/precious/lab-grown-diamonds" },
+          { label: "All precious jewellery", href: "/precious" },
+        ],
+      },
+      {
+        title: "Sterling Silver",
+        href: "/collections/silver",
+        links: [
+          { label: "Shop silver", href: "/collections/silver" },
+          { label: "Silver jewellery care", href: "/help/care" },
+        ],
+      },
+      {
+        title: "New Arrival",
+        href: "/collections/new-launch",
+        links: [
+          { label: "Latest designs", href: "/collections/new-launch" },
+          { label: "New earrings", href: "/category/earrings" },
+          { label: "New rings", href: "/category/rings" },
+        ],
+      },
+      {
+        title: "Best Sellers",
+        href: "/best-sellers",
+        links: [
+          { label: "Most loved pieces", href: "/best-sellers" },
+          { label: "Everyday favourites", href: "/collections/everyday" },
+        ],
+      },
+      {
+        title: "Collections",
+        href: "/collections",
+        links: [
+          { label: "Explore all", href: "/collections" },
+          { label: "Wedding edit", href: "/wedding" },
+          { label: "Jewellery sets", href: "/category/sets" },
         ],
       },
     ],
@@ -133,14 +163,53 @@ export const navigation: NavItem[] = [
     href: "/collections",
     columns: [
       {
-        title: "Discover our collections",
+        title: "New Launch",
+        href: "/collections/new-launch",
         links: [
-          { label: "New Launch", href: "/collections/new-launch" },
-          { label: "Wedding", href: "/wedding" },
-          { label: "Best Sellers", href: "/best-sellers" },
-          { label: "Oxidised", href: "/collections/oxidised" },
-          { label: "CZ", href: "/collections/cz" },
-          { label: "Sterling Silver", href: "/collections/silver" },
+          { label: "Latest designs", href: "/collections/new-launch" },
+          { label: "Earrings", href: "/category/earrings" },
+          { label: "Rings", href: "/category/rings" },
+        ],
+      },
+      {
+        title: "Wedding",
+        href: "/wedding",
+        links: [
+          { label: "Wedding edit", href: "/wedding" },
+          { label: "Necklaces", href: "/category/necklaces" },
+          { label: "Jewellery sets", href: "/category/sets" },
+        ],
+      },
+      {
+        title: "Best Sellers",
+        href: "/best-sellers",
+        links: [
+          { label: "Most loved", href: "/best-sellers" },
+          { label: "Everyday essentials", href: "/collections/everyday" },
+        ],
+      },
+      {
+        title: "Oxidised",
+        href: "/collections/oxidised",
+        links: [
+          { label: "Explore oxidised", href: "/collections/oxidised" },
+          { label: "Jewellery care", href: "/help/care" },
+        ],
+      },
+      {
+        title: "CZ",
+        href: "/collections/cz",
+        links: [
+          { label: "Explore CZ", href: "/collections/cz" },
+          { label: "Styling inspiration", href: "/collections/party" },
+        ],
+      },
+      {
+        title: "Sterling Silver",
+        href: "/collections/silver",
+        links: [
+          { label: "Shop silver", href: "/collections/silver" },
+          { label: "Silver care", href: "/help/care" },
         ],
       },
     ],

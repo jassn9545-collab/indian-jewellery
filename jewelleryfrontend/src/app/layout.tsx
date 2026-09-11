@@ -1,3 +1,4 @@
+import { Footer } from "@/components/layout/footer";
 import type { Metadata } from "next";
 import { Inter, Cormorant_Garamond } from "next/font/google";
 import { Navbar } from "@/components/storefront/header";
@@ -34,6 +35,7 @@ export default function RootLayout({
       <body>
         <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   );

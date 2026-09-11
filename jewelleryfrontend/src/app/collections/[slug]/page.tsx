@@ -1,4 +1,4 @@
-import { Placeholder } from "@/components/storefront/placeholder";
+import { CollectionPage } from "@/components/collection/collection-page";
 import { navigation } from "@/lib/storefront";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -48,9 +48,9 @@ export default async function Page({
       .includes("/collections/" + slug);
     if (!known) notFound();
     return (
-      <Placeholder
+      <CollectionPage
         title={collectionTitle(slug)}
-        category={collectionTitle(slug)}
+        items={collectionProducts(slug)}
       />
     );
   }
