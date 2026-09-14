@@ -587,7 +587,32 @@
   }
   .product-detail {
     grid-template-columns: minmax(0, 1fr);
-    gap: 32px;
+    gap: 24px;
+  }
+  .product-gallery {
+    flex-direction: column-reverse;
+    gap: 12px;
+  }
+  .gallery-thumbs-col {
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    gap: 8px;
+  }
+  .gallery-thumbs-list {
+    flex-direction: row;
+    width: auto;
+    overflow-x: auto;
+    scrollbar-width: none;
+    gap: 8px;
+  }
+  .gallery-thumb-item {
+    width: 52px;
+    height: 52px;
+    flex-shrink: 0;
+  }
+  .gallery-nav-btn {
+    display: none;
   }
   .detail-copy h1 {
     font-size: 34px;

@@ -10,14 +10,17 @@ import {
   ZoomIn,
   ZoomOut,
   ChevronDown,
+  ChevronUp,
   ShieldCheck,
   RotateCcw,
 } from "lucide-react";
 import { type Product, imagePath } from "@/lib/catalog";
 import { Price } from "./product-card";
 import { useShop } from "@/store/shop";
+
 export function ProductDetail({ product }: { product: Product }) {
   const [zoom, setZoom] = useState(false);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [tab, setTab] = useState("details");
   const [pin, setPin] = useState("");
@@ -33,12 +36,61 @@ export function ProductDetail({ product }: { product: Product }) {
   const router = useRouter();
   const { add, toggleWishlist, wishlist } = useShop();
   const saved = wishlist.includes(product.id);
+
+  const galleryViews = [
+    {
+      id: "view-1",
+      label: "Model View",
+      src: imagePath(product.image),
+      className: "object-cover",
+    },
+    {
+      id: "view-2",
+      label: "Full View",
+      src: imagePath(product.image),
+      className: "object-contain",
+    },
+    {
+      id: "view-3",
+      label: "Close-up Detail",
+      src: imagePath(product.image),
+      className: "object-cover scale-125",
+    },
+    {
+      id: "view-4",
+      label: "Back & Clasp View",
+      src: imagePath(product.image),
+      className: "object-cover scale-110",
+    },
+    {
+      id: "view-5",
+      label: "Paired Angle",
+      src: imagePath(product.image),
+      className: "object-cover",
+    },
+  ];
+
+  const currentView = galleryViews[activeImageIndex] || galleryViews[0];
+
+  function prevImage() {
+    setActiveImageIndex((prev) =>
+      prev > 0 ? prev - 1 : galleryViews.length - 1,
+    );
+  }
+
+  function nextImage() {
+    setActiveImageIndex((prev) =>
+      prev < galleryViews.length - 1 ? prev + 1 : 0,
+    );
+  }
+
   function addBag() {
     if (!product.available || atLimit) return;
     add(product.id, Math.min(quantity, 10 - bagQuantity));
     setAdded(true);
     setTimeout(() => setAdded(false), 2400);
   }
+
   const details = [
     ["Description", product.description],
     [
@@ -63,35 +115,93 @@ export function ProductDetail({ product }: { product: Product }) {
       "Complimentary shipping on orders above INR 799. Final delivery dates and return eligibility will be confirmed at launch.",
     ],
   ];
+
   return (
     <div className="product-detail">
-      <div>
+      <div className="product-gallery">
+        <div className="gallery-thumbs-col" aria-label="Product image gallery">
+          <button
+            type="button"
+            className="gallery-nav-btn prev-btn"
+            onClick={prevImage}
+            aria-label="Previous image"
+          >
+            <ChevronUp size={18} />
+          </button>
+          <div className="gallery-thumbs-list">
+            {galleryViews.map((view, idx) => (
+              <button
+                key={view.id}
+                type="button"
+                className={
+                  "gallery-thumb-item" +
+                  (activeImageIndex === idx ? " active" : "")
+                }
+                onClick={() => {
+                  setActiveImageIndex(idx);
+                  if (idx === 2) setZoom(true);
+                  else if (idx === 1) setZoom(false);
+                }}
+                aria-label={view.label}
+              >
+                <div className="thumb-image-wrap">
+                  <Image
+                    src={view.src}
+                    alt={view.label}
+                    width={72}
+                    height={72}
+                    className={view.className}
+                  />
+                </div>
+              </button>
+            ))}
+          </div>
+          <button
+            type="button"
+            className="gallery-nav-btn next-btn"
+            onClick={nextImage}
+            aria-label="Next image"
+          >
+            <ChevronDown size={18} />
+          </button>
+        </div>
         <div
           className="detail-photo"
-          onPointerMove={(event) => {
-            if (event.pointerType !== "mouse") return;
+          onMouseMove={(event) => {
             const bounds = event.currentTarget.getBoundingClientRect();
-            event.currentTarget.style.setProperty(
-              "--zoom-x",
-              `${((event.clientX - bounds.left) / bounds.width) * 100}%`,
+            const x = Math.max(
+              0,
+              Math.min(
+                100,
+                ((event.clientX - bounds.left) / bounds.width) * 100,
+              ),
             );
-            event.currentTarget.style.setProperty(
-              "--zoom-y",
-              `${((event.clientY - bounds.top) / bounds.height) * 100}%`,
+            const y = Math.max(
+              0,
+              Math.min(
+                100,
+                ((event.clientY - bounds.top) / bounds.height) * 100,
+              ),
             );
+            event.currentTarget.style.setProperty("--zoom-x", `${x}%`);
+            event.currentTarget.style.setProperty("--zoom-y", `${y}%`);
           }}
-          onPointerLeave={(event) => {
+          onMouseLeave={(event) => {
             event.currentTarget.style.removeProperty("--zoom-x");
             event.currentTarget.style.removeProperty("--zoom-y");
           }}
         >
           <Image
-            src={imagePath(product.image)}
-            alt={product.name}
+            key={currentView.id}
+            src={currentView.src}
+            alt={product.name + " - " + currentView.label}
             fill
             preload
-            sizes="(max-width:767px) 100vw, 50vw"
-            className={zoom ? "zoomed" : ""}
+            sizes="(max-width:767px) 100vw, 55vw"
+            className={
+              (zoom || activeImageIndex === 2 ? "zoomed " : "") +
+              (currentView.className || "")
+            }
           />
           <button
             className="icon-button"
@@ -100,34 +210,6 @@ export function ProductDetail({ product }: { product: Product }) {
             onClick={() => setZoom(!zoom)}
           >
             {zoom ? <ZoomOut /> : <ZoomIn />}
-          </button>
-        </div>
-        <div className="gallery-thumbs">
-          <button
-            className={!zoom ? "active" : ""}
-            onClick={() => setZoom(false)}
-            aria-label="View full product"
-          >
-            <Image
-              src={imagePath(product.image)}
-              alt="Full product"
-              width={72}
-              height={72}
-            />
-            Full view
-          </button>
-          <button
-            className={zoom ? "active" : ""}
-            onClick={() => setZoom(true)}
-            aria-label="View product detail"
-          >
-            <Image
-              src={imagePath(product.image)}
-              alt="Product detail"
-              width={72}
-              height={72}
-            />
-            Detail
           </button>
         </div>
       </div>

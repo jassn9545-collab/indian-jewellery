@@ -6,6 +6,10 @@ type BagItem = { id: string; quantity: number };
 type ShopState = {
   bag: BagItem[];
   wishlist: string[];
+  isCartOpen: boolean;
+  openCart: () => void;
+  closeCart: () => void;
+  toggleCart: () => void;
   add: (id: string, quantity?: number) => void;
   quantity: (id: string, value: number) => void;
   remove: (id: string) => void;
@@ -16,8 +20,13 @@ export const useShop = create<ShopState>()(
     (set) => ({
       bag: [],
       wishlist: [],
+      isCartOpen: false,
+      openCart: () => set({ isCartOpen: true }),
+      closeCart: () => set({ isCartOpen: false }),
+      toggleCart: () => set((s) => ({ isCartOpen: !s.isCartOpen })),
       add: (id, quantity = 1) =>
         set((s) => ({
+          isCartOpen: true,
           bag:
             !products.some((p) => p.id === id && p.available) ||
             !Number.isInteger(quantity) ||
@@ -56,6 +65,7 @@ export const useShop = create<ShopState>()(
       name: "techglock-shop",
       storage: createJSONStorage(() => localStorage),
       skipHydration: true,
+      partialize: (state) => ({ bag: state.bag, wishlist: state.wishlist }),
     },
   ),
 );

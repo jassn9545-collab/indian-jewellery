@@ -175,12 +175,8 @@ export function FeaturedProducts() {
   return (
     <section className="sf-featured" aria-labelledby="sf-featured-heading">
       <div className="sf-section-heading">
-        <h2 id="sf-featured-heading">Crafted Locally, Loved Everywhere</h2>
+        <h2 id="sf-featured-heading">Royally Crafted for You</h2>
         <span className="sf-gold-rule" />
-        <p>
-          Discover jewellery inspired by Indian craftsmanship and designed for
-          the modern you.
-        </p>
       </div>
       <div className="sf-product-grid">
         {featuredProducts.map((product) => (

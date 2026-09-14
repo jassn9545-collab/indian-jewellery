@@ -28,7 +28,7 @@ export default async function Page({
   const product = products.find((p) => p.id === slug);
   if (!product) notFound();
   return (
-    <main id="main" className="container page-shell">
+    <main id="main" className="listing-container page-shell">
       <nav className="breadcrumb">
         <Link href="/">Home</Link>
         <span>/</span>

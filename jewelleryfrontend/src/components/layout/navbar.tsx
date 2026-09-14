@@ -45,11 +45,18 @@ export function Navbar() {
   const [overlay, setOverlay] = useState<"search" | "bag" | "menu" | null>(
     null,
   );
+  const isCartOpen = useShop((s) => s.isCartOpen);
+  const openCart = useShop((s) => s.openCart);
+  const closeCart = useShop((s) => s.closeCart);
   const [mega, setMega] = useState(false);
   const [query, setQuery] = useState("");
   const dark = useSyncExternalStore(subscribeTheme, readTheme, () => false);
   const bag = useShop((s) => s.bag);
   const wishlist = useShop((s) => s.wishlist);
+  const close = () => {
+    setOverlay(null);
+    closeCart();
+  };
   useEffect(() => {
     useShop.persist.rehydrate();
   }, []);
@@ -162,7 +169,10 @@ export function Navbar() {
                 bag.reduce((s, i) => s + i.quantity, 0) +
                 " items"
               }
-              onClick={() => setOverlay("bag")}
+              onClick={() => {
+                setOverlay(null);
+                openCart();
+              }}
             >
               <ShoppingBag />
               {bag.length > 0 && (
@@ -250,20 +260,20 @@ export function Navbar() {
           </div>
         )}
       </header>
-      {overlay && (
+      {(overlay || isCartOpen) && (
         <Modal
           title={
             overlay === "search"
               ? "Find your next favourite"
-              : overlay === "bag"
-                ? "Your shopping bag"
-                : "Explore Indian Jewellery"
+              : overlay === "menu"
+                ? "Explore Indian Jewellery"
+                : "Your shopping bag"
           }
-          onClose={() => setOverlay(null)}
+          onClose={close}
           wide={overlay === "search"}
         >
-          {overlay === "bag" ? (
-            <Bag onNavigate={() => setOverlay(null)} />
+          {isCartOpen || overlay === "bag" ? (
+            <Bag onNavigate={close} />
           ) : overlay === "menu" ? (
             <nav className="mobile-nav">
               {[

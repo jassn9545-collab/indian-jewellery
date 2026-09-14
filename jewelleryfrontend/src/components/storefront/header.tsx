@@ -168,7 +168,9 @@ export function Search({ onClose }: { onClose: () => void }) {
   const router = useRouter();
   const results = products
     .filter((p) =>
-      (p.name + " " + p.category + " " + p.material).toLowerCase().includes(query.trim().toLowerCase()),
+      (p.name + " " + p.category + " " + p.material)
+        .toLowerCase()
+        .includes(query.trim().toLowerCase()),
     )
     .slice(0, 5);
   return (
@@ -229,8 +231,14 @@ export function Navbar() {
   const [overlay, setOverlay] = useState<"search" | "bag" | "menu" | null>(
     null,
   );
+  const isCartOpen = useShop((s) => s.isCartOpen);
+  const openCart = useShop((s) => s.openCart);
+  const closeCart = useShop((s) => s.closeCart);
   const navRef = useRef<HTMLElement>(null);
-  const close = () => setOverlay(null);
+  const close = () => {
+    setOverlay(null);
+    closeCart();
+  };
   useEffect(() => {
     useShop.persist.rehydrate();
     const nav = navRef.current;
@@ -263,6 +271,9 @@ export function Navbar() {
     return () => document.removeEventListener("keydown", dismiss);
   }, [active]);
   const selected = navigation.find((item) => item.label === active);
+  const isBagVisible = isCartOpen || overlay === "bag";
+  const hasOverlay = overlay || isCartOpen;
+
   return (
     <>
       <a className="skip-link" href="#main">
@@ -290,7 +301,10 @@ export function Navbar() {
           <button
             className="sf-icon sf-hamburger"
             aria-label="Open navigation menu"
-            onClick={() => setOverlay("menu")}
+            onClick={() => {
+              closeCart();
+              setOverlay("menu");
+            }}
           >
             <Menu />
           </button>
@@ -339,6 +353,7 @@ export function Navbar() {
               aria-label="Search jewellery"
               onClick={() => {
                 setActive(null);
+                closeCart();
                 setOverlay("search");
               }}
             >
@@ -355,7 +370,8 @@ export function Navbar() {
             <CartButton
               onClick={() => {
                 setActive(null);
-                setOverlay("bag");
+                setOverlay(null);
+                openCart();
               }}
             />
           </div>
@@ -364,27 +380,30 @@ export function Navbar() {
           <MegaMenu item={selected} onNavigate={() => setActive(null)} />
         )}
       </header>
-      {overlay && (
+      {hasOverlay && (
         <Modal
           title={
             overlay === "search"
               ? "Find your next favourite"
-              : overlay === "bag"
-                ? "Your shopping bag"
-                : "Explore Indian Jewellery"
+              : overlay === "menu"
+                ? "Explore Indian Jewellery"
+                : "Your shopping bag"
           }
           onClose={close}
           wide={overlay === "search"}
         >
           {overlay === "search" ? (
             <Search onClose={close} />
-          ) : overlay === "bag" ? (
+          ) : isBagVisible ? (
             <Bag onNavigate={close} />
           ) : (
             <nav className="sf-mobile-nav" aria-label="Mobile navigation">
               <button
                 className="sf-mobile-search"
-                onClick={() => setOverlay("search")}
+                onClick={() => {
+                  closeCart();
+                  setOverlay("search");
+                }}
               >
                 <SearchIcon size={18} />
                 Search jewellery

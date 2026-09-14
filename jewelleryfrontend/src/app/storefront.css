@@ -1038,10 +1038,10 @@ body {
 }
 .sf-nav-inner {
   max-width: none;
-  padding-inline: var(--sf-page-gutter);
+  padding-inline: calc(var(--sf-page-gutter) * 1.5);
 }
 .sf-hero-copy {
-  padding-left: var(--sf-page-gutter);
+  padding-left: calc(var(--sf-page-gutter) * 1.5);
 }
 .sf-mega {
   left: var(--sf-page-gutter);
@@ -1116,12 +1116,13 @@ body {
   gap: 8px;
 }
 .sf-categories {
-  padding-inline: var(--sf-page-gutter);
+  padding-inline: calc(var(--sf-page-gutter) * 1.5);
 }
 .sf-category-row {
   max-width: none;
   gap: 12px;
   justify-content: space-between;
+  padding-inline: 0;
 }
 .sf-category {
   flex: 0 0 auto;
@@ -1225,6 +1226,9 @@ body {
     padding-left: var(--sf-page-gutter);
     padding-right: var(--sf-page-gutter);
   }
+  .sf-categories {
+    padding-inline: 12px;
+  }
   .sf-category-photo {
     width: 104px;
     height: 104px;
@@ -1234,6 +1238,7 @@ body {
   }
   .sf-category-row {
     gap: 12px;
+    padding-inline: 0;
   }
   .sf-featured {
     --sf-featured-gutter: 16px;
@@ -1453,6 +1458,7 @@ body {
   max-width: none;
   margin-inline: auto;
   padding-inline: var(--sf-page-gutter);
+  padding-inline: calc(var(--sf-page-gutter) * 1.5);
 }
 .listing-grid {
   display: grid;
@@ -1471,5 +1477,8 @@ body {
   .collection-layout > .listing-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 767px) {
+  .listing-container {
+    padding-inline: 12px;
+  }
   .listing-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 }

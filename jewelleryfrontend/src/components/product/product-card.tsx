@@ -27,6 +27,7 @@ export function ProductCard({ product }: { product: Product }) {
   const atLimit = bagQuantity >= 10;
   function addToBag() {
     if (!product.available || atLimit) return;
+    setQuick(false);
     add(product.id);
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);
