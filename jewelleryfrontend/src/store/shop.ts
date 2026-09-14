@@ -1,4 +1,5 @@
 "use client";
+import { products } from "@/lib/catalog";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 type BagItem = { id: string; quantity: number };
@@ -17,19 +18,29 @@ export const useShop = create<ShopState>()(
       wishlist: [],
       add: (id, quantity = 1) =>
         set((s) => ({
-          bag: s.bag.some((i) => i.id === id)
-            ? s.bag.map((i) =>
-                i.id === id
-                  ? { ...i, quantity: Math.min(10, i.quantity + quantity) }
-                  : i,
-              )
-            : [...s.bag, { id, quantity: Math.min(10, quantity) }],
+          bag:
+            !products.some((p) => p.id === id && p.available) ||
+            !Number.isInteger(quantity) ||
+            quantity < 1
+              ? s.bag
+              : s.bag.some((i) => i.id === id)
+                ? s.bag.map((i) =>
+                    i.id === id
+                      ? { ...i, quantity: Math.min(10, i.quantity + quantity) }
+                      : i,
+                  )
+                : [...s.bag, { id, quantity: Math.min(10, quantity) }],
         })),
       quantity: (id, value) =>
         set((s) => ({
           bag: s.bag.map((i) =>
             i.id === id
-              ? { ...i, quantity: Math.max(1, Math.min(10, value)) }
+              ? {
+                  ...i,
+                  quantity: Number.isFinite(value)
+                    ? Math.max(1, Math.min(10, Math.floor(value)))
+                    : i.quantity,
+                }
               : i,
           ),
         })),

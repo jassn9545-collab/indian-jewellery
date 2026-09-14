@@ -9,7 +9,7 @@ export function CollectionPage({
   items: Product[];
 }) {
   return (
-    <main id="main" className="container page-shell">
+    <main id="main" className="listing-container page-shell">
       <nav className="breadcrumb" aria-label="Breadcrumb">
         <Link href="/">Home</Link>
         <span>/</span>

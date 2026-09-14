@@ -11,19 +11,29 @@ try {
   await expect(page.locator(".sf-hero-slide img")).toHaveCount(3);
   await expect(page.locator(".sf-category")).toHaveCount(10);
   await expect(page.locator(".sf-local-brand li")).toHaveCount(4);
-  await expect(page.locator(".sf-product")).toHaveCount(4);
+  await expect(
+    page.locator("[aria-labelledby=sf-featured-heading] .sf-product"),
+  ).toHaveCount(4);
   await expect(page.locator("footer")).toHaveCount(1);
-  await expect(page.locator(".arrivals")).toHaveCount(1);
-  await expect(page.locator(".craft-section")).toHaveCount(1);
-  await expect(page.locator(".style-grid")).toHaveCount(1);
+  await expect(
+    page.getByRole("heading", { name: "SHOP BY STYLE", exact: false }),
+  ).toHaveCount(1);
   await expect(page.locator(".silver-section")).toHaveCount(1);
-  await expect(page.locator(".looks-section")).toHaveCount(1);
-  await expect(page.locator(".reviews-section")).toHaveCount(1);
+  await expect(page.locator(".sf-looks-section")).toHaveCount(1);
+  await expect(page.locator(".sf-reviews-section")).toHaveCount(1);
   await page.mouse.move(1, 1);
   const before = await page
     .locator(".sf-dots button[aria-pressed=true]")
     .getAttribute("aria-label");
-  await expect.poll(() => page.locator(".sf-dots button[aria-pressed=true]").getAttribute("aria-label"), {timeout:8000, intervals:[200]}).not.toBe(before);
+  await expect
+    .poll(
+      () =>
+        page
+          .locator(".sf-dots button[aria-pressed=true]")
+          .getAttribute("aria-label"),
+      { timeout: 8000, intervals: [200] },
+    )
+    .not.toBe(before);
   await expect(page.locator(".sf-ribbon-message:not([inert])")).toHaveCount(1);
   await page.getByRole("button", { name: "Show slide 1", exact: true }).click();
   await page.waitForTimeout(800);
@@ -51,7 +61,9 @@ try {
   const first = page.locator(".sf-product").first();
   await first.getByRole("button", { name: /Save .* to wishlist/ }).click();
   await first.getByRole("button", { name: "Add to cart", exact: true }).click();
-  await expect(page.getByRole("status")).toHaveText("Added to cart");
+  await expect(
+    page.locator("[aria-labelledby=sf-featured-heading]").getByRole("status"),
+  ).toHaveText("Added to cart");
   await page
     .getByRole("button", { name: "Open shopping bag, 1 items", exact: true })
     .click();
@@ -131,7 +143,9 @@ try {
       throw Error("Route failed " + route + " " + response.status());
   }
   await page.goto(base, { waitUntil: "networkidle" });
-  await page.locator(".sf-featured").scrollIntoViewIfNeeded();
+  await page
+    .locator("[aria-labelledby=sf-featured-heading]")
+    .scrollIntoViewIfNeeded();
   await page.waitForTimeout(500);
   const broken = await page
     .locator(".sf-home img")

@@ -8,8 +8,8 @@ export const storefrontCategories = [
   { name: "Sets", slug: "sets", image: "necklace" },
   { name: "Mangalsutra", slug: "mangalsutra", image: "mangalsutra" },
   { name: "Watches", slug: "watches", referenceLeft: 870 },
-  { name: "Hair Accessories", slug: "hair-accessories", referenceLeft: 678 },
-  { name: "Bags", slug: "bags", referenceLeft: 772 },
+  { name: "Hair Accessories", slug: "hair-accessories", referenceLeft: 686 },
+  { name: "Bags", slug: "bags", referenceLeft: 778 },
 ];
 export const heroSlides = [
   {
@@ -220,5 +220,11 @@ export const featuredProducts = [
   products[0],
   products[2],
   products[1],
+  products[4],
+];
+export const bestSellerProducts = [
+  products[1],
+  products[5],
+  products[3],
   products[4],
 ];

@@ -1,25 +1,25 @@
 # Indian Jewellery
 
-## Structure
+Next.js and TypeScript jewellery storefront. All application development lives in
+`jewelleryfrontend/`; backend and admin implementation remain out of scope.
 
-- `jewelleryfrontend/`: Next.js and TypeScript frontend application.
-- `backend/`: Reserved for the backend API, database integration and business logic.
-- `requirements/requirements.txt`: Requirements placeholder.
-- `typography/typography.md`: Typography placeholder.
-- `design-system/design-system.md`: Design system placeholder.
+## Project documentation
 
-## Run the Frontend
+- [Website requirements and setup](requirements/requirements.txt)
+- [Global design system](design-system/design-system.md)
+- [Typography guide](typography/typography.md)
+- [Frontend development and verification](jewelleryfrontend/README.md)
+
+## Run locally
+
+Use Node.js 24 LTS and npm:
 
 ```powershell
 cd jewelleryfrontend
+npm ci
 npm run dev
 ```
 
-Open http://localhost:3000.
-
-## Check the Frontend
-
-```powershell
-npm run lint
-npm run build
-```
+Open http://localhost:3000. No backend credentials are needed for this frontend preview.
+Run `npm run lint`, `npx tsc --noEmit --incremental false`, and `npm run build` to verify.
+See the frontend README for browser checks and production preview instructions.

@@ -7,7 +7,7 @@ const pages: Record<
 > = {
   story: {
     title: "Jewellery & You",
-    copy: "TECHGLOCK is a celebration of modern Indian style. Of the pieces you reach for every morning, and the ones you save for a moment that matters.",
+    copy: "Indian Jewellery is a celebration of modern Indian style. Of the pieces you reach for every morning, and the ones you save for a moment that matters.",
     heading: "Rooted in heritage. Made for today.",
     detail:
       "Our design direction pairs the richness of Indian jewellery traditions with considered, contemporary silhouettes. A little nostalgia. A fresh point of view. Something that feels like you.",
@@ -57,7 +57,7 @@ export default async function Page({
       <p>{p.copy}</p>
       <Image
         src="/images/hero.webp"
-        alt="TECHGLOCK emerald kundan jewellery"
+        alt="Indian Jewellery emerald kundan jewellery"
         width={1000}
         height={667}
       />

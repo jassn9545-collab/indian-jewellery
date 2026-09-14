@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { products } from "@/lib/catalog";
 import { ProductDetail } from "@/components/product/product-detail";
-import { ProductCard } from "@/components/product/product-card";
+import { BestSellerCard } from "@/components/product/best-seller-card";
 export function generateStaticParams() {
   return products.map((p) => ({ slug: p.id }));
 }
@@ -43,12 +43,12 @@ export default async function Page({
         <div className="section-heading">
           <h2>A beautiful pairing</h2>
         </div>
-        <div className="product-grid">
+        <div className="listing-grid">
           {products
             .filter((p) => p.id !== slug)
             .slice(0, 4)
             .map((p) => (
-              <ProductCard key={p.id} product={p} />
+              <BestSellerCard key={p.id} product={p} />
             ))}
         </div>
       </section>

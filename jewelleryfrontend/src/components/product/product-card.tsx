@@ -21,7 +21,12 @@ export function ProductCard({ product }: { product: Product }) {
   const add = useShop((s) => s.add);
   const [quick, setQuick] = useState(false);
   const [added, setAdded] = useState(false);
+  const bagQuantity = useShop(
+    (s) => s.bag.find((i) => i.id === product.id)?.quantity ?? 0,
+  );
+  const atLimit = bagQuantity >= 10;
   function addToBag() {
+    if (!product.available || atLimit) return;
     add(product.id);
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);
@@ -71,14 +76,16 @@ export function ProductCard({ product }: { product: Product }) {
         <button
           className="quick-add"
           onClick={addToBag}
-          disabled={!product.available}
+          disabled={!product.available || atLimit}
         >
           <Plus size={15} />
           {added
             ? "Added to bag"
-            : product.available
-              ? "Add to bag"
-              : "Out of stock"}
+            : atLimit
+              ? "Maximum added"
+              : product.available
+                ? "Add to bag"
+                : "Out of stock"}
         </button>
       </div>
       {quick && (
@@ -100,13 +107,15 @@ export function ProductCard({ product }: { product: Product }) {
               <button
                 className="button"
                 onClick={addToBag}
-                disabled={!product.available}
+                disabled={!product.available || atLimit}
               >
                 {added
                   ? "Added to bag"
-                  : product.available
-                    ? "Add to bag"
-                    : "Out of stock"}
+                  : atLimit
+                    ? "Maximum added"
+                    : product.available
+                      ? "Add to bag"
+                      : "Out of stock"}
               </button>
               <Link
                 className="text-link"

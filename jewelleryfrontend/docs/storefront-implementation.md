@@ -1,15 +1,60 @@
-# Indian Jewellery storefront
+# Indian Jewellery storefront implementation
 
-The approved homepage is implemented in Next.js and TypeScript using existing dependencies. Components live in src/components/storefront; navigation, hero and category data live in src/lib/storefront.ts. Styles are in src/app/storefront.css and override the legacy shared palette where necessary.
+Application: Next.js App Router + TypeScript. See [requirements](../../requirements/requirements.txt)
+for the full route inventory, scope and setup.
 
-Homepage order: rotating announcement, sticky navigation with mega menus, three-photo hero carousel, category row without a visible heading, four-item craftsmanship strip, featured products. Existing assurance, arrivals, craft, style, silver, bestseller, trending-look and review sections remain below the updated sections. The shared footer and newsletter are preserved.
+## Homepage composition
 
-Both carousels advance every four seconds and pause for hover, keyboard focus, hidden tabs, and reduced-motion preferences. Announcement offers can also be changed with arrow keys. Hero dots select slides manually. Hero height subtracts measured ribbon/navigation heights from the viewport.
+Current `src/app/page.tsx` order: HeroCarousel, CategorySection, LocalBrand,
+NewLaunchSection, FeaturedProducts, ShopByStyleSection, SilverSection, BestSellers,
+TrendingLooksSection and CustomerReviewsSection. The shared root layout adds Navbar
+and Footer. Earlier requirements describe a different order and additional arrivals/craft
+sections; the current working layout is preserved during bug fixes. Browser checks target
+this composition.
+The old trust/benefits bar is removed. Footer includes the newsletter preview.
 
-Fonts: Cormorant Garamond 400/500/600 and Inter 400/500/600 via next/font. New hero images are optimized local WebP copies of the two supplied images. Watch, bag and hair-accessory thumbnails use the supplied category reference locally. No remote image host is required by the new homepage.
+`src/lib/storefront.ts` supplies navigation, hero/category and featured-product data.
+`src/lib/catalog.ts` supplies sample products, styles and collection aliases.
+`src/store/shop.ts` persists cart/wishlist IDs and quantities in browser storage.
 
-Cart and wishlist reuse the existing persisted Zustand store and retain product IDs. Featured product prices and names match the approved brief. Search and the bag reuse existing frontend functionality.
+## New Launch
 
-Category and campaign routes reuse the full existing collection browser. Product links reuse the original full product-detail page. Categories with no catalog inventory show the collection browser empty state. Existing collection, cart, wishlist, search and other routes remain available. Backend work is out of scope.
+- Data: `src/lib/new-launch.ts`; four campaign items with id, title, image, alt, buttonText, link.
+- UI: `src/components/storefront/new-launch.tsx`; Section, Carousel and Card exports.
+- CSS: adjacent `new-launch.module.css`, scoped to avoid changing existing sections.
+- NewLaunchSection accepts an optional readonly items array; empty input hides the section.
+- Images reuse local necklace, earrings, silver and ring photography.
+- CSS Grid creates 3.25 cards on desktop, 2.25 on tablet, and approximately 1.15 on mobile,
+  including the intentional next-card preview and consistent gaps.
+- Native scroll snapping supports touch; pointer events add mouse dragging without
+  following links during a drag. Arrows use measured card widths and rewind at the ends.
+- Keyboard: left/right arrows, Home/End; individual links retain normal tab navigation.
+- No autoplay or cloned infinite slides. Reduced motion changes programmatic scrolling to instant.
 
-Verification: npm run lint; npx tsc --noEmit; npm run build; node scripts/verify-storefront.mjs. The browser script uses installed Microsoft Edge, checks navigation and shopping interactions, tests viewport fit, and saves screenshots under ignored artifacts/.
+## Preserved behavior
+
+Ribbon and hero autoplay pause on hover, focus, hidden tabs and reduced motion.
+ResizeObserver measures the 36px ribbon and 80px sticky header for hero viewport fit.
+Category crop positions center Hair Accessories and Bags. Featured products retain no
+border, compact information spacing and smaller inset images. Current section refinements are preserved.
+
+## Verification
+
+Run lint, TypeScript and production build. With the dev server running, use
+`node scripts/verify-storefront.mjs` and `node scripts/verify-new-launch.mjs`.
+`node scripts/verify-fixes.mjs` checks repeated search parameters, CZ results, cart limits
+and populated 320px product/cart/drawer layouts. All scripts use installed Microsoft Edge headlessly; screenshots go in ignored `artifacts/`.
+Set `STOREFRONT_URL` for a different port. No backend is required.
+
+## Shared product listings
+
+All category routes, collections (including navigation aliases), Best Sellers, Wedding,
+Precious and search use `Collection` and the shared `.listing-container` shell.
+The shell uses the full homepage width and `--sf-page-gutter` (16px on mobile), without a content-width cap.
+`BestSellerCard` in `src/components/product/best-seller-card.tsx` is extracted from the
+homepage and used by both homepage product sections, listings, wishlist and related products.
+Its shared styles preserve the image ratio/insets, typography, wishlist, badge and button.
+Listing grids use four desktop columns, three laptop columns and two tablet/mobile columns
+(with two columns beside tablet filters). Grid rows stay content-sized even beside tall filters.
+Run `node scripts/verify-listings.mjs` to check route coverage, card styling, responsive
+spacing and shopping/filter interactions.

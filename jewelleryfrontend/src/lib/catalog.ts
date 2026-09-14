@@ -238,6 +238,10 @@ export function collectionProducts(slug: string) {
   if (slug === "5000-10000")
     return products.filter((p) => p.price > 5000 && p.price <= 10000);
   if (slug === "above-10000") return products.filter((p) => p.price > 10000);
+  if (slug === "cz")
+    return products.filter((p) => p.gemstone === "Cubic zirconia");
+  if (slug === "silver")
+    return products.filter((p) => p.material.toLowerCase().includes("silver"));
   if (slug === "precious")
     return products.filter(
       (p) =>

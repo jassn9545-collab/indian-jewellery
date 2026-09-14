@@ -1,299 +1,418 @@
+"use client";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
-  ShieldCheck,
   Gem,
-  RotateCcw,
-  LockKeyhole,
   Star,
-  Check,
+  Leaf,
+  Sparkles,
+  Quote,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
-import { products, styles, imagePath } from "@/lib/catalog";
-import { ProductCard } from "@/components/product/product-card";
-import { Carousel } from "@/components/home/carousel";
-function SectionHeading({
-  eyebrow,
-  title,
-  copy,
-  href,
-}: {
-  eyebrow: string;
-  title: string;
-  copy?: string;
-  href?: string;
-}) {
+import { imagePath } from "@/lib/catalog";
+
+export function SilverSection() {
   return (
-    <div className="section-heading">
-      <div>
-        <span className="eyebrow">{eyebrow}</span>
-        <h2>{title}</h2>
-        {copy && <p>{copy}</p>}
-      </div>
-      {href && (
-        <Link href={href} className="text-link">
-          View all <ArrowRight size={16} />
-        </Link>
-      )}
-    </div>
-  );
-}
-export function ExistingSections() {
-  return (
-    <>
-      <section className="trust-bar" aria-label="Our assurances">
-        {[
-          [ShieldCheck, "Authentic quality"],
-          [Gem, "Premium craftsmanship"],
-          [RotateCcw, "Easy returns"],
-          [LockKeyhole, "Secure payments"],
-        ].map(([Icon, label]) => {
-          const I = Icon as typeof Gem;
-          return (
-            <div key={String(label)}>
-              <I size={21} />
-              <span>{String(label)}</span>
-            </div>
-          );
-        })}
-      </section>
-      <section className="section container arrivals">
-        <div className="arrival-intro">
-          <span className="eyebrow">JUST ARRIVED</span>
-          <h2>
-            New pieces.
-            <br />
-            <em>New possibilities.</em>
-          </h2>
-          <p>
-            Fresh designs crafted for
-            <br />
-            your newest moments.
-          </p>
-          <Link href="/collections/new-in" className="text-link">
-            Explore new arrivals <ArrowRight size={16} />
-          </Link>
-          <span className="editorial-number">01 / THE NEW EDIT</span>
-        </div>
-        <Carousel label="New arrivals">
-          <div className="arrival-products">
-            {products.slice(0, 4).map((p) => (
-              <ProductCard key={p.id} product={p} />
-            ))}
-          </div>
-        </Carousel>
-      </section>
-      <section className="craft-section" id="craft">
-        <div className="craft-photo">
-          <Image
-            src="/images/hero.webp"
-            alt="Detailed emerald and gold kundan necklace styled with ivory silk"
-            fill
-            sizes="(max-width:767px) 100vw, 50vw"
-          />
-        </div>
-        <div className="craft-copy">
-          <span className="eyebrow">A LOVE LETTER TO INDIAN ARTISTRY</span>
-          <h2>
-            Royally Crafted
-            <br />
-            for <em>You.</em>
-          </h2>
-          <p>
-            A beautiful blend of heritage craftsmanship and contemporary design.
-            Pieces that carry a little of our past into your every tomorrow.
-          </p>
-          <Link href="/about/craftsmanship" className="button light">
-            Discover our craft <ArrowRight size={17} />
-          </Link>
-          <div className="craft-values">
-            <span>
-              Authentic
-              <br />
-              designs
-            </span>
-            <span>
-              Premium
-              <br />
-              quality
-            </span>
-            <span>
-              Made for
-              <br />
-              modern India
-            </span>
-          </div>
-        </div>
-      </section>
-      <section className="section container">
-        <SectionHeading
-          eyebrow="DRESS FOR YOUR MOMENT"
-          title="Shop by Style"
-          copy="Different moods. Beautifully you."
-          href="/collections/all"
-        />
-        <div className="style-grid">
-          {styles.map((s) => (
-            <Link
-              className="style-card"
-              href={"/collections/" + s.slug}
-              key={s.slug}
-            >
-              <div className="style-image">
-                <Image
-                  src={imagePath(s.image)}
-                  alt={s.name + " jewellery"}
-                  fill
-                  sizes="(max-width:767px) 45vw, 30vw"
-                />
-              </div>
-              <div>
-                <h3>{s.name}</h3>
-                <p>{s.copy}</p>
-                <ArrowRight size={19} />
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
-      <section className="silver-section">
-        <div className="container silver-inner">
+    <section className="silver-section" aria-label="Pure Silver Collection">
+      <div className="container silver-inner">
+        {/* Left Column: Editorial Photo */}
+        <div className="silver-photo-wrap">
           <div className="silver-photo">
             <Image
               src="/images/silver.webp"
-              alt="Sculptural sterling silver lotus earrings"
+              alt="Sculptural 925 sterling silver lotus earrings on warm stone"
               fill
-              sizes="(max-width:767px) 100vw, 50vw"
+              quality={95}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
+              className="silver-img"
             />
-          </div>
-          <div className="silver-copy">
-            <span className="eyebrow">THE 925 EDIT</span>
-            <h2>
-              Pure Silver.
-              <br />
-              <em>Simply you.</em>
-            </h2>
-            <p>
-              Timeless silver jewellery designed for everyday elegance. Light on
-              you. Lasting in your collection.
-            </p>
-            <Link href="/collections/silver" className="button">
-              Shop silver <ArrowRight size={17} />
-            </Link>
-            <div className="silver-note">
-              <Gem size={24} />
-              <span>
-                925 Sterling Silver
-                <br />
-                <small>A little luxury, every day.</small>
-              </span>
+            <div className="silver-photo-tag">
+              <span className="silver-tag-text">CRAFTED FOR TODAY</span>
+              <span className="silver-tag-line" />
             </div>
           </div>
         </div>
-      </section>
-      <section className="section container">
-        <SectionHeading
-          eyebrow="LOVED, WORN, REPEATED"
-          title="Best Sellers"
-          copy="Pieces our customers keep coming back for."
-          href="/collections/best-sellers"
-        />
-        <div className="product-grid">
-          {[products[1], products[5], products[3], products[4]].map((p) => (
-            <ProductCard key={p.id} product={p} />
-          ))}
-        </div>
-      </section>
-      <section className="section looks-section">
-        <div className="container">
-          <SectionHeading
-            eyebrow="THE INDIAN JEWELLERY MUSE"
-            title="Trending Looks"
-            copy="A little inspiration for your next beautiful moment."
-            href="/collections/all"
-          />
-          <div className="looks-grid">
-            {[
-              { image: "hero", label: "The modern heirloom", slug: "wedding" },
-              {
-                image: "earrings",
-                label: "A touch of emerald",
-                slug: "festive",
-              },
-              {
-                image: "bracelet",
-                label: "Everyday, elevated",
-                slug: "office",
-              },
-              { image: "jhumka", label: "In a festive mood", slug: "festive" },
-            ].map((look, i) => (
-              <Link
-                href={"/collections/" + look.slug}
-                className={"look look-" + i}
-                key={look.label}
-              >
-                <Image
-                  src={imagePath(look.image)}
-                  alt={look.label}
-                  fill
-                  sizes="(max-width:767px) 45vw, 25vw"
-                />
-                <span>
-                  {look.label}
-                  <ArrowRight size={15} />
+
+        {/* Right Column: Editorial Copy */}
+        <div className="silver-copy">
+          <div className="silver-watermark-badge">
+            <span className="silver-badge-text">SILVER FOR A BRIGHTER YOU</span>
+          </div>
+
+          <div className="silver-eyebrow-wrap">
+            <span className="silver-eyebrow">THE 925 EDIT</span>
+            <span className="silver-gold-line" />
+          </div>
+
+          <h2 className="silver-title">
+            Pure Silver.
+            <br />
+            <em>Simply You.</em>
+          </h2>
+
+          <p className="silver-desc">
+            Timeless silver jewellery designed for everyday elegance. Light on
+            you. Lasting in your collection.
+          </p>
+
+          <div className="silver-actions">
+            <Link href="/collections/silver" className="silver-btn">
+              <span>Shop Silver</span>
+              <ArrowRight size={16} className="silver-btn-icon" />
+            </Link>
+          </div>
+
+          <div className="silver-benefits">
+            <div className="silver-benefit-item">
+              <div className="silver-benefit-icon">
+                <Gem size={20} strokeWidth={1.5} />
+              </div>
+              <div className="silver-benefit-text">
+                <span className="silver-benefit-title">
+                  925 Sterling Silver
                 </span>
-              </Link>
-            ))}
+                <span className="silver-benefit-sub">
+                  A little luxury, every day.
+                </span>
+              </div>
+            </div>
+
+            <div className="silver-benefit-divider" />
+
+            <div className="silver-benefit-item">
+              <div className="silver-benefit-icon">
+                <Leaf size={20} strokeWidth={1.5} />
+              </div>
+              <div className="silver-benefit-text">
+                <span className="silver-benefit-title">Skin Friendly</span>
+                <span className="silver-benefit-sub">
+                  Comfort for all-day wear.
+                </span>
+              </div>
+            </div>
+
+            <div className="silver-benefit-divider" />
+
+            <div className="silver-benefit-item">
+              <div className="silver-benefit-icon">
+                <Sparkles size={20} strokeWidth={1.5} />
+              </div>
+              <div className="silver-benefit-text">
+                <span className="silver-benefit-title">Timeless Design</span>
+                <span className="silver-benefit-sub">Always in style.</span>
+              </div>
+            </div>
           </div>
         </div>
-      </section>
-      <section className="section container reviews-section">
-        <SectionHeading
-          eyebrow="LITTLE NOTES OF LOVE"
-          title="What Our Customers Say"
-        />
-        <div className="review-grid">
-          {[
-            {
-              name: "Ananya S.",
-              city: "Bengaluru",
-              text: "The emerald earrings are even more beautiful in person. Wore them to a wedding and did not stop getting compliments.",
-              initial: "A",
-            },
-            {
-              name: "Priya M.",
-              city: "Mumbai",
-              text: "Absolutely loved the quality and design. The packaging was beautiful. It felt like opening a little gift to myself.",
-              initial: "P",
-            },
-            {
-              name: "Meera R.",
-              city: "New Delhi",
-              text: "Finally found silver earrings I can wear every day. So delicate, comfortable and beautifully finished.",
-              initial: "M",
-            },
-          ].map((r) => (
-            <article className="review-card" key={r.name}>
-              <div className="review-stars" aria-label="5 out of 5 stars">
-                {Array.from({ length: 5 }, (_, i) => (
-                  <Star size={13} fill="currentColor" key={i} />
-                ))}
-              </div>
-              <blockquote>&ldquo;{r.text}&rdquo;</blockquote>
-              <div className="review-person">
-                <span className="avatar">{r.initial}</span>
-                <div>
-                  <strong>{r.name}</strong>
-                  <small>{r.city}</small>
-                </div>
-                <span className="verified">
-                  <Check size={12} /> Verified buyer
-                </span>
-              </div>
-            </article>
-          ))}
+      </div>
+    </section>
+  );
+}
+
+export function TrendingLooksSection() {
+  return (
+    <section className="sf-looks-section" aria-labelledby="sf-looks-heading">
+      <div className="sf-section-heading">
+        <h2 id="sf-looks-heading">Trending Looks</h2>
+        <span className="sf-gold-rule" />
+        <p>A little inspiration for your next beautiful moment.</p>
+      </div>
+
+      <div className="sf-looks-grid">
+        {[
+          {
+            image: "hero",
+            label: "The Modern Heirloom",
+            subtitle: "Wedding Edit",
+            slug: "wedding",
+            tag: "Bridal",
+          },
+          {
+            image: "earrings",
+            label: "A Touch of Emerald",
+            subtitle: "Festive Glamour",
+            slug: "festive",
+            tag: "Festive",
+          },
+          {
+            image: "necklace",
+            label: "Royal Kundan Grandeur",
+            subtitle: "Heritage Chokers",
+            slug: "wedding",
+            tag: "Royal",
+          },
+          {
+            image: "bracelet",
+            label: "Everyday Elevated",
+            subtitle: "Modern Minimal",
+            slug: "office",
+            tag: "Everyday",
+          },
+          {
+            image: "jhumka",
+            label: "Festive Traditions",
+            subtitle: "Meenakari Magic",
+            slug: "festive",
+            tag: "Statement",
+          },
+          {
+            image: "silver",
+            label: "The Silver Symphony",
+            subtitle: "Pure 925 Edit",
+            slug: "silver",
+            tag: "Silver",
+          },
+        ].map((look, i) => (
+          <Link
+            href={"/collections/" + look.slug}
+            className={"sf-look sf-look-" + i}
+            key={look.label}
+          >
+            <div className="sf-look-media">
+              <Image
+                src={imagePath(look.image)}
+                alt={look.label}
+                fill
+                quality={95}
+                sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 16vw"
+              />
+              <span className="sf-look-tag">{look.tag}</span>
+            </div>
+            <div className="sf-look-content">
+              <small>{look.subtitle}</small>
+              <h3>{look.label}</h3>
+              <span className="sf-look-cta">
+                Explore look <ArrowRight size={13} />
+              </span>
+            </div>
+          </Link>
+        ))}
+      </div>
+
+      <Link
+        href="/collections"
+        className="sf-view-all"
+        style={{ marginTop: 28 }}
+      >
+        Explore all looks <ArrowRight size={16} />
+      </Link>
+    </section>
+  );
+}
+
+export interface CustomerReview {
+  id: number;
+  name: string;
+  location: string;
+  image: string;
+  rating: number;
+  review: string;
+}
+
+export const customerReviews: CustomerReview[] = [
+  {
+    id: 1,
+    name: "Ananya S.",
+    location: "Bengaluru",
+    image: "/images/reviews/ananya.jpg",
+    rating: 5,
+    review:
+      "The emerald earrings are even more beautiful in person. Wore them to a wedding and did not stop getting compliments.",
+  },
+  {
+    id: 2,
+    name: "Priya M.",
+    location: "Mumbai",
+    image: "/images/reviews/priya.jpg",
+    rating: 5,
+    review:
+      "Absolutely loved the quality and design. The packaging was beautiful. It felt like opening a little gift to myself.",
+  },
+  {
+    id: 3,
+    name: "Meera R.",
+    location: "New Delhi",
+    image: "/images/reviews/meera.jpg",
+    rating: 5,
+    review:
+      "Finally found silver earrings I can wear every day. So delicate, comfortable and beautifully finished.",
+  },
+  {
+    id: 4,
+    name: "Riya D.",
+    location: "Jaipur",
+    image: "/images/reviews/riya.jpg",
+    rating: 5,
+    review:
+      "The craftsmanship is exquisite. Feels so lightweight on the skin yet looks truly royal and timeless.",
+  },
+];
+
+export function CustomerReviewCard({ review }: { review: CustomerReview }) {
+  return (
+    <article className="sf-review-card">
+      <div className="sf-review-avatar-col">
+        <div className="sf-review-avatar-frame">
+          <Image
+            src={review.image}
+            alt={review.name}
+            width={64}
+            height={64}
+            quality={95}
+            className="sf-review-avatar-img"
+          />
         </div>
-      </section>
-    </>
+      </div>
+
+      <div className="sf-review-body">
+        <div className="sf-review-top-row">
+          <div
+            className="sf-review-stars"
+            aria-label={`${review.rating} out of 5 stars`}
+          >
+            {Array.from({ length: review.rating }, (_, i) => (
+              <Star key={i} size={12} fill="#C69C45" stroke="#C69C45" />
+            ))}
+          </div>
+          <Quote size={16} className="sf-review-quote-icon" />
+        </div>
+
+        <blockquote className="sf-review-quote">
+          &ldquo;{review.review}&rdquo;
+        </blockquote>
+
+        <div className="sf-review-footer">
+          <div className="sf-review-author">
+            <strong className="sf-review-name">{review.name}</strong>
+            <span className="sf-review-location">{review.location}</span>
+          </div>
+
+          <span className="sf-review-verified">Sample review</span>
+        </div>
+      </div>
+    </article>
+  );
+}
+
+export function CustomerReviewsSection() {
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const scrollTo = (index: number) => {
+    if (!carouselRef.current) return;
+    const cards = carouselRef.current.querySelectorAll<HTMLElement>(
+      ".sf-review-card-wrapper",
+    );
+    if (cards[index]) {
+      cards[index].scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+        inline: "center",
+      });
+      setActiveIndex(index);
+    }
+  };
+
+  const handlePrev = () => {
+    const nextIdx = Math.max(0, activeIndex - 1);
+    scrollTo(nextIdx);
+  };
+
+  const handleNext = () => {
+    const nextIdx = Math.min(customerReviews.length - 1, activeIndex + 1);
+    scrollTo(nextIdx);
+  };
+
+  const handleScroll = () => {
+    if (!carouselRef.current) return;
+    const scrollLeft = carouselRef.current.scrollLeft;
+    const width = carouselRef.current.offsetWidth;
+    const newIdx = Math.round(scrollLeft / (width * 0.85 || 1));
+    setActiveIndex(Math.min(customerReviews.length - 1, Math.max(0, newIdx)));
+  };
+
+  return (
+    <section className="sf-reviews-section" aria-labelledby="sf-reviews-title">
+      <div className="sf-reviews-container">
+        {/* Editorial Centered Header */}
+        <div className="sf-reviews-header">
+          <div className="sf-reviews-eyebrow-wrap">
+            <span className="sf-reviews-line" />
+            <span className="sf-reviews-eyebrow">LITTLE NOTES OF LOVE</span>
+            <span className="sf-reviews-line" />
+          </div>
+
+          <h2 id="sf-reviews-title" className="sf-reviews-title">
+            What Our Customers Say
+          </h2>
+
+          <div className="sf-reviews-divider">
+            <span className="sf-reviews-divider-line" />
+            <span className="sf-reviews-divider-icon">✦</span>
+            <span className="sf-reviews-divider-line" />
+          </div>
+        </div>
+
+        {/* Reviews Grid / Carousel Track */}
+        <div className="sf-reviews-carousel-wrap">
+          <div
+            ref={carouselRef}
+            onScroll={handleScroll}
+            className="sf-reviews-track"
+          >
+            {customerReviews.map((r, index) => (
+              <div
+                className={`sf-review-card-wrapper ${
+                  index === activeIndex ? "is-active" : ""
+                }`}
+                key={r.id}
+              >
+                <CustomerReviewCard review={r} />
+              </div>
+            ))}
+          </div>
+
+          {/* Navigation Controls (Mobile / Swipe) */}
+          <div className="sf-reviews-controls">
+            <button
+              type="button"
+              onClick={handlePrev}
+              disabled={activeIndex === 0}
+              className="sf-reviews-nav-btn sf-reviews-prev"
+              aria-label="Previous review"
+            >
+              <ChevronLeft size={18} />
+            </button>
+
+            <div className="sf-reviews-dots">
+              {customerReviews.map((_, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => scrollTo(i)}
+                  className={`sf-reviews-dot ${
+                    i === activeIndex ? "is-active" : ""
+                  }`}
+                  aria-label={`Go to review ${i + 1}`}
+                />
+              ))}
+            </div>
+
+            <button
+              type="button"
+              onClick={handleNext}
+              disabled={activeIndex === customerReviews.length - 1}
+              className="sf-reviews-nav-btn sf-reviews-next"
+              aria-label="Next review"
+            >
+              <ChevronRight size={18} />
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }

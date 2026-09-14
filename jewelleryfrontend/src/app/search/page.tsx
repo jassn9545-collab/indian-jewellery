@@ -4,16 +4,17 @@ export const metadata = { title: "Search jewellery" };
 export default async function Page({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string }>;
+  searchParams: Promise<{ q?: string | string[] }>;
 }) {
-  const { q = "" } = await searchParams;
+  const { q: rawQuery } = await searchParams;
+  const q = (Array.isArray(rawQuery) ? rawQuery[0] : rawQuery)?.trim() ?? "";
   const found = products.filter((p) =>
     (p.name + " " + p.category + " " + p.material)
       .toLowerCase()
       .includes(q.toLowerCase()),
   );
   return (
-    <main id="main" className="container page-shell">
+    <main id="main" className="listing-container page-shell">
       <div className="page-heading">
         <h1>Find your next favourite</h1>
       </div>

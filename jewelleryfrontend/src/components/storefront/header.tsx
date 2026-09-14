@@ -168,7 +168,7 @@ export function Search({ onClose }: { onClose: () => void }) {
   const router = useRouter();
   const results = products
     .filter((p) =>
-      (p.name + " " + p.category).toLowerCase().includes(query.toLowerCase()),
+      (p.name + " " + p.category + " " + p.material).toLowerCase().includes(query.trim().toLowerCase()),
     )
     .slice(0, 5);
   return (
@@ -238,8 +238,8 @@ export function Navbar() {
     const measure = () =>
       document.documentElement.style.setProperty(
         "--store-header-height",
-        (nav?.getBoundingClientRect().height || 72) +
-          (ribbon?.getBoundingClientRect().height || 32) +
+        (nav?.getBoundingClientRect().height || 80) +
+          (ribbon?.getBoundingClientRect().height || 36) +
           "px",
       );
     const observer = new ResizeObserver(measure);

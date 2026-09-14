@@ -1,6 +1,5 @@
 import { CollectionPage } from "@/components/collection/collection-page";
 import { navigation } from "@/lib/storefront";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
   categories,
@@ -8,7 +7,6 @@ import {
   collectionProducts,
   collectionTitle,
 } from "@/lib/catalog";
-import { Collection } from "@/components/collection/collection";
 const slugs = [
   ...new Set([
     "all",
@@ -55,18 +53,9 @@ export default async function Page({
     );
   }
   return (
-    <main id="main" className="container page-shell">
-      <nav className="breadcrumb">
-        <Link href="/">Home</Link>
-        <span>/</span>
-        <span>{collectionTitle(slug)}</span>
-      </nav>
-      <div className="page-heading">
-        <span className="eyebrow">THE INDIAN JEWELLERY COLLECTION</span>
-        <h1>{collectionTitle(slug)}</h1>
-        <p>Thoughtfully chosen pieces for your everyday and extraordinary.</p>
-      </div>
-      <Collection items={collectionProducts(slug)} />
-    </main>
+    <CollectionPage
+      title={collectionTitle(slug)}
+      items={collectionProducts(slug)}
+    />
   );
 }

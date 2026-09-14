@@ -7,10 +7,11 @@ import {
   heroSlides,
   storefrontCategories,
   featuredProducts,
+  bestSellerProducts,
 } from "@/lib/storefront";
-import { imagePath, money, type Product } from "@/lib/catalog";
-import { useShop } from "@/store/shop";
-import { Badge, Button, WishlistButton } from "./primitives";
+import { imagePath } from "@/lib/catalog";
+import { BestSellerCard } from "@/components/product/best-seller-card";
+import { Button } from "./primitives";
 import { useAutoplay } from "./use-autoplay";
 export function HeroSlide({
   slide,
@@ -162,56 +163,6 @@ export function LocalBrand() {
     </section>
   );
 }
-export function ProductCard({
-  product,
-  onAdded,
-}: {
-  product: Product;
-  onAdded: () => void;
-}) {
-  const add = useShop((s) => s.add);
-  const quantity = useShop(
-    (s) => s.bag.find((i) => i.id === product.id)?.quantity ?? 0,
-  );
-  return (
-    <article className="sf-product">
-      <div className="sf-product-photo">
-        <Link href={"/product/" + product.id} aria-label={product.name}>
-          <Image
-            src={imagePath(product.image)}
-            alt={product.name}
-            fill
-            sizes="(max-width:767px) 46vw, (max-width:1023px) 44vw, 23vw"
-          />
-        </Link>
-        <Badge>{product.badge}</Badge>
-        <WishlistButton id={product.id} name={product.name} />
-      </div>
-      <div className="sf-product-info">
-        <span className="sf-product-category">{product.category}</span>
-        <Link className="sf-product-name" href={"/product/" + product.id}>
-          {product.name}
-        </Link>
-        <div className="sf-product-price">
-          <strong>{money(product.price)}</strong>
-          <s>{money(product.mrp)}</s>
-          <span>
-            {Math.round((1 - product.price / product.mrp) * 100)}% OFF
-          </span>
-        </div>
-        <Button
-          disabled={quantity >= 10}
-          onClick={() => {
-            add(product.id);
-            onAdded();
-          }}
-        >
-          {quantity >= 10 ? "Maximum added" : "Add to cart"}
-        </Button>
-      </div>
-    </article>
-  );
-}
 export function FeaturedProducts() {
   const [toast, setToast] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
@@ -233,11 +184,48 @@ export function FeaturedProducts() {
       </div>
       <div className="sf-product-grid">
         {featuredProducts.map((product) => (
-          <ProductCard key={product.id} product={product} onAdded={added} />
+          <BestSellerCard key={product.id} product={product} onAdded={added} />
         ))}
       </div>
       <Link href="/collections" className="sf-view-all">
         View all products <ArrowRight size={16} />
+      </Link>
+      <div
+        role="status"
+        aria-live="polite"
+        className={"sf-toast " + (toast ? "is-visible" : "")}
+      >
+        {toast ? "Added to cart" : ""}
+      </div>
+    </section>
+  );
+}
+
+export function BestSellers() {
+  const [toast, setToast] = useState(false);
+  const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  useEffect(() => () => clearTimeout(timer.current), []);
+  const added = () => {
+    clearTimeout(timer.current);
+    setToast(true);
+    timer.current = setTimeout(() => setToast(false), 2400);
+  };
+  return (
+    <section className="sf-featured" aria-labelledby="sf-bestsellers-heading">
+      <div className="sf-section-heading">
+        <h2 id="sf-bestsellers-heading">Best Sellers</h2>
+        <span className="sf-gold-rule" />
+        <p>
+          Pieces our customers keep coming back for. Loved, worn, and repeated.
+        </p>
+      </div>
+      <div className="sf-product-grid">
+        {bestSellerProducts.map((product) => (
+          <BestSellerCard key={product.id} product={product} onAdded={added} />
+        ))}
+      </div>
+      <Link href="/best-sellers" className="sf-view-all">
+        View all best sellers <ArrowRight size={16} />
       </Link>
       <div
         role="status"

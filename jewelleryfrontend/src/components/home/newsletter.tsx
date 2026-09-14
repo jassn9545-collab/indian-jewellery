@@ -19,7 +19,7 @@ export function Newsletter() {
       <div className="container newsletter-inner">
         <div>
           <span className="eyebrow">SOMETHING BEAUTIFUL IS ALWAYS COMING</span>
-          <h2>Join the TECHGLOCK Jewellery Circle</h2>
+          <h2>Join the Indian Jewellery Circle</h2>
           <p>New launches, little luxuries and inspiration, just for you.</p>
         </div>
         <form onSubmit={handleSubmit(() => setDone(true))} noValidate>

@@ -96,6 +96,9 @@
   .silver-inner {
     gap: 40px;
   }
+  .sf-reviews-track {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
   .newsletter-inner {
     gap: 32px;
   }
@@ -210,20 +213,6 @@
   }
   .hero-edition {
     display: none;
-  }
-  .trust-bar {
-    padding: 16px;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px 8px;
-  }
-  .trust-bar > div {
-    font-size: 9px;
-    gap: 8px;
-    justify-content: flex-start;
-    border: 0;
-  }
-  .trust-bar svg {
-    width: 18px;
   }
   .section-heading {
     margin-bottom: 24px;
@@ -379,25 +368,35 @@
     top: 18px;
   }
   .silver-section {
-    padding: 0;
+    padding: 44px 0;
   }
   .silver-inner {
     grid-template-columns: 1fr;
-    gap: 0;
+    gap: 32px;
     width: 100%;
   }
   .silver-photo {
-    aspect-ratio: 5/4;
+    aspect-ratio: 16 / 11;
   }
   .silver-copy {
-    padding: 32px 24px 40px;
+    padding: 0;
   }
-  .silver-copy h2 {
-    font-size: 40px;
-    margin-top: 12px;
+  .silver-title {
+    font-size: 34px;
+    margin-top: 0;
   }
-  .silver-note {
-    margin-top: 24px;
+  .silver-desc {
+    font-size: 13px;
+    margin-bottom: 24px;
+  }
+  .silver-benefits {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    padding-top: 20px;
+  }
+  .silver-benefit-divider {
+    display: none;
   }
   .looks-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -407,16 +406,92 @@
     font-size: 10px;
     padding: 12px;
   }
-  .review-grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
+  .sf-reviews-section {
+    padding: 44px 0 54px;
   }
-  .review-card blockquote {
-    min-height: 0;
-    margin: 16px 0 24px;
+  .sf-reviews-header {
+    margin-bottom: 28px;
   }
-  .verified {
+  .sf-reviews-track {
     display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 14px;
+    padding: 4px 2px 8px;
+  }
+  .sf-reviews-track::-webkit-scrollbar {
+    display: none;
+  }
+  .sf-review-card-wrapper {
+    flex: 0 0 92%;
+    min-width: 270px;
+    scroll-snap-align: center;
+  }
+  .sf-review-card {
+    padding: 20px 16px;
+    gap: 14px;
+  }
+  .sf-review-avatar-frame {
+    width: 60px;
+    height: 60px;
+  }
+  .sf-review-quote {
+    font-size: 12.5px;
+    line-height: 1.6;
+    margin: 0 0 14px 0;
+  }
+  .sf-reviews-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 22px;
+  }
+  .sf-reviews-nav-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 1px solid rgba(198, 156, 69, 0.5);
+    color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(13, 59, 46, 0.06);
+    transition: all 0.2s ease;
+  }
+  .sf-reviews-nav-btn:hover:not(:disabled) {
+    background: var(--color-primary);
+    color: #ffffff;
+    border-color: var(--color-primary);
+  }
+  .sf-reviews-nav-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+  .sf-reviews-dots {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .sf-reviews-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(198, 156, 69, 0.28);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+  .sf-reviews-dot.is-active {
+    width: 22px;
+    border-radius: 10px;
+    background: var(--color-gold);
   }
   .newsletter {
     padding: 40px 0;
@@ -511,7 +586,7 @@
     max-width: 190px;
   }
   .product-detail {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 32px;
   }
   .detail-copy h1 {

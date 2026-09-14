@@ -3,20 +3,20 @@ import Link from "next/link";
 import { Heart } from "lucide-react";
 import { useShop } from "@/store/shop";
 import { products } from "@/lib/catalog";
-import { ProductCard } from "@/components/product/product-card";
+import { BestSellerCard } from "@/components/product/best-seller-card";
 export default function Page() {
   const saved = useShop((s) => s.wishlist);
   const items = products.filter((p) => saved.includes(p.id));
   return (
-    <main id="main" className="container page-shell">
+    <main id="main" className="listing-container page-shell">
       <div className="page-heading">
         <h1>Your little collection of loves</h1>
         <p>{items.length} saved pieces</p>
       </div>
       {items.length ? (
-        <div className="product-grid">
+        <div className="listing-grid">
           {items.map((p) => (
-            <ProductCard key={p.id} product={p} />
+            <BestSellerCard key={p.id} product={p} />
           ))}
         </div>
       ) : (

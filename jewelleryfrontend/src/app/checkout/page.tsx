@@ -5,7 +5,8 @@ import { useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ShieldCheck } from "lucide-react";
+import { Modal } from "@/components/ui/modal";
+import { ShieldCheck, CreditCard } from "lucide-react";
 import { useShop } from "@/store/shop";
 import { products, money } from "@/lib/catalog";
 const schema = z.object({
@@ -24,6 +25,7 @@ function Checkout() {
   const bag = useShop((s) => s.bag);
   const query = useSearchParams();
   const [review, setReview] = useState(false);
+  const [paymentOpen, setPaymentOpen] = useState(false);
   const {
     register,
     handleSubmit,
@@ -58,8 +60,47 @@ function Checkout() {
             Store preview: checkout is not live. No payment will be taken and no
             order will be placed.
           </div>
+          {paymentOpen && (
+            <Modal
+              title="Razorpay payment preview"
+              onClose={() => setPaymentOpen(false)}
+            >
+              <p className="notice">
+                This is a store preview, not a live Razorpay checkout. No
+                payment will be charged.
+              </p>
+              <dl className="summary">
+                <div>
+                  <dt>Payment provider</dt>
+                  <dd>Razorpay</dd>
+                </div>
+                <div className="total">
+                  <dt>Order total</dt>
+                  <dd>{money(subtotal - discount + shipping)}</dd>
+                </div>
+              </dl>
+              <p className="fine-print">
+                Online payments will be available when the store launches. No
+                card details, UPI PIN or bank credentials are needed here.
+              </p>
+              <button
+                type="button"
+                className="button full"
+                onClick={() => setPaymentOpen(false)}
+              >
+                Back to checkout
+              </button>
+            </Modal>
+          )}
           <div className="checkout-layout">
-            <form onSubmit={handleSubmit(() => setReview(true))} noValidate>
+            <form
+              onChange={() => setReview(false)}
+              onSubmit={handleSubmit(() => {
+                setReview(true);
+                setPaymentOpen(true);
+              })}
+              noValidate
+            >
               <h2 style={{ marginBottom: 24 }}>Delivery details</h2>
               <div className="form-grid">
                 {(
@@ -95,17 +136,41 @@ function Checkout() {
                   </label>
                 ))}
               </div>
+              <fieldset className="checkout-payment">
+                <legend>Payment method</legend>
+                <label className="checkout-payment-option">
+                  <input
+                    type="radio"
+                    name="paymentMethod"
+                    value="razorpay"
+                    defaultChecked
+                    aria-describedby="razorpay-preview-note"
+                  />
+                  <CreditCard size={24} aria-hidden="true" />
+                  <span>
+                    <strong>Razorpay</strong>
+                    <span className="checkout-payment-caption">
+                      Online payment ? Frontend preview
+                    </span>
+                  </span>
+                </label>
+                <p id="razorpay-preview-note" className="fine-print">
+                  Preview the payment step after entering your delivery details.
+                  No payment information is collected.
+                </p>
+              </fieldset>
               <button
                 className="button"
                 style={{ marginTop: 24 }}
                 type="submit"
               >
-                Review details
+                Preview Razorpay payment
               </button>
               {review && (
                 <p className="notice" role="status" style={{ marginTop: 24 }}>
-                  Your details are valid. Online ordering will be available when
-                  TECHGLOCK launches. Your bag has been kept for you.
+                  Your details are valid. Razorpay is selected for this preview.
+                  No payment has been made or order placed. Your bag is
+                  unchanged.
                 </p>
               )}
             </form>

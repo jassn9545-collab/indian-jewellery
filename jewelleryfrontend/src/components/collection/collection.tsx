@@ -1,10 +1,18 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SlidersHorizontal, SearchX } from "lucide-react";
 import { type Product, money } from "@/lib/catalog";
-import { ProductCard } from "@/components/product/product-card";
+import { BestSellerCard } from "@/components/product/best-seller-card";
 import { Modal } from "@/components/ui/modal";
 export function Collection({ items }: { items: Product[] }) {
+  const [notice, setNotice] = useState("");
+  const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  useEffect(() => () => clearTimeout(timer.current), []);
+  function added() {
+    clearTimeout(timer.current);
+    setNotice("Added to cart");
+    timer.current = setTimeout(() => setNotice(""), 2400);
+  }
   const [selected, setSelected] = useState<Record<string, string[]>>({});
   const [max, setMax] = useState(10000);
   const [sort, setSort] = useState("featured");
@@ -147,9 +155,9 @@ export function Collection({ items }: { items: Product[] }) {
           {!open && filters}
         </aside>
         {shown.length ? (
-          <div className="product-grid">
+          <div className="listing-grid">
             {shown.map((p) => (
-              <ProductCard product={p} key={p.id} />
+              <BestSellerCard product={p} key={p.id} onAdded={added} />
             ))}
           </div>
         ) : (
@@ -162,6 +170,13 @@ export function Collection({ items }: { items: Product[] }) {
             </button>
           </div>
         )}
+      </div>
+      <div
+        role="status"
+        aria-live="polite"
+        className={"sf-toast " + (notice ? "is-visible" : "")}
+      >
+        {notice}
       </div>
       {open && (
         <Modal title="Refine your collection" onClose={() => setOpen(false)}>

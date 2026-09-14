@@ -23,3 +23,14 @@ Subjects:
 - mangalsutra.webp: Double black-bead necklace with a small curved gold pendant and clear stones.
 
 These are illustrative catalogue images, not photographs of manufactured inventory.
+
+## Supplied Indian Jewellery logo
+
+`public/images/indian-jewellery-logo.png` is the original user-supplied logo.
+The shared header renders it with an SVG alpha filter (`logo-background`) to hide
+its near-black background against the header. The source PNG itself is unchanged;
+it is not a transparent export. The artwork is cropped visually using CSS.
+
+Built-in imagegen background-extraction attempts were discarded because they
+changed the artwork and added a glow. Prompt: remove only the dark background,
+preserve exact lettering, peacock and gems, and output a transparent PNG.

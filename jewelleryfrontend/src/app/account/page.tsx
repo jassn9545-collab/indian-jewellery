@@ -16,23 +16,18 @@ export default function Page() {
   return (
     <main id="main" className="container page-shell">
       <div className="page-heading">
-        <h1>Your TECHGLOCK</h1>
+        <h1>Your Indian Jewellery</h1>
         <p>A space for your favourite pieces and beautiful moments.</p>
       </div>
       <div className="notice">
         Account preview. Sign-in, saved addresses and order history will be
         available at launch.
       </div>
-      <div
-        className="account-tabs"
-        role="tablist"
-        aria-label="Account sections"
-      >
+      <div className="account-tabs" role="group" aria-label="Account sections">
         {tabs.map((t) => (
           <button
             key={t}
-            role="tab"
-            aria-selected={tab === t}
+            aria-pressed={tab === t}
             className={tab === t ? "active" : ""}
             onClick={() => setTab(t)}
           >
@@ -40,10 +35,11 @@ export default function Page() {
           </button>
         ))}
       </div>
-      <section role="tabpanel">
+      <section>
         {tab === "Profile" ? (
           <form
             style={{ maxWidth: 600 }}
+            onChange={() => setSaved(false)}
             onSubmit={(e) => {
               e.preventDefault();
               setSaved(true);

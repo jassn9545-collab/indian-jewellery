@@ -7,7 +7,7 @@ const content: Record<string, { title: string; sections: [string, string][] }> =
       sections: [
         [
           "Thoughtfully delivered",
-          "We are preparing to deliver TECHGLOCK across India. Complimentary standard shipping is planned for orders above INR 799. Delivery timelines and serviceable pincodes will be confirmed at launch.",
+          "We are preparing to deliver Indian Jewellery across India. Complimentary standard shipping is planned for orders above INR 799. Delivery timelines and serviceable pincodes will be confirmed at launch.",
         ],
         [
           "Tracking your order",
@@ -32,7 +32,7 @@ const content: Record<string, { title: string; sections: [string, string][] }> =
       title: "A few things you may wonder",
       sections: [
         [
-          "Is TECHGLOCK taking orders?",
+          "Is Indian Jewellery taking orders?",
           "This is a preview of our upcoming jewellery store. Checkout, payments and customer accounts are not live yet.",
         ],
         [

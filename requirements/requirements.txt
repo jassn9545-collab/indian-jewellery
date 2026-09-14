@@ -1,0 +1,182 @@
+INDIAN JEWELLERY ? WEBSITE REQUIREMENTS AND PROJECT SETUP
+Updated: 2026-09-14
+
+1. SCOPE AND STATUS
+Build a responsive Indian jewellery storefront in Next.js and TypeScript.
+Application development is restricted to jewelleryfrontend/.
+Root requirements, design-system and typography folders contain project documentation.
+backend/ and adminpanel/ are reserved and have no implementation in this task.
+The current site is a frontend preview using local sample data, not a live commerce service.
+Do not imply that authentication, payments, orders or newsletter subscriptions are live.
+
+2. DOCUMENTATION SOURCES
+requirements/requirements.txt: website scope, functionality, setup and acceptance criteria.
+design-system/design-system.md: canonical supplied global visual system and approved exceptions.
+typography/typography.md: font configuration and type hierarchy.
+jewelleryfrontend/README.md: developer quick start.
+jewelleryfrontend/docs/design-system.md: implementation mapping to canonical rules.
+jewelleryfrontend/docs/storefront-implementation.md: homepage component map and behavior.
+jewelleryfrontend/docs/assets.md: existing local image provenance.
+Keep these filenames; do not create competing requierment.txt or typographic.md copies.
+
+3. TECHNICAL STACK
+Next.js 16.3.4 App Router; React 19.2.8; TypeScript 5.
+Tailwind CSS 4 with @tailwindcss/postcss; global CSS and scoped CSS Modules.
+Lucide React for icons; Zustand for browser-persisted cart and wishlist.
+React Hook Form + Zod + @hookform/resolvers for frontend form validation.
+ESLint with eslint-config-next; Prettier; @playwright/test for browser verification.
+package.json and package-lock.json are the dependency source of truth.
+No additional carousel, icon, image or styling package is required.
+Read jewelleryfrontend/AGENTS.md and the installed Next.js docs before changing framework code.
+
+4. LOCAL SETUP
+Validated development runtime: Node.js v24.21.0 and npm 10.9.0.
+From repository root:
+  cd jewelleryfrontend
+  npm ci
+  npm run dev
+Open http://localhost:3000.
+Alternative port: npm run dev -- --port 3001.
+For production preview: npm run build, then npm start.
+No environment variables, API keys or database are required for the frontend preview.
+Google Fonts are configured through next/font/google; dependency installation and a fresh
+font build require internet access. Product imagery is served locally from public/images/.
+Do not commit node_modules/, .next/, artifacts/ or secrets.
+
+5. SOURCE STRUCTURE
+src/app/: route pages, root layout, loading/error/not-found states and CSS.
+src/components/storefront/: active navbar, primitives, homepage sections and New Launch.
+src/components/home/: existing editorial sections, carousel and newsletter.
+src/components/collection/: reusable filtered/sorted collection browser.
+src/components/product/: product cards and detail UI.
+src/components/cart/: bag UI.
+src/components/ui/: modal and structured data helpers.
+src/lib/catalog.ts: product samples, category/style collections, prices, route aliases.
+src/lib/storefront.ts: navigation, hero slides, category data and featured products.
+src/lib/new-launch.ts: typed campaign card data.
+src/store/shop.ts: Zustand cart/wishlist state.
+public/images/: local WebP photography and the category reference crop sheet.
+scripts/: existing smoke verification and New Launch regression checks.
+
+6. GLOBAL HEADER AND FOOTER
+36px rotating announcement ribbon; 80px sticky navbar with existing logo and actions.
+Desktop navigation: Women, Men, Kids, Best Sellers, Precious, Collections, Wedding.
+Mega menus, search, account, wishlist and bag; mobile navigation drawer and search.
+Hero subtracts actual measured ribbon + navbar height from viewport height.
+Announcement and hero autoplay pause on hover, focus, hidden tab and reduced motion.
+Footer includes newsletter preview, shop/help/about links, social links, contact information
+and decorative payment labels. Those labels do not represent a payment integration.
+
+7. HOMEPAGE ORDER
+Shared ribbon and navbar, followed by:
+  1. Three-slide hero carousel.
+  2. Ten circular categories: Rings, Earrings, Necklaces, Bangles, Bracelets, Sets,
+     Mangalsutra, Watches, Hair Accessories, Bags.
+  3. NEW LAUNCH image-card carousel (new; immediately after categories).
+  4. Jaipur craftsmanship strip: Handcrafted in Jaipur, Light Weight, Skin Friendly, Brass Jewellery.
+  5. Crafted Locally, Loved Everywhere featured products.
+  6. Existing New pieces / New possibilities arrivals.
+  7. Royally Crafted for You editorial section.
+  8. Shop by Style.
+  9. Pure Silver.
+  10. Best Sellers.
+  11. Trending Looks.
+  12. Customer reviews.
+Shared newsletter and footer follow the page.
+The removed Authentic quality / Premium craftsmanship / Easy returns / Secure payments
+benefits bar must not return. Keep all other sections and earlier approved refinements.
+
+8. NEW LAUNCH ACCEPTANCE CRITERIA
+Centered NEW LAUNCH h2 with balanced thin gold rules on each side.
+Multi-card horizontal carousel, never a single full-width hero.
+Desktop (1024px+): three complete cards plus a quarter of the next card.
+Tablet (768?1023px): two complete cards plus a quarter of the next card.
+Mobile (320?767px): one complete card plus a small portion of the next card.
+Use equal CSS gaps: desktop 24px, tablet 16px, mobile 12px.
+Use the existing homepage gutter; keep both outer edges balanced.
+Cards share a 4:5 aspect ratio and full-bleed centered cover images with no distortion.
+Titles and SHOP NOW links remain inside the card over the image, aligned consistently.
+Use existing imagery: necklace, earrings, silver, ring; no separate reference image was supplied.
+Titles: Pillars of Time; Leafy Affair; Fractals In Nature; Timeless Radiance.
+Each item has id, image, alt, title, buttonText and link; render with map, not duplicate markup.
+Expose reusable NewLaunchSection, NewLaunchCarousel and NewLaunchCard components.
+NewLaunchSection accepts optional items so future API data can replace local data.
+Empty data hides the section; a single card does not render navigation arrows.
+Previous/next controls are circular, vertically centered, labeled and keyboard accessible.
+Arrow controls move by a measured card plus gap. End controls rewind to the opposite end;
+this is not a cloned infinite carousel. Native touch/swipe and mouse dragging are supported.
+ArrowLeft/ArrowRight and Home/End work when the carousel or its links have focus.
+Respect reduced motion; no carousel autoplay is required.
+Only the carousel scrolls horizontally. Never create page-level horizontal overflow.
+Do not modify other homepage sections to implement this feature.
+
+9. ROUTES AND DISCOVERY
+/: complete homepage.
+/collections and /collections/[slug]: collection discovery with breadcrumb and heading.
+/category/[slug]: the ten homepage categories; empty inventory shows an empty state.
+/best-sellers, /wedding, /precious, /precious/lab-grown-diamonds: campaign/category browsers.
+/product/[id] and /products/[slug]: product detail routes for known catalog IDs.
+/search: search results; /wishlist: saved products; /cart: bag.
+/checkout and /account: frontend previews with explicit unavailable backend actions.
+/help/[slug] and /about/[slug]: supporting information for known slugs.
+Unknown products/categories/pages use the existing not-found behavior.
+Collection filters: category, material/purity, gemstone, occasion, collection badge,
+maximum price and availability. Sorting: featured, price ascending/descending,
+bestselling and newest. Mobile filters use the existing modal.
+Some campaign aliases share the full sample catalog; do not claim live merchandising.
+
+10. PRODUCT AND SHOPPING BEHAVIOR
+Products contain ID, name, category, price, MRP, image, material, gemstone, occasion,
+badge, sample rating/review count, availability and description.
+Display INR prices, original prices and calculated discount percentages.
+Detail page includes image zoom, quantity/size selection, wishlist, add-to-bag,
+product details and delivery lookup preview. Unavailable stock must not be purchasable.
+Bag supports quantity updates (1?10), removal, totals and the existing coupon preview.
+Cart/wishlist persist in localStorage under techglock-shop with explicit hydration.
+Checkout validates name, email, Indian mobile number, address, city, state and pincode.
+It only shows a review preview: no payment, order or server submission occurs.
+Account and newsletter remain previews; do not invent authentication or subscription success.
+
+11. GLOBAL VISUAL AND TYPOGRAPHY RULES
+Follow design-system/design-system.md for every new UI surface.
+Emerald #0D3B2E, deep emerald #082C22, gold #C69C45, light gold #E8D5A8,
+ivory #FDFCF8, beige #F4F0E8, white #FFFFFF and semantic text/border colors.
+Use CSS variables, the 4px spacing scale and existing component tokens.
+Cormorant Garamond for display headings; Inter for interface and body, weights 400/500/600.
+Load fonts once through the existing root layout. No new fonts or icon libraries.
+Restrained radii, minimal shadows, readable hierarchy and subtle 180ms interactions.
+Preserve the approved featured-card border removal, reduced image height and tighter spacing.
+Global future defaults do not override explicit section refinements.
+Dark-theme tokens exist but full active storefront dark-mode support is not completed.
+
+12. ACCESSIBILITY, RESPONSIVENESS AND PERFORMANCE
+Semantic headings, meaningful alt text, labeled controls, visible focus and keyboard access.
+At least 44px interactive carousel controls, natural touch scrolling and reduced-motion support.
+Test 320, 390, 768, 1024, 1280 and 1440px widths, plus resizing and page zoom.
+Avoid horizontal page overflow, clipped CTA text, distorted imagery and stale arrow steps.
+Use next/image with fill inside a sized positioned parent and responsive sizes.
+Lazy-load below-fold images; do not preload every carousel image.
+Use local assets and no unnecessary dependencies. Keep client boundaries limited to interaction.
+Preserve existing metadata, product structured data, loading, error and not-found handling.
+
+13. VERIFICATION
+From jewelleryfrontend/:
+  npm run lint
+  npx tsc --noEmit --incremental false
+  npm run build
+With the local server running:
+  node scripts/verify-storefront.mjs
+  node scripts/verify-new-launch.mjs
+Browser scripts use installed Microsoft Edge in headless mode.
+STOREFRONT_URL can override http://localhost:3000.
+Check section order, visible full/partial cards, images, equal gaps, CTA destinations,
+arrows, rewind, keyboard, drag, touch, reduced motion and no page overflow.
+Review desktop/tablet/mobile screenshots saved under ignored artifacts/.
+The older scripts/verify.mjs targets legacy features and is not the primary active-homepage check.
+
+14. FUTURE INTEGRATION (NOT IMPLEMENTED)
+Real product/inventory/pricing API, campaign CMS, customer authentication, addresses,
+server cart, order placement/history, payment provider, delivery/returns, newsletter
+subscription and verified reviews need separate backend scope and implementation.
+Replace sample product claims, reviews, policy copy, social destinations and contact details
+with approved business content before a public commerce launch.

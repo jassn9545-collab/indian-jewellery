@@ -23,6 +23,10 @@ export function ProductDetail({ product }: { product: Product }) {
   const [pin, setPin] = useState("");
   const [delivery, setDelivery] = useState("");
   const [added, setAdded] = useState(false);
+  const bagQuantity = useShop(
+    (s) => s.bag.find((i) => i.id === product.id)?.quantity ?? 0,
+  );
+  const atLimit = bagQuantity >= 10;
   const [size, setSize] = useState(
     product.category === "Rings" ? "Adjustable" : "Standard",
   );
@@ -30,7 +34,8 @@ export function ProductDetail({ product }: { product: Product }) {
   const { add, toggleWishlist, wishlist } = useShop();
   const saved = wishlist.includes(product.id);
   function addBag() {
-    add(product.id, quantity);
+    if (!product.available || atLimit) return;
+    add(product.id, Math.min(quantity, 10 - bagQuantity));
     setAdded(true);
     setTimeout(() => setAdded(false), 2400);
   }
@@ -61,7 +66,25 @@ export function ProductDetail({ product }: { product: Product }) {
   return (
     <div className="product-detail">
       <div>
-        <div className="detail-photo">
+        <div
+          className="detail-photo"
+          onPointerMove={(event) => {
+            if (event.pointerType !== "mouse") return;
+            const bounds = event.currentTarget.getBoundingClientRect();
+            event.currentTarget.style.setProperty(
+              "--zoom-x",
+              `${((event.clientX - bounds.left) / bounds.width) * 100}%`,
+            );
+            event.currentTarget.style.setProperty(
+              "--zoom-y",
+              `${((event.clientY - bounds.top) / bounds.height) * 100}%`,
+            );
+          }}
+          onPointerLeave={(event) => {
+            event.currentTarget.style.removeProperty("--zoom-x");
+            event.currentTarget.style.removeProperty("--zoom-y");
+          }}
+        >
           <Image
             src={imagePath(product.image)}
             alt={product.name}
@@ -153,13 +176,15 @@ export function ProductDetail({ product }: { product: Product }) {
           <button
             className="button"
             onClick={addBag}
-            disabled={!product.available}
+            disabled={!product.available || atLimit}
           >
             {added
               ? "Added to bag"
-              : product.available
-                ? "Add to bag"
-                : "Out of stock"}
+              : atLimit
+                ? "Maximum added"
+                : product.available
+                  ? "Add to bag"
+                  : "Out of stock"}
           </button>
           <button
             className="icon-button"
@@ -178,9 +203,10 @@ export function ProductDetail({ product }: { product: Product }) {
         )}
         <button
           className="button secondary full"
-          disabled={!product.available}
+          disabled={!product.available || atLimit}
           onClick={() => {
-            add(product.id, quantity);
+            if (!product.available || atLimit) return;
+            add(product.id, Math.min(quantity, 10 - bagQuantity));
             router.push("/checkout");
           }}
         >
@@ -223,27 +249,25 @@ export function ProductDetail({ product }: { product: Product }) {
         </div>
         <div
           className="detail-tabs"
-          role="tablist"
+          role="group"
           aria-label="Product information"
         >
           <button
-            role="tab"
-            aria-selected={tab === "details"}
+            aria-pressed={tab === "details"}
             className={tab === "details" ? "active" : ""}
             onClick={() => setTab("details")}
           >
             Product details
           </button>
           <button
-            role="tab"
-            aria-selected={tab === "reviews"}
+            aria-pressed={tab === "reviews"}
             className={tab === "reviews" ? "active" : ""}
             onClick={() => setTab("reviews")}
           >
             Reviews ({product.reviews})
           </button>
         </div>
-        <div role="tabpanel">
+        <div>
           {tab === "details" ? (
             <div className="details-list">
               {details.map(([title, copy]) => (

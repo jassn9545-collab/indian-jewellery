@@ -1,6 +1,4 @@
-==================================================
-GLOBAL JEWELLERY DESIGN SYSTEM
-==================================================
+# Global Jewellery Design System
 
 IMPORTANT:
 This is the GLOBAL DESIGN SYSTEM for the entire jewellery website.
@@ -13,9 +11,7 @@ Do NOT create a different visual style for individual pages.
 
 All new UI must look like it belongs to the same premium jewellery brand.
 
-==================================================
-1. BRAND VISUAL DIRECTION
-==================================================
+## 1. BRAND VISUAL DIRECTION
 
 Overall visual language:
 
@@ -45,10 +41,7 @@ Avoid excessive animations.
 
 Avoid visual clutter.
 
-
-==================================================
-2. COLOR SYSTEM
-==================================================
+## 2. COLOR SYSTEM
 
 Use CSS variables for ALL colors.
 
@@ -70,7 +63,8 @@ Ivory:
 --color-background: #FDFCF8;
 
 Warm Beige:
---color-surface: #F4F0E8;
+--color-surface-secondary: #F4F0E8;
+--color-surface: #FFFFFF;
 
 White:
 --color-white: #FFFFFF;
@@ -92,7 +86,6 @@ Success:
 
 Error:
 --color-error: #B42318;
-
 
 COLOR USAGE:
 
@@ -134,10 +127,7 @@ Do not introduce a new color for a new page.
 
 Use the existing design system.
 
-
-==================================================
-3. TYPOGRAPHY SYSTEM
-==================================================
+## 3. TYPOGRAPHY SYSTEM
 
 Typography must remain consistent across the entire website.
 
@@ -149,10 +139,7 @@ Cormorant Garamond
 UI FONT:
 Inter
 
-
---------------------------------------------------
 Cormorant Garamond
---------------------------------------------------
 
 Use for:
 
@@ -184,10 +171,7 @@ Editorial heading:
 Mobile heading:
 30–38px
 
-
---------------------------------------------------
 Inter
---------------------------------------------------
 
 Use for:
 
@@ -231,10 +215,7 @@ Price:
 Button:
 11–12px
 
-
---------------------------------------------------
 TYPOGRAPHY RULE
---------------------------------------------------
 
 Do NOT introduce another font.
 
@@ -246,10 +227,7 @@ Maintain clear typography hierarchy.
 
 Use CSS variables/classes for typography.
 
-
-==================================================
-4. FONT IMPORT
-==================================================
+## 4. FONT IMPORT
 
 Use Google Fonts if the existing project architecture allows it.
 
@@ -270,10 +248,7 @@ DO NOT import them again.
 
 Reuse the existing configuration.
 
-
-==================================================
-5. SPACING SYSTEM
-==================================================
+## 5. SPACING SYSTEM
 
 Use a 4px spacing system.
 
@@ -304,7 +279,6 @@ Large section spacing
 80px
 Major editorial spacing
 
-
 IMPORTANT:
 
 Do not randomly use values such as:
@@ -319,10 +293,7 @@ unless there is a strong layout reason.
 
 Prefer the design-system spacing scale.
 
-
-==================================================
-6. CONTAINER SYSTEM
-==================================================
+## 6. CONTAINER SYSTEM
 
 Use a consistent content container across all pages.
 
@@ -344,15 +315,11 @@ Desktop horizontal padding:
 Mobile horizontal padding:
 16px
 
-
 Every new section should align with the same global container.
 
 Do NOT allow different pages to have random content widths.
 
-
-==================================================
-7. BORDER SYSTEM
-==================================================
+## 7. BORDER SYSTEM
 
 Use:
 
@@ -376,10 +343,7 @@ Avoid decorative borders everywhere.
 
 Gold borders should be used very selectively.
 
-
-==================================================
-8. SHADOW SYSTEM
-==================================================
+## 8. SHADOW SYSTEM
 
 The website should NOT rely on heavy shadows.
 
@@ -404,10 +368,7 @@ large black shadows
 strong floating shadows
 neumorphism
 
-
-==================================================
-9. BORDER RADIUS
-==================================================
+## 9. BORDER RADIUS
 
 Use restrained rounding.
 
@@ -431,10 +392,7 @@ Modals:
 
 Do NOT make every component heavily rounded.
 
-
-==================================================
-10. BUTTON SYSTEM
-==================================================
+## 10. BUTTON SYSTEM
 
 Primary Button:
 
@@ -463,7 +421,6 @@ Inter
 uppercase
 letter-spacing: 0.05em
 
-
 Hover:
 
 Background:
@@ -471,7 +428,6 @@ Background:
 
 Transform:
 translateY(-1px)
-
 
 Secondary Button:
 
@@ -484,7 +440,6 @@ Border:
 Text:
 #0D3B2E
 
-
 Ghost Button:
 
 Transparent background
@@ -494,13 +449,9 @@ No strong border
 Text:
 #191919
 
-
 Buttons must remain elegant and minimal.
 
-
-==================================================
-11. LINK SYSTEM
-==================================================
+## 11. LINK SYSTEM
 
 Normal link:
 
@@ -520,10 +471,7 @@ Transition:
 
 180ms ease
 
-
-==================================================
-12. CARD SYSTEM
-==================================================
+## 12. CARD SYSTEM
 
 All new cards must follow the same visual language.
 
@@ -545,10 +493,7 @@ Cards should have:
 - High-quality imagery
 - Minimal UI
 
-
-==================================================
-13. PRODUCT CARD SYSTEM
-==================================================
+## 13. PRODUCT CARD SYSTEM
 
 Every future product card must follow the same structure.
 
@@ -569,7 +514,6 @@ Original price
 Discount
 ↓
 Action
-
 
 Product image:
 
@@ -597,17 +541,13 @@ transform: scale(1.03);
 Transition:
 180ms ease
 
-
 Wishlist:
 Minimal outline heart.
 
 Active wishlist:
 Emerald/gold accent.
 
-
-==================================================
-14. IMAGE STYLE
-==================================================
+## 14. IMAGE STYLE
 
 All jewellery imagery should feel:
 
@@ -634,7 +574,6 @@ Avoid:
 - Heavy filters
 - Artificial neon lighting
 
-
 For product images:
 
 Keep jewellery centered.
@@ -653,10 +592,7 @@ object-fit: contain;
 
 depending on image type.
 
-
-==================================================
-15. ICON SYSTEM
-==================================================
+## 15. ICON SYSTEM
 
 Use minimal outline icons.
 
@@ -686,10 +622,7 @@ Menu
 Close
 Arrow
 
-
-==================================================
-16. HEADER / NAVIGATION STYLE
-==================================================
+## 16. HEADER / NAVIGATION STYLE
 
 Navbar should always feel premium and minimal.
 
@@ -713,10 +646,7 @@ Emerald text or subtle bottom border.
 
 Do NOT create different navbar styles for different pages.
 
-
-==================================================
-17. SECTION HEADING SYSTEM
-==================================================
+## 17. SECTION HEADING SYSTEM
 
 Use consistent section headings.
 
@@ -727,7 +657,6 @@ SMALL EYEBROW
 Cormorant Garamond Heading
 
 Short supporting description
-
 
 Eyebrow:
 
@@ -749,13 +678,9 @@ Inter
 14–15px
 400
 
-
 Use this hierarchy consistently.
 
-
-==================================================
-18. DECORATIVE ELEMENTS
-==================================================
+## 18. DECORATIVE ELEMENTS
 
 Luxury decorative elements should be subtle.
 
@@ -770,10 +695,7 @@ Do NOT overdecorate the interface.
 
 Decorative elements should support the jewellery aesthetic, not compete with content.
 
-
-==================================================
-19. HOVER EFFECTS
-==================================================
+## 19. HOVER EFFECTS
 
 Use subtle interactions.
 
@@ -795,7 +717,6 @@ background change
 
 opacity change
 
-
 Do NOT use:
 
 bounce
@@ -804,10 +725,7 @@ large scale
 3D rotation
 excessive parallax
 
-
-==================================================
-20. RESPONSIVE DESIGN
-==================================================
+## 20. RESPONSIVE DESIGN
 
 Every new page/section MUST be responsive.
 
@@ -823,7 +741,6 @@ Tablet:
 Mobile:
 320–767px
 
-
 Desktop-first is acceptable, but mobile MUST be intentionally designed.
 
 Do not simply shrink desktop UI.
@@ -837,10 +754,7 @@ Mobile should have:
 - Touch-friendly controls
 - Proper image crops
 
-
-==================================================
-21. MOBILE SPACING
-==================================================
+## 21. MOBILE SPACING
 
 Mobile page padding:
 
@@ -858,7 +772,6 @@ Product grid gap:
 
 12px
 
-
 Do not allow horizontal overflow.
 
 Check:
@@ -867,10 +780,7 @@ overflow-x: hidden;
 
 where appropriate.
 
-
-==================================================
-22. ACCESSIBILITY
-==================================================
+## 22. ACCESSIBILITY
 
 All future UI must follow basic accessibility standards.
 
@@ -885,10 +795,7 @@ Use:
 - Alt text
 - Sufficient text contrast
 
-
-==================================================
-23. DARK MODE
-==================================================
+## 23. DARK MODE
 
 If dark mode already exists in the project:
 
@@ -910,10 +817,7 @@ Gold can remain as a premium accent.
 
 Avoid making the dark mode pure black.
 
-
-==================================================
-24. ANIMATION SYSTEM
-==================================================
+## 24. ANIMATION SYSTEM
 
 All animations should be subtle.
 
@@ -935,10 +839,7 @@ long cinematic animations
 
 Page transitions should not delay content visibility.
 
-
-==================================================
-25. FORM / INPUT SYSTEM
-==================================================
+## 25. FORM / INPUT SYSTEM
 
 For any future:
 
@@ -980,10 +881,7 @@ Use a subtle focus ring.
 
 Do NOT create a different input style on each page.
 
-
-==================================================
-26. BADGES
-==================================================
+## 26. BADGES
 
 Use badges only when useful.
 
@@ -1013,10 +911,7 @@ Gold
 Neutral badge:
 Warm beige
 
-
-==================================================
-27. MODAL / DROPDOWN
-==================================================
+## 27. MODAL / DROPDOWN
 
 Future modals and dropdowns must use:
 
@@ -1039,10 +934,7 @@ Same global typography.
 
 Do not introduce a new visual style.
 
-
-==================================================
-28. PAGE CONSISTENCY RULE
-==================================================
+## 28. PAGE CONSISTENCY RULE
 
 CRITICAL:
 
@@ -1069,10 +961,7 @@ REUSE IT.
 
 Do not create a duplicate component with slightly different styling.
 
-
-==================================================
-29. EXISTING PROJECT RULE
-==================================================
+## 29. EXISTING PROJECT RULE
 
 Before implementing any new page or section:
 
@@ -1087,10 +976,7 @@ Before implementing any new page or section:
 9. Do not create duplicate utilities.
 10. Do not overwrite existing working functionality.
 
-
-==================================================
-30. FINAL DESIGN PRINCIPLE
-==================================================
+## 30. FINAL DESIGN PRINCIPLE
 
 Every new page should look like:
 
@@ -1113,7 +999,38 @@ Premium
 → Usability
 → Performance
 
-
 FINAL RULE:
 
 If any new page/section requirement conflicts with this design system, keep the GLOBAL DESIGN SYSTEM as the default unless the requirement explicitly asks for a different visual treatment.
+
+## Project integration and approved exceptions
+
+This is the canonical visual specification for new frontend work. See
+[requirements](../requirements/requirements.txt) for functionality and setup, and
+[typography](../typography/typography.md) for the font hierarchy.
+
+- Application code belongs only in `jewelleryfrontend/`; backend and admin work are out of scope.
+- Fonts are already loaded once through `next/font/google` in `src/app/layout.tsx`.
+  Use `--font-display` (Cormorant Garamond) and `--font-body` (Inter); do not add a CSS font import.
+- `src/app/tokens.css` defines shared tokens. `src/app/storefront.css` supplies the current
+  emerald/gold/ivory overrides and is imported after `globals.css` and `responsive.css`.
+- Runtime `--color-surface` means white; warm beige is `--color-surface-secondary` or
+  `--color-image`. This naming preserves existing white cards, menus and dialogs.
+- Existing storefront containers use `--sf-page-gutter: clamp(24px, 2.8vw, 40px)`;
+  mobile is 16px. New Launch uses this alignment instead of changing existing containers.
+  The 1320px container above is a general future-page guideline, not a global migration.
+- Existing `.button` uses the 20px button radius; `.sf-button` retains its approved 4px radius.
+  New Launch reuses `.button`. Existing card radii remain unchanged.
+- Current header: 36px ribbon and 80px sticky navbar. Measured heights drive the hero.
+- Explicit featured-card refinements supersede default product-card borders: cards in
+  ?Crafted Locally, Loved Everywhere? have no border, compact information spacing,
+  and image insets of 8% vertically / 4% horizontally. Their outer padding is the page
+  gutter + 8px and column gap the page gutter - 4px; mobile uses 16px / 8px respectively.
+- Do not restore the removed Authentic quality / Premium craftsmanship / Easy returns /
+  Secure payments section. The separate Jaipur craftsmanship strip remains.
+- New Launch follows the category row, with a centered serif heading, gold rules,
+  image-background cards, light overlaid titles, emerald CTAs and circular arrows.
+  Its desktop/tablet/mobile view shows 3/2/1 full cards plus part of the next.
+- Dark-theme tokens exist, but the current storefront overrides are light-themed and no
+  active theme switcher is mounted. Full dark-mode parity is future work, not a shipped feature.
+- Do not apply future defaults retroactively to existing pages without a requested migration.
