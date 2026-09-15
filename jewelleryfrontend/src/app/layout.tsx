@@ -5,6 +5,8 @@ import { Navbar } from "@/components/storefront/header";
 import "./globals.css";
 import "./responsive.css";
 import "./storefront.css";
+import "./responsive-fixes.css";
+import "./commerce.css";
 const bodyFont = Inter({
   variable: "--font-body",
   subsets: ["latin"],

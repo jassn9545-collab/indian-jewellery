@@ -15,10 +15,10 @@ export default async function Page({
   );
   return (
     <main id="main" className="listing-container page-shell">
-      <div className="page-heading">
+      <div className="page-heading search-page-heading">
         <h1>Find your next favourite</h1>
       </div>
-      <form action="/search" className="coupon">
+      <form action="/search" className="search-page-form">
         <input
           aria-label="Search jewellery"
           name="q"

@@ -2,20 +2,31 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Heart, ShoppingBag } from "lucide-react";
-import type { ReactNode } from "react";
+import { useId, type ReactNode } from "react";
 import { useShop } from "@/store/shop";
 export function Logo() {
+  const filterId = useId();
   return (
     <Link href="/" className="sf-logo" aria-label="Indian Jewellery home">
       <svg className="sf-logo-filter" aria-hidden="true" width="0" height="0">
         <defs>
-          <filter id="logo-background" colorInterpolationFilters="sRGB">
-            <feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  4 4 4 0 -0.65" />
+          <filter id={filterId} colorInterpolationFilters="sRGB">
+            <feColorMatrix
+              type="matrix"
+              values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  4 4 4 0 -0.65"
+            />
           </filter>
         </defs>
       </svg>
       <span className="sf-logo-artwork">
-        <Image src="/images/indian-jewellery-logo.png" alt="Indian Jewellery" width={1536} height={1024} sizes="180px" preload />
+        <Image
+          src="/images/indian-jewellery-logo.png"
+          alt="Indian Jewellery"
+          width={1536}
+          height={1024}
+          sizes="180px"
+          style={{ filter: `url(#${filterId})` }}
+        />
       </span>
     </Link>
   );

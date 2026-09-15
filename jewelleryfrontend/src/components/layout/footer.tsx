@@ -1,6 +1,10 @@
+"use client";
+
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { useState } from "react";
+import { ArrowUpRight, ChevronDown } from "lucide-react";
 import { Newsletter } from "@/components/home/newsletter";
+import { Logo } from "@/components/storefront/primitives";
 
 function InstagramIcon({ size = 18 }: { size?: number }) {
   return (
@@ -73,6 +77,7 @@ const columns = [
     ],
   },
 ];
+
 function UpiIcon({ height = 14 }: { height?: number }) {
   return (
     <svg
@@ -168,15 +173,22 @@ function RazorpayIcon({ height = 15 }: { height?: number }) {
 }
 
 export function Footer() {
+  const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
+
+  const toggleSection = (title: string) => {
+    setOpenSections((prev) => ({
+      ...prev,
+      [title]: !prev[title],
+    }));
+  };
+
   return (
     <>
       <Newsletter />
       <footer className="footer">
         <div className="container footer-grid">
           <div className="footer-brand">
-            <Link href="/" className="wordmark">
-              INDIAN JEWELLERY<span>JEWELLERY &amp; YOU</span>
-            </Link>
+            <Logo />
             <p>
               Modern Indian jewellery.
               <br />
@@ -190,7 +202,7 @@ export function Footer() {
                 aria-label="Instagram"
                 title="Instagram"
               >
-                <InstagramIcon size={18} />
+                <InstagramIcon size={20} />
               </a>
               <a
                 href="https://www.facebook.com/"
@@ -199,32 +211,71 @@ export function Footer() {
                 aria-label="Facebook"
                 title="Facebook"
               >
-                <FacebookIcon size={18} />
+                <FacebookIcon size={20} />
               </a>
             </div>
           </div>
-          {columns.map((c) => (
-            <div key={c.title}>
-              <h3>{c.title}</h3>
-              {c.links.map(([name, href]) => (
-                <Link key={name} href={href}>
-                  {name}
-                </Link>
-              ))}
+          {columns.map((c) => {
+            const isOpen = !!openSections[c.title];
+            return (
+              <div key={c.title} className="footer-column">
+                <button
+                  type="button"
+                  className="footer-heading-btn"
+                  onClick={() => toggleSection(c.title)}
+                  aria-expanded={isOpen}
+                  aria-controls={`footer-col-${c.title.toLowerCase().replace(/\s+/g, "-")}`}
+                >
+                  <h3>{c.title}</h3>
+                  <ChevronDown
+                    size={16}
+                    className={`footer-chevron ${isOpen ? "open" : ""}`}
+                    aria-hidden="true"
+                  />
+                </button>
+                <div
+                  id={`footer-col-${c.title.toLowerCase().replace(/\s+/g, "-")}`}
+                  className={`footer-column-content ${isOpen ? "is-open" : ""}`}
+                >
+                  {c.links.map(([name, href]) => (
+                    <Link key={name} href={href}>
+                      {name}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+          <div className="footer-column">
+            <button
+              type="button"
+              className="footer-heading-btn"
+              onClick={() => toggleSection("LET'S TALK")}
+              aria-expanded={!!openSections["LET'S TALK"]}
+              aria-controls="footer-col-lets-talk"
+            >
+              <h3>LET&apos;S TALK</h3>
+              <ChevronDown
+                size={16}
+                className={`footer-chevron ${openSections["LET'S TALK"] ? "open" : ""}`}
+                aria-hidden="true"
+              />
+            </button>
+            <div
+              id="footer-col-lets-talk"
+              className={`footer-column-content ${openSections["LET'S TALK"] ? "is-open" : ""}`}
+            >
+              <Link href="/help/contact">
+                Customer care <ArrowUpRight size={13} />
+              </Link>
+              <p>
+                Monday - Saturday
+                <br />
+                10:00 AM - 6:00 PM IST
+              </p>
+              <Link href="/help/contact">Send us a note</Link>
+              <p>Made with love in India.</p>
             </div>
-          ))}
-          <div>
-            <h3>LET&apos;S TALK</h3>
-            <Link href="/help/contact">
-              Customer care <ArrowUpRight size={13} />
-            </Link>
-            <p>
-              Monday - Saturday
-              <br />
-              10:00 AM - 6:00 PM IST
-            </p>
-            <Link href="/help/contact">Send us a note</Link>
-            <p>Made with love in India.</p>
           </div>
         </div>
         <div className="container footer-bottom">

@@ -23,7 +23,7 @@ import {
 import { navigation, type NavItem } from "@/lib/storefront";
 import { products, money, imagePath } from "@/lib/catalog";
 import { useShop } from "@/store/shop";
-import { Modal } from "@/components/ui/modal";
+import { Modal, type CloseModal } from "@/components/ui/modal";
 import { Bag } from "@/components/cart/bag";
 import { Logo, WishlistButton, CartButton } from "./primitives";
 import { useAutoplay } from "./use-autoplay";
@@ -163,7 +163,7 @@ export function MegaMenu({
     </div>
   );
 }
-export function Search({ onClose }: { onClose: () => void }) {
+export function Search({ onClose }: { onClose: CloseModal }) {
   const [query, setQuery] = useState("");
   const router = useRouter();
   const results = products
@@ -178,8 +178,7 @@ export function Search({ onClose }: { onClose: () => void }) {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          router.push("/search?q=" + encodeURIComponent(query));
-          onClose();
+          onClose(() => router.push("/search?q=" + encodeURIComponent(query)));
         }}
       >
         <label htmlFor="sf-search-input" className="sr-only">
@@ -190,7 +189,6 @@ export function Search({ onClose }: { onClose: () => void }) {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search jewellery, collections..."
-          autoFocus
         />
         <button className="sf-icon" aria-label="View search results">
           <SearchIcon />
@@ -205,7 +203,6 @@ export function Search({ onClose }: { onClose: () => void }) {
             key={p.id}
             className="sf-search-result"
             href={"/product/" + p.id}
-            onClick={onClose}
           >
             <Image
               src={imagePath(p.image)}
@@ -239,6 +236,14 @@ export function Navbar() {
     setOverlay(null);
     closeCart();
   };
+  useEffect(() => {
+    const dismissOnHistory = () => {
+      setOverlay(null);
+      useShop.getState().closeCart();
+    };
+    window.addEventListener("popstate", dismissOnHistory);
+    return () => window.removeEventListener("popstate", dismissOnHistory);
+  }, []);
   useEffect(() => {
     useShop.persist.rehydrate();
     const nav = navRef.current;
@@ -298,16 +303,26 @@ export function Navbar() {
         }}
       >
         <div className="sf-nav-inner">
-          <button
-            className="sf-icon sf-hamburger"
-            aria-label="Open navigation menu"
-            onClick={() => {
-              closeCart();
-              setOverlay("menu");
-            }}
-          >
-            <Menu />
-          </button>
+          <div className="sf-mobile-actions">
+            <button
+              className="sf-icon sf-hamburger"
+              aria-label="Open navigation menu"
+              onClick={() => {
+                closeCart();
+                setOverlay("menu");
+              }}
+            >
+              <Menu />
+            </button>
+            <Link
+              className="sf-icon"
+              href="/login"
+              aria-label="Login or sign up"
+              title="Login or sign up"
+            >
+              <UserRound />
+            </Link>
+          </div>
           <Logo />
           <nav className="sf-desktop-nav" aria-label="Main navigation">
             {navigation.map((item) =>
@@ -362,8 +377,9 @@ export function Navbar() {
             <WishlistButton />
             <Link
               className="sf-icon sf-desktop-action"
-              href="/account"
+              href="/login"
               aria-label="Account"
+              title="Login or sign up"
             >
               <UserRound />
             </Link>
@@ -382,6 +398,7 @@ export function Navbar() {
       </header>
       {hasOverlay && (
         <Modal
+          key={overlay || "bag"}
           title={
             overlay === "search"
               ? "Find your next favourite"
@@ -391,63 +408,61 @@ export function Navbar() {
           }
           onClose={close}
           wide={overlay === "search"}
+          side={overlay === "menu" ? "left" : "right"}
         >
-          {overlay === "search" ? (
-            <Search onClose={close} />
-          ) : isBagVisible ? (
-            <Bag onNavigate={close} />
-          ) : (
-            <nav className="sf-mobile-nav" aria-label="Mobile navigation">
-              <button
-                className="sf-mobile-search"
-                onClick={() => {
-                  closeCart();
-                  setOverlay("search");
-                }}
-              >
-                <SearchIcon size={18} />
-                Search jewellery
-              </button>
-              {navigation.map((item) =>
-                item.columns ? (
-                  <details key={item.label}>
-                    <summary>
+          {(dismiss) =>
+            overlay === "search" ? (
+              <Search onClose={dismiss} />
+            ) : isBagVisible ? (
+              <Bag />
+            ) : (
+              <nav className="sf-mobile-nav" aria-label="Mobile navigation">
+                <button
+                  className="sf-mobile-search"
+                  onClick={() => {
+                    dismiss(() => setOverlay("search"));
+                  }}
+                >
+                  <SearchIcon size={18} />
+                  Search jewellery
+                </button>
+                {navigation.map((item) =>
+                  item.columns ? (
+                    <details key={item.label}>
+                      <summary>
+                        {item.label}
+                        <ChevronDown size={16} />
+                      </summary>
+                      <Link href={item.href}>
+                        View all {item.label.toLowerCase()}
+                      </Link>
+                      {item.columns.map((col) => (
+                        <div key={col.title}>
+                          <h3 className="sf-menu-heading">
+                            <MenuIcon label={col.title} />
+                            {col.title}
+                          </h3>
+                          {col.links.map((link) => (
+                            <Link key={link.href} href={link.href}>
+                              <MenuIcon label={link.label} />
+                              <span>{link.label}</span>
+                            </Link>
+                          ))}
+                        </div>
+                      ))}
+                    </details>
+                  ) : (
+                    <Link href={item.href} key={item.label}>
                       {item.label}
-                      <ChevronDown size={16} />
-                    </summary>
-                    <Link href={item.href} onClick={close}>
-                      View all {item.label.toLowerCase()}
                     </Link>
-                    {item.columns.map((col) => (
-                      <div key={col.title}>
-                        <h3 className="sf-menu-heading">
-                          <MenuIcon label={col.title} />
-                          {col.title}
-                        </h3>
-                        {col.links.map((link) => (
-                          <Link
-                            key={link.href}
-                            href={link.href}
-                            onClick={close}
-                          >
-                            <MenuIcon label={link.label} />
-                            <span>{link.label}</span>
-                          </Link>
-                        ))}
-                      </div>
-                    ))}
-                  </details>
-                ) : (
-                  <Link href={item.href} key={item.label} onClick={close}>
-                    {item.label}
-                  </Link>
-                ),
-              )}
-              <Link href="/account" onClick={close}>
-                My account
-              </Link>
-            </nav>
-          )}
+                  ),
+                )}
+                <Link href="/account">My account</Link>
+                <Link href="/signup">Create an account</Link>
+                <Link href="/login">Log in with email</Link>
+              </nav>
+            )
+          }
         </Modal>
       )}
     </>

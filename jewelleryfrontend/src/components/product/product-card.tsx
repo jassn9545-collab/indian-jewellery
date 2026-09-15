@@ -91,42 +91,43 @@ export function ProductCard({ product }: { product: Product }) {
       </div>
       {quick && (
         <Modal title="A closer look" onClose={() => setQuick(false)} wide>
-          <div className="quick-product">
-            <div className="quick-image">
-              <Image
-                src={imagePath(product.image)}
-                alt={product.name}
-                fill
-                sizes="(max-width:767px) 80vw, 400px"
-              />
+          {(close) => (
+            <div className="quick-product">
+              <div className="quick-image">
+                <Image
+                  src={imagePath(product.image)}
+                  alt={product.name}
+                  fill
+                  sizes="(max-width:767px) 80vw, 400px"
+                />
+              </div>
+              <div>
+                <span className="eyebrow">{product.category}</span>
+                <h2>{product.name}</h2>
+                <Price product={product} />
+                <p>{product.description}</p>
+                <button
+                  className="button"
+                  onClick={() => close(addToBag)}
+                  disabled={!product.available || atLimit}
+                >
+                  {added
+                    ? "Added to bag"
+                    : atLimit
+                      ? "Maximum added"
+                      : product.available
+                        ? "Add to bag"
+                        : "Out of stock"}
+                </button>
+                <Link
+                  className="text-link"
+                  href={"/products/" + product.id}
+                >
+                  View full details
+                </Link>
+              </div>
             </div>
-            <div>
-              <span className="eyebrow">{product.category}</span>
-              <h2>{product.name}</h2>
-              <Price product={product} />
-              <p>{product.description}</p>
-              <button
-                className="button"
-                onClick={addToBag}
-                disabled={!product.available || atLimit}
-              >
-                {added
-                  ? "Added to bag"
-                  : atLimit
-                    ? "Maximum added"
-                    : product.available
-                      ? "Add to bag"
-                      : "Out of stock"}
-              </button>
-              <Link
-                className="text-link"
-                href={"/products/" + product.id}
-                onClick={() => setQuick(false)}
-              >
-                View full details
-              </Link>
-            </div>
-          </div>
+          )}
         </Modal>
       )}
     </article>

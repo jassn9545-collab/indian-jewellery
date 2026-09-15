@@ -9,6 +9,10 @@ import { Modal } from "@/components/ui/modal";
 import { ShieldCheck, CreditCard } from "lucide-react";
 import { useShop } from "@/store/shop";
 import { products, money } from "@/lib/catalog";
+import {
+  RazorpayInformation,
+  RazorpayPreview,
+} from "@/components/checkout/razorpay-details";
 const schema = z.object({
   name: z.string().min(2, "Enter your full name."),
   email: z.email("Enter a valid email."),
@@ -29,6 +33,7 @@ function Checkout() {
   const {
     register,
     handleSubmit,
+    getValues,
     formState: { errors },
   } = useForm<Form>({ resolver: zodResolver(schema) });
   const items = bag.flatMap((i) => {
@@ -64,32 +69,22 @@ function Checkout() {
             <Modal
               title="Razorpay payment preview"
               onClose={() => setPaymentOpen(false)}
+              footer={(close) => (
+                <button
+                  type="button"
+                  className="button full"
+                  onClick={() => close()}
+                >
+                  Back to checkout
+                </button>
+              )}
             >
-              <p className="notice">
-                This is a store preview, not a live Razorpay checkout. No
-                payment will be charged.
-              </p>
-              <dl className="summary">
-                <div>
-                  <dt>Payment provider</dt>
-                  <dd>Razorpay</dd>
-                </div>
-                <div className="total">
-                  <dt>Order total</dt>
-                  <dd>{money(subtotal - discount + shipping)}</dd>
-                </div>
-              </dl>
-              <p className="fine-print">
-                Online payments will be available when the store launches. No
-                card details, UPI PIN or bank credentials are needed here.
-              </p>
-              <button
-                type="button"
-                className="button full"
-                onClick={() => setPaymentOpen(false)}
-              >
-                Back to checkout
-              </button>
+              <RazorpayPreview
+                subtotal={subtotal}
+                discount={discount}
+                shipping={shipping}
+                email={getValues("email")}
+              />
             </Modal>
           )}
           <div className="checkout-layout">
@@ -150,10 +145,11 @@ function Checkout() {
                   <span>
                     <strong>Razorpay</strong>
                     <span className="checkout-payment-caption">
-                      Online payment ? Frontend preview
+                      UPI, cards, netbanking and wallets
                     </span>
                   </span>
                 </label>
+                <RazorpayInformation />
                 <p id="razorpay-preview-note" className="fine-print">
                   Preview the payment step after entering your delivery details.
                   No payment information is collected.

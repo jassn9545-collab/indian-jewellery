@@ -2,6 +2,8 @@
 @import "./tokens.css";
 @import "./home.css";
 @import "./shop.css";
+
+/* Global Styles */
 * {
   box-sizing: border-box;
   letter-spacing: 0;
@@ -434,7 +436,42 @@ a {
   font-weight: 600;
   margin-bottom: 20px;
 }
-.footer-grid > div > a:not(.wordmark) {
+.footer-heading-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0;
+  margin-bottom: 20px;
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: default;
+  pointer-events: none;
+}
+.footer-heading-btn h3 {
+  margin-bottom: 0;
+}
+.footer-chevron {
+  display: none;
+  transition: transform 0.25s ease;
+  color: var(--color-footer-muted);
+}
+.footer-chevron.open {
+  transform: rotate(180deg);
+}
+.footer-column-content {
+  display: flex;
+  flex-direction: column;
+}
+.footer-column-content p {
+  margin: 12px 0;
+}
+.footer-grid a:not(.wordmark),
+.footer-grid > div > a:not(.wordmark),
+.footer-column-content a:not(.wordmark) {
   display: flex;
   align-items: center;
   gap: 4px;
@@ -445,25 +482,18 @@ a {
 }
 .social-links {
   display: flex;
-  gap: 12px;
+  gap: 16px;
   align-items: center;
 }
 .social-links a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  border: 1px solid var(--color-white-border);
-  color: var(--color-footer-text);
-  background: rgba(255, 255, 255, 0.05);
-  transition: all 0.2s ease;
+  color: var(--color-footer-muted);
+  transition: color 0.2s ease, transform 0.2s ease;
 }
 .social-links a:hover {
-  background: var(--color-gold);
-  color: var(--color-footer);
-  border-color: var(--color-gold);
+  color: var(--color-gold);
   transform: translateY(-2px);
 }
 .footer-bottom {

@@ -23,6 +23,14 @@ export default function Page() {
         Account preview. Sign-in, saved addresses and order history will be
         available at launch.
       </div>
+      <div className="account-access-links">
+        <Link className="button" href="/signup">
+          Create an account
+        </Link>
+        <Link className="button secondary" href="/login">
+          Log in with email
+        </Link>
+      </div>
       <div className="account-tabs" role="group" aria-label="Account sections">
         {tabs.map((t) => (
           <button

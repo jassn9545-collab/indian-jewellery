@@ -535,9 +535,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 24px;
+  gap: 16px;
   min-height: 72px;
-  padding: 8px 24px;
+  padding: 8px 20px;
 }
 .sf-local-brand li + li:before {
   content: "";
@@ -549,14 +549,15 @@ body {
   background: var(--color-border);
 }
 .sf-local-brand svg {
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
   stroke-width: 1.2;
 }
 .sf-local-brand span {
-  font-size: 15px;
-  line-height: 1.5;
-  text-align: center;
+  font-size: 14px;
+  line-height: 1.35;
+  text-align: left;
 }
 .sf-featured {
   max-width: 1344px;
@@ -666,13 +667,20 @@ body {
   line-height: 16px;
 }
 .sf-product-name {
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 22px;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--color-primary);
+  line-height: 1.3;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  transition: color 180ms ease;
+}
+.sf-product-name:hover {
+  color: var(--color-gold);
 }
 .sf-product-price {
   display: flex;
@@ -897,26 +905,41 @@ body {
     padding: 16px 12px;
   }
   .sf-local-brand {
-    padding: 16px;
+    padding: 16px 12px;
   }
   .sf-local-brand ul {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    row-gap: 16px;
+    gap: 12px;
   }
   .sf-local-brand li {
-    gap: 12px;
-    padding: 8px;
-    min-height: 64px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    padding: 10px 12px;
+    min-height: 56px;
+    background: #ffffff;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
   }
+  .sf-local-brand li:before,
+  .sf-local-brand li + li:before,
   .sf-local-brand li:nth-child(3):before {
     display: none;
   }
   .sf-local-brand svg {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    color: var(--color-primary);
   }
   .sf-local-brand span {
     font-size: 12px;
+    line-height: 1.3;
+    font-weight: 500;
+    text-align: left;
+    white-space: normal;
   }
   .sf-featured {
     padding: 32px 16px 40px;
@@ -929,7 +952,9 @@ body {
     grid-template-rows: 16px 44px 48px 40px;
   }
   .sf-product-name {
-    font-size: 13px;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.3;
   }
   .sf-product-price strong {
     font-size: 14px;
@@ -1252,7 +1277,9 @@ body {
     gap: 12px;
   }
   .sf-product-name {
-    font-size: 13px;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.3;
     min-height: 44px;
   }
   .sf-product-price {

@@ -1,8 +1,8 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
-import { SlidersHorizontal, SearchX } from "lucide-react";
+import { useEffect, useId, useRef, useState } from "react";
+import { SlidersHorizontal, SearchX, ChevronDown } from "lucide-react";
 import { type Product, money } from "@/lib/catalog";
-import { BestSellerCard } from "@/components/product/best-seller-card";
+import { CollectionResults } from "./collection-results";
 import { Modal } from "@/components/ui/modal";
 export function Collection({ items }: { items: Product[] }) {
   const [notice, setNotice] = useState("");
@@ -17,7 +17,12 @@ export function Collection({ items }: { items: Product[] }) {
   const [max, setMax] = useState(10000);
   const [sort, setSort] = useState("featured");
   const [open, setOpen] = useState(false);
+  const [expandedFilter, setExpandedFilter] = useState<string | null>(
+    "category",
+  );
+  const filterId = useId();
   const [stock, setStock] = useState(false);
+  const [columns, setColumns] = useState<4 | 5>(4);
   const groups: {
     title: string;
     key: "category" | "material" | "gemstone" | "occasion" | "badge";
@@ -77,25 +82,42 @@ export function Collection({ items }: { items: Product[] }) {
   const filters = (
     <div className="filters">
       {groups.map((g) => (
-        <fieldset key={g.key}>
-          <legend>{g.title}</legend>
-          {g.options.map((value) => (
-            <label key={value}>
-              <input
-                type="checkbox"
-                checked={selected[g.key]?.includes(value) || false}
-                onChange={() =>
-                  setSelected((s) => ({
-                    ...s,
-                    [g.key]: s[g.key]?.includes(value)
-                      ? s[g.key].filter((v) => v !== value)
-                      : [...(s[g.key] || []), value],
-                  }))
-                }
-              />
-              {value}
-            </label>
-          ))}
+        <fieldset key={g.key} className="filter-accordion">
+          <legend>
+            <button
+              type="button"
+              className="filter-accordion-trigger"
+              aria-expanded={expandedFilter === g.key}
+              aria-controls={`${filterId}-${g.key}`}
+              onClick={() =>
+                setExpandedFilter((current) =>
+                  current === g.key ? null : g.key,
+                )
+              }
+            >
+              <span>{g.title}</span>
+              <ChevronDown size={16} aria-hidden="true" />
+            </button>
+          </legend>
+          <div id={`${filterId}-${g.key}`} hidden={expandedFilter !== g.key}>
+            {g.options.map((value) => (
+              <label key={value}>
+                <input
+                  type="checkbox"
+                  checked={selected[g.key]?.includes(value) || false}
+                  onChange={() =>
+                    setSelected((s) => ({
+                      ...s,
+                      [g.key]: s[g.key]?.includes(value)
+                        ? s[g.key].filter((v) => v !== value)
+                        : [...(s[g.key] || []), value],
+                    }))
+                  }
+                />
+                {value}
+              </label>
+            ))}
+          </div>
         </fieldset>
       ))}
       <fieldset>
@@ -130,36 +152,65 @@ export function Collection({ items }: { items: Product[] }) {
   return (
     <>
       <div className="collection-toolbar">
-        <span aria-live="polite">{shown.length} pieces</span>
         <button className="mobile-filter-button" onClick={() => setOpen(true)}>
-          <SlidersHorizontal size={16} />
-          Filter
+          <SlidersHorizontal size={15} />
+          <span>Filter</span>
         </button>
-        <label>
-          Sort by{" "}
-          <select
-            aria-label="Sort products"
-            value={sort}
-            onChange={(e) => setSort(e.target.value)}
-          >
-            <option value="featured">Featured</option>
-            <option value="newest">Newest</option>
-            <option value="low">Price: Low to High</option>
-            <option value="high">Price: High to Low</option>
-            <option value="bestselling">Bestselling</option>
-          </select>
-        </label>
+        <div className="collection-toolbar-sort">
+          <label>
+            <span className="sort-label-text">Sort by</span>
+            <select
+              aria-label="Sort products"
+              value={sort}
+              onChange={(e) => setSort(e.target.value)}
+            >
+              <option value="featured">Featured</option>
+              <option value="newest">Newest</option>
+              <option value="low">Price: Low to High</option>
+              <option value="high">Price: High to Low</option>
+              <option value="bestselling">Bestselling</option>
+            </select>
+          </label>
+        </div>
+        <span className="collection-count" aria-live="polite">
+          {shown.length} pieces
+        </span>
+        <div
+          className="collection-view"
+          role="group"
+          aria-label="Product grid layout"
+        >
+          <span>View as</span>
+          {([4, 5] as const).map((count) => (
+            <button
+              key={count}
+              type="button"
+              aria-label={`${count} columns`}
+              aria-pressed={columns === count}
+              aria-controls="collection-products"
+              title={`${count} columns`}
+              onClick={() => setColumns(count)}
+            >
+              <span className="grid-choice-icon" aria-hidden="true">
+                {Array.from({ length: count }, (_, index) => (
+                  <span key={index} />
+                ))}
+              </span>
+            </button>
+          ))}
+        </div>
       </div>
       <div className="collection-layout">
         <aside className="desktop-filters" aria-label="Product filters">
           {!open && filters}
         </aside>
         {shown.length ? (
-          <div className="listing-grid">
-            {shown.map((p) => (
-              <BestSellerCard product={p} key={p.id} onAdded={added} />
-            ))}
-          </div>
+          <CollectionResults
+            key={shown.map((product) => product.id).join("|")}
+            items={shown}
+            columns={columns}
+            onAdded={added}
+          />
         ) : (
           <div className="empty-state">
             <SearchX size={36} />
@@ -179,11 +230,18 @@ export function Collection({ items }: { items: Product[] }) {
         {notice}
       </div>
       {open && (
-        <Modal title="Refine your collection" onClose={() => setOpen(false)}>
+        <Modal
+          title="Filters"
+          className="collection-filter-modal"
+          side="left"
+          onClose={() => setOpen(false)}
+          footer={(close) => (
+            <button className="button full" onClick={() => close()}>
+              Show {shown.length} pieces
+            </button>
+          )}
+        >
           {filters}
-          <button className="button full" onClick={() => setOpen(false)}>
-            Show {shown.length} pieces
-          </button>
         </Modal>
       )}
     </>
