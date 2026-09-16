@@ -3,6 +3,7 @@ import { useId, useState } from "react";
 import {
   CreditCard,
   Landmark,
+  Smartphone,
   QrCode,
   Wallet,
   ShieldCheck,
@@ -13,6 +14,8 @@ const methods = [
   {
     id: "upi",
     title: "UPI",
+    Icon: Smartphone,
+    summary: "Pay with a supported UPI app.",
     Icon: QrCode,
     summary: "Google Pay, PhonePe, Paytm & any UPI app.",
     detail:
@@ -22,6 +25,7 @@ const methods = [
     id: "card",
     title: "Credit / debit card",
     Icon: CreditCard,
+    summary: "Use a supported credit or debit card.",
     summary: "Visa, Mastercard, RuPay & more.",
     detail:
       "In live checkout, Razorpay collects your card details and your bank may ask you to verify the payment. No card details are collected in this preview.",
@@ -30,6 +34,7 @@ const methods = [
     id: "netbanking",
     title: "Netbanking",
     Icon: Landmark,
+    summary: "Continue with your bank.",
     summary: "All major Indian banks supported.",
     detail:
       "In live checkout, choose a supported bank and complete its authentication steps. You return to the store after the bank processes the payment.",
@@ -38,6 +43,7 @@ const methods = [
     id: "wallet",
     title: "Wallets",
     Icon: Wallet,
+    summary: "Choose an available wallet.",
     summary: "Amazon Pay, Mobikwik & more.",
     detail:
       "In live checkout, select a supported wallet and follow its approval steps. Available wallets depend on the merchant's enabled payment methods.",

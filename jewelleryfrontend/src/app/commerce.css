@@ -288,8 +288,10 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  padding: 8px 12px;
   padding: 8px 14px;
   border: 1px solid var(--color-border);
+  border-radius: 4px;
   border-radius: 6px;
   background: var(--color-surface);
   font-weight: 500;
