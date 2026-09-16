@@ -252,7 +252,7 @@ export function CustomersList({
         className="stat-grid"
         style={{
           gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-          marginBottom: "24px",
+          marginBottom: "16px",
         }}
       >
         <div className="stat-card">
@@ -295,7 +295,7 @@ export function CustomersList({
       </div>
 
       {/* Search and Filters Toolbar */}
-      <div className="panel" style={{ marginBottom: "20px" }}>
+      <div className="panel" style={{ marginBottom: "16px" }}>
         <div
           className="filters"
           style={{ flexWrap: "wrap", gap: "12px", padding: "16px 20px" }}

@@ -157,7 +157,7 @@ export function ShippingList({ orders, loading }: ShippingListProps) {
         className="stat-grid"
         style={{
           gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-          marginBottom: "24px",
+          marginBottom: "16px",
         }}
       >
         <div className="stat-card">
@@ -207,7 +207,7 @@ export function ShippingList({ orders, loading }: ShippingListProps) {
       </div>
 
       {/* Filters Toolbar */}
-      <div className="panel" style={{ marginBottom: "20px" }}>
+      <div className="panel" style={{ marginBottom: "16px" }}>
         <div
           className="filters"
           style={{ flexWrap: "wrap", gap: "12px", padding: "16px 20px" }}

@@ -42,18 +42,18 @@ import {
 } from "@/lib/admin-data";
 import {
   type CommerceData,
-  type Order,
   type OrderUpdate,
   type ReturnStatus,
 } from "@/lib/commerce";
 import {
   authService,
-  repository,
   commerceRepository,
   type Session,
 } from "@/lib/storage";
 import { ConfirmModal, ErrorState, LoadingState, Modal } from "./ui";
 import { Dashboard } from "./dashboard";
+import { Inventory, Analytics, StoreSettings } from './operations';
+import type { Settings, RemoteWorkspace } from '@/lib/storage';
 import { EntryList, EntryPreview } from "./entry-list";
 import { EntryForm } from "./entry-form";
 import { OrdersList } from "./orders/orders-list";
@@ -94,6 +94,16 @@ export function AdminApp() {
   const [ready, setReady] = useState(false);
   const [db, setDb] = useState<Database | null>(null);
   const [commerce, setCommerce] = useState<CommerceData | null>(null);
+  const [settings, setSettings] = useState<Settings>({ storeName: 'Indian Jewellery', contactEmail: '', lowStockThreshold: 10 });
+  function savedWorkspace(ws: RemoteWorkspace) {
+    setDb(ws.catalog);
+    setCommerce(ws.commerce);
+    if (ws.settings) setSettings(ws.settings);
+    setToast('Changes saved successfully');
+    const channel = new BroadcastChannel('ij-admin-catalog');
+    channel.postMessage('updated');
+    channel.close();
+  }
   const [error, setError] = useState("");
   const [toast, setToast] = useState("");
   const [logout, setLogout] = useState(false);
@@ -107,17 +117,13 @@ export function AdminApp() {
       : parts[1]
         ? "details"
         : "all";
-  const [ordersExpanded, setOrdersExpanded] = useState(isOrders);
-  useEffect(() => {
-    if (isOrders) {
-      setOrdersExpanded(true);
-    }
-  }, [isOrders]);
+  const [ordersOpen, setOrdersExpanded] = useState(isOrders);
+  const ordersExpanded = isOrders || ordersOpen;
   useEffect(() => {
     let alive = true;
     Promise.resolve()
       .then(async () => {
-        const current = authService.session();
+        const current = await authService.session();
         if (!alive) return;
         setSession(current);
         setReady(true);
@@ -130,13 +136,11 @@ export function AdminApp() {
           return;
         }
         if (current) {
-          const [data, ws] = await Promise.all([
-            repository.load(),
-            commerceRepository.load(),
-          ]);
+          const ws = await commerceRepository.load();
           if (alive) {
-            setDb(data);
+            setDb(ws.catalog);
             setCommerce(ws.commerce);
+            if (ws.settings) setSettings(ws.settings);
           }
         }
       })
@@ -158,19 +162,20 @@ export function AdminApp() {
   useEffect(() => {
     const channel = new BroadcastChannel("ij-admin-catalog");
     channel.onmessage = () =>
-      Promise.all([repository.load(), commerceRepository.load()])
-        .then(([data, ws]) => {
-          setDb(data);
+      commerceRepository.load()
+        .then((ws) => {
+          setDb(ws.catalog);
           setCommerce(ws.commerce);
+          if (ws.settings) setSettings(ws.settings);
         })
         .catch((e) => setError(e.message));
     return () => channel.close();
   }, []);
   async function save(moduleKey: Module, rows: Entry[], message: string) {
     if (!db) return;
-    const next = { ...db, [moduleKey]: rows };
-    await repository.save(next);
-    setDb(next);
+    const ws = await commerceRepository.saveCatalog(moduleKey, rows, db[moduleKey]);
+    setDb(ws.catalog);
+    setCommerce(ws.commerce);
     setToast(message);
     const channel = new BroadcastChannel("ij-admin-catalog");
     channel.postMessage("updated");
@@ -515,7 +520,7 @@ export function AdminApp() {
   }
   let content;
   if (section === "dashboard" && parts.length <= 1)
-    content = <Dashboard db={db} name={session.name} />;
+    content = <Dashboard db={db} name={session.name} threshold={settings.lowStockThreshold} />;
   else if (moduleKey) {
     const action = parts[1];
     const id = parts[2];
@@ -625,7 +630,7 @@ export function AdminApp() {
             />
             <h3>Order not found</h3>
             <p className="muted" style={{ margin: "8px auto 20px" }}>
-              Order "{parts[1]}" could not be located in the store catalog.
+              Order &quot;{parts[1]}&quot; could not be located in the store catalog.
             </p>
             <Link href="/admin/orders" className="button">
               Back to All Orders
@@ -680,7 +685,7 @@ export function AdminApp() {
             />
             <h3>Customer not found</h3>
             <p className="muted" style={{ margin: "8px auto 20px" }}>
-              Customer "{parts[1]}" could not be located in the store records.
+              Customer &quot;{parts[1]}&quot; could not be located in the store records.
             </p>
             <Link href="/admin/customers" className="button">
               Back to Customers
@@ -722,7 +727,7 @@ export function AdminApp() {
             />
             <h3>Transaction not found</h3>
             <p className="muted" style={{ margin: "8px auto 20px" }}>
-              Payment transaction "{parts[1]}" could not be located in the
+              Payment transaction &quot;{parts[1]}&quot; could not be located in the
               records.
             </p>
             <Link href="/admin/payments" className="button">
@@ -765,7 +770,7 @@ export function AdminApp() {
             />
             <h3>Shipment not found</h3>
             <p className="muted" style={{ margin: "8px auto 20px" }}>
-              Shipment for "{parts[1]}" could not be located in the tracking
+              Shipment for &quot;{parts[1]}&quot; could not be located in the tracking
               records.
             </p>
             <Link href="/admin/shipping" className="button">
@@ -775,24 +780,14 @@ export function AdminApp() {
         );
       }
     }
-  } else if (["inventory", "analytics", "settings"].includes(section)) {
-    const title = section.charAt(0).toUpperCase() + section.slice(1);
-    content = (
-      <div className="list-panel">
-        <div className="page-heading">
-          <h1>{title}</h1>
-        </div>
-        <div
-          className="panel"
-          style={{ padding: "48px 24px", textAlign: "center" }}
-        >
-          <p className="muted">
-            {title} module preview. Detailed records and configuration will be
-            connected in the upcoming release.
-          </p>
-        </div>
-      </div>
-    );
+  } else if (section === 'inventory' && commerce) {
+    content = <Inventory db={db} commerce={commerce} threshold={settings.lowStockThreshold} onSaved={savedWorkspace} />;
+  } else if (section === 'analytics' && commerce) {
+    content = <Analytics db={db} commerce={commerce} />;
+  } else if (section === 'settings') {
+    content = <StoreSettings settings={settings} onSaved={savedWorkspace} />;
+  } else if (["inventory", "analytics"].includes(section)) {
+    content = <LoadingState />;
   }
   if (!content)
     content = (
@@ -892,7 +887,7 @@ export function AdminApp() {
           {content}
           <footer className="workspace-footer">
             <span>Indian Jewellery · Made with care</span>
-            <span>Local preview workspace</span>
+            <span>{settings.storeName}</span>
           </footer>
         </main>
       </div>
@@ -902,8 +897,8 @@ export function AdminApp() {
           message="Are you sure you want to logout?"
           confirmLabel="Confirm Logout"
           onClose={() => setLogout(false)}
-          onConfirm={() => {
-            authService.logout();
+          onConfirm={async () => {
+            await authService.logout();
             setSession(null);
             setDb(null);
             setLogout(false);
@@ -1003,7 +998,7 @@ function AuthPage({
           <h2>{signup ? "Create your account" : "Welcome back"}</h2>
           <p>
             {signup
-              ? "Set up your local admin workspace."
+              ? "Create the first administrator account for your store."
               : "Sign in to curate your collection."}
           </p>
           <form onSubmit={submit}>
@@ -1092,8 +1087,7 @@ function AuthPage({
             </Link>
           </p>
           <div className="demo-note">
-            Frontend preview · Accounts and catalog changes are saved in this
-            browser. Live store publishing is not connected.
+            Sign in with your store administrator account.
           </div>
         </div>
       </main>

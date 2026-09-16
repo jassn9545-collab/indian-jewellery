@@ -663,7 +663,7 @@ test("customers, payments, and shipping: listing, filtering, details views, and 
   await page.locator("tbody tr").getByRole("link", { name: "View" }).click();
   await expect(page).toHaveURL(/\/admin\/payments\/TXN-DEMO-1001$/);
 
-  // Check 4 Cards / Panels on Payment Details
+  // Check Cards / Panels on Payment Details
   await expect(
     page.getByRole("heading", { name: "Payment Information" }),
   ).toBeVisible();
@@ -672,9 +672,6 @@ test("customers, payments, and shipping: listing, filtering, details views, and 
   ).toBeVisible();
   await expect(
     page.getByRole("heading", { name: /Order Information/ }),
-  ).toBeVisible();
-  await expect(
-    page.getByText(/Payment Gateway Security Assurance/),
   ).toBeVisible();
 
   // Verify safe display (masked/secure)

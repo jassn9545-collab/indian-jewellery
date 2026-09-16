@@ -32,7 +32,7 @@ export function PaymentDetails({ payment }: PaymentDetailsProps) {
   return (
     <div className="payment-details-layout">
       {/* Top Header */}
-      <div className="page-heading" style={{ marginBottom: "20px" }}>
+      <div className="page-heading" style={{ marginBottom: "16px" }}>
         <div
           style={{
             display: "flex",
@@ -76,7 +76,7 @@ export function PaymentDetails({ payment }: PaymentDetailsProps) {
         className="panel"
         style={{
           padding: "12px 16px",
-          marginBottom: "20px",
+          marginBottom: "16px",
           display: "flex",
           alignItems: "center",
           gap: "10px",
@@ -98,12 +98,12 @@ export function PaymentDetails({ payment }: PaymentDetailsProps) {
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(360px, 1fr))",
-          gap: "20px",
-          marginBottom: "24px",
+          gap: "16px",
+          marginBottom: "16px",
         }}
       >
         {/* 1. Payment Information */}
-        <div className="panel" style={{ padding: "24px" }}>
+        <div className="panel" style={{ padding: "16px" }}>
           <div
             style={{
               display: "flex",
@@ -224,7 +224,7 @@ export function PaymentDetails({ payment }: PaymentDetailsProps) {
         </div>
 
         {/* 2. Customer Information */}
-        <div className="panel" style={{ padding: "24px" }}>
+        <div className="panel" style={{ padding: "16px" }}>
           <div
             style={{
               display: "flex",
@@ -299,7 +299,7 @@ export function PaymentDetails({ payment }: PaymentDetailsProps) {
         {/* 3. Order Information */}
         <div
           className="panel"
-          style={{ padding: "24px", gridColumn: "1 / -1" }}
+          style={{ padding: "16px", gridColumn: "1 / -1" }}
         >
           <div
             style={{
@@ -442,7 +442,7 @@ export function PaymentDetails({ payment }: PaymentDetailsProps) {
         {payment.refund ? (
           <div
             className="panel"
-            style={{ padding: "24px", gridColumn: "1 / -1" }}
+            style={{ padding: "16px", gridColumn: "1 / -1" }}
           >
             <div
               style={{

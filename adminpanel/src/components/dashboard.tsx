@@ -13,7 +13,7 @@ import {
 import { Database, modules, money } from "@/lib/admin-data";
 import { Media, StatusToggle } from "./ui";
 
-export function Dashboard({ db, name }: { db: Database; name: string }) {
+export function Dashboard({ db, name, threshold = 10 }: { db: Database; name: string; threshold?: number }) {
   const stats = [
     {
       label: "Total products",
@@ -61,7 +61,7 @@ export function Dashboard({ db, name }: { db: Database; name: string }) {
   const max = Math.max(1, ...categories.map((c) => c.count));
   const active = db.products.filter((p) => p.status === "Active").length;
   const low = db.products.filter(
-    (p) => (p.stock || 0) > 0 && (p.stock || 0) <= 10,
+    (p) => (p.stock || 0) > 0 && (p.stock || 0) <= threshold,
   ).length;
   const out = db.products.filter((p) => !p.stock).length;
   const stocked = db.products.length - low - out;
@@ -169,7 +169,7 @@ export function Dashboard({ db, name }: { db: Database; name: string }) {
           <div className="inventory-legend">
             {[
               ["In stock", stocked, "primary"],
-              ["Low stock (1–10)", low, "gold"],
+              [`Low stock (≤${threshold})`, low, "gold"],
               ["Out of stock", out, "neutral"],
             ].map(([label, count, color]) => (
               <div key={label}>

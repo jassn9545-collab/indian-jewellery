@@ -180,3 +180,30 @@ server cart, order placement/history, payment provider, delivery/returns, newsle
 subscription and verified reviews need separate backend scope and implementation.
 Replace sample product claims, reviews, policy copy, social destinations and contact details
 with approved business content before a public commerce launch.
+
+15. ADMIN MYSQL INTEGRATION (2026-09-16)
+Explicitly authorized scope: adminpanel/ Next.js + TypeScript and backend/ Node.js + Express + MySQL.
+Storefront implementation remains unchanged. Follow the canonical design system.
+All catalog/sidebar sections use authenticated Express APIs rather than browser IndexedDB.
+Catalog fields, status, ordering, images and videos persist in MySQL. Start with empty records;
+do not silently turn sample orders/customers into live records or migrate browser data.
+Dashboard, orders, returns, customers, payments and shipping read persisted workspace records.
+Inventory: searchable, filtered, paginated product/SKU/category details; current, sold and
+available stock; stock value at selling price; validated stock adjustment with conflict checks.
+Analytics shows all-time saved-order/customer totals. Settings saves store name, contact email
+and low-stock threshold. Empty order data stays empty; checkout/payment ingestion is out of scope.
+Use HTTP-only admin sessions, server-side administrator checks and no public admin signup.
+Persist workspace updates atomically with a revision check. Media is stored as MySQL blobs.
+MySQL schema and migrations live in backend/prisma/mysql; original PostgreSQL history is preserved.
+Admin layouts use compact 4px-scale spacing, 32px desktop/28px mobile headings and existing fonts.
+Do not shrink controls or remove fields to reduce scrolling. Inventory uses eight rows per page.
+Local setup requires a MySQL DATABASE_URL, ADMIN_SESSION_SECRET and a provisioned administrator.
+See backend/ADMIN-SETUP.md. Browser API-fixture tests do not prove live MySQL connectivity.
+
+16. INITIAL ADMIN SIGNUP (2026-09-16)
+Login links to /admin/signup. Signup posts name, email and password to Express /admin-api/signup.
+Initial signup creates the first administrator and an HTTP-only session, then opens the dashboard.
+A transaction and durable setup marker prevent repeated bootstrap registration; existing admin
+accounts must sign in. Production initial signup requires ADMIN_ALLOW_INITIAL_SIGNUP=true during setup.
+MySQL configuration, migrations and ADMIN_SESSION_SECRET remain prerequisites.
+This supersedes the CLI-only initial-account requirement; CLI provisioning remains available.

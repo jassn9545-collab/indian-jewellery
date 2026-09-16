@@ -3,6 +3,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import helmet from 'helmet';
 import cors from 'cors';
+import { adminRouter } from './admin/routes';
 
 import { connectToDatabase, disconnectFromDatabase } from './database/prisma';
 import { configureRoutes } from './routes';
@@ -11,6 +12,9 @@ import { authMiddleWare } from './middleware/authMiddleware';
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+app.use(helmet());
+app.use('/admin-api', adminRouter);
 
 // Middleware to parse JSON bodies
 app.use(express.json());
@@ -28,7 +32,7 @@ app.use(cors({
   optionsSuccessStatus: 204
 }));
 
-// Connect to PostgreSQL — fail fast if the database is unreachable.
+// Connect to MySQL — fail fast if the database is unreachable.
 connectToDatabase().catch((error) => {
   console.error(error);
   process.exit(1);
@@ -46,7 +50,7 @@ const server = app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
 });
 
-// Close the Postgres pool on shutdown so connections are not left dangling.
+// Close the database pool on shutdown so connections are not left dangling.
 const shutdown = async (signal: string) => {
   console.log(`${signal} received, shutting down...`);
   server.close(async () => {

@@ -158,7 +158,7 @@ export function ReturnsList({
       </div>
 
       {/* Filters Toolbar */}
-      <div className="panel" style={{ marginBottom: "20px" }}>
+      <div className="panel" style={{ marginBottom: "16px" }}>
         <div
           className="filters"
           style={{ flexWrap: "wrap", gap: "12px", padding: "16px 20px" }}

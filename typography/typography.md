@@ -52,3 +52,13 @@ that clip longer content. Use uppercase and tracking for short labels, not body 
 
 CSS entry points: `src/app/globals.css`, `src/app/storefront.css`, and the scoped
 `src/components/storefront/new-launch.module.css`. No duplicate font setup is needed.
+
+## Admin compact layout (2026-09-16)
+
+The admin application retains its existing local Inter and Cormorant Garamond font files.
+Use Cormorant Garamond 600 for page headings: 32px desktop and 28px mobile.
+Use Inter for forms, stock numbers, table cells, navigation and actions. Summary values are
+28px desktop and 24px mobile; supporting summary text is at least 11px.
+Reduce unused spacing with 12px/16px gaps and 16px panel padding, rather than reducing
+body readability or clipping content. Keep responsive reflow, visible focus and mobile targets.
+This exception applies to adminpanel only; storefront typography is unchanged.

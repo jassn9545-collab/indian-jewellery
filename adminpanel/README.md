@@ -64,3 +64,7 @@ npm run test:e2e
 ```
 
 Tests use installed Microsoft Edge through Playwright on this Windows workspace. For other environments, change the browser channel in `playwright.config.ts` or install the corresponding browser. Coverage includes session redirects, login/logout, all module navigation, product CRUD, image persistence, linked-product deletion rules, category isolation, content/review forms and mobile layout.
+
+## Connected admin (2026-09-16)
+
+The current application uses the Express/MySQL backend, superseding the browser-storage preview described above. Follow [backend setup](../backend/ADMIN-SETUP.md) before signing in. No public administrator signup or automatic sample-data import is enabled. Inventory, analytics and settings are now connected screens. Use `npx playwright test tests/admin-api.spec.ts` for the API-contract browser checks; the older preview tests need migration before use with this backend.

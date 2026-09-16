@@ -20,11 +20,11 @@ if (process.env.NODE_ENV !== 'production') {
 export const connectToDatabase = async (): Promise<boolean> => {
   try {
     await prisma.$connect();
-    console.log('Connected to PostgreSQL');
+    console.log('Connected to MySQL');
     return true;
   } catch (error) {
-    console.error('Error connecting to PostgreSQL:', error);
-    throw new Error('Error connecting to PostgreSQL');
+    console.error('Error connecting to MySQL:', error);
+    throw new Error('Error connecting to MySQL');
   }
 };
 

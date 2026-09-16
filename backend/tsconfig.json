@@ -2,17 +2,12 @@
   "compilerOptions": {
     "esModuleInterop": true,
     "module": "commonjs",
-    "target": "es6",
+    "target": "es2022",
     "moduleResolution": "node",
     "sourceMap": true,
-    "outDir": "dist"
+    "outDir": "dist",
+    "resolveJsonModule": true
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.handlebars",
-    "src/*.json"
-  ],
-  "lib": [
-    "es2015"
-  ]
+  "include": ["src/**/*.ts", "src/**/*.handlebars", "src/*.json"],
+  "lib": ["es2015"]
 }

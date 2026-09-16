@@ -41,7 +41,7 @@ export function ShippingDetails({ shipment }: ShippingDetailsProps) {
   return (
     <div className="shipping-details-layout">
       {/* Top Header */}
-      <div className="page-heading" style={{ marginBottom: "20px" }}>
+      <div className="page-heading" style={{ marginBottom: "16px" }}>
         <div
           style={{
             display: "flex",
@@ -84,12 +84,12 @@ export function ShippingDetails({ shipment }: ShippingDetailsProps) {
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(360px, 1fr))",
-          gap: "20px",
-          marginBottom: "24px",
+          gap: "16px",
+          marginBottom: "16px",
         }}
       >
         {/* 1. Shipping Information */}
-        <div className="panel" style={{ padding: "24px" }}>
+        <div className="panel" style={{ padding: "16px" }}>
           <div
             style={{
               display: "flex",
@@ -177,7 +177,7 @@ export function ShippingDetails({ shipment }: ShippingDetailsProps) {
         </div>
 
         {/* 2. Delivery Address */}
-        <div className="panel" style={{ padding: "24px" }}>
+        <div className="panel" style={{ padding: "16px" }}>
           <div
             style={{
               display: "flex",
@@ -256,7 +256,7 @@ export function ShippingDetails({ shipment }: ShippingDetailsProps) {
         {/* 3. Order Information & Products Summary */}
         <div
           className="panel"
-          style={{ padding: "24px", gridColumn: "1 / -1" }}
+          style={{ padding: "16px", gridColumn: "1 / -1" }}
         >
           <div
             style={{
@@ -341,7 +341,7 @@ export function ShippingDetails({ shipment }: ShippingDetailsProps) {
         {/* 4. Order / Shipping Timeline */}
         <div
           className="panel"
-          style={{ padding: "24px", gridColumn: "1 / -1" }}
+          style={{ padding: "16px", gridColumn: "1 / -1" }}
         >
           <div
             style={{
@@ -364,7 +364,7 @@ export function ShippingDetails({ shipment }: ShippingDetailsProps) {
               paddingLeft: "28px",
               display: "flex",
               flexDirection: "column",
-              gap: "20px",
+              gap: "16px",
             }}
           >
             {/* Vertical timeline connector bar */}

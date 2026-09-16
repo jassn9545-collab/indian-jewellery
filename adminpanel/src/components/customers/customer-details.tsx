@@ -84,7 +84,7 @@ export function CustomerDetails({
   return (
     <div className="customer-details-layout">
       {/* Top Header */}
-      <div className="page-heading" style={{ marginBottom: "20px" }}>
+      <div className="page-heading" style={{ marginBottom: "16px" }}>
         <div
           style={{
             display: "flex",
@@ -135,12 +135,12 @@ export function CustomerDetails({
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))",
-          gap: "20px",
-          marginBottom: "24px",
+          gap: "16px",
+          marginBottom: "16px",
         }}
       >
         {/* 1. Customer Information Card */}
-        <div className="panel" style={{ padding: "24px" }}>
+        <div className="panel" style={{ padding: "16px" }}>
           <div
             style={{
               display: "flex",
@@ -241,7 +241,7 @@ export function CustomerDetails({
         </div>
 
         {/* 2. Addresses Card */}
-        <div className="panel" style={{ padding: "24px" }}>
+        <div className="panel" style={{ padding: "16px" }}>
           <div
             style={{
               display: "flex",
@@ -335,7 +335,7 @@ export function CustomerDetails({
         </div>
 
         {/* 3. Customer Summary Card */}
-        <div className="panel" style={{ padding: "24px" }}>
+        <div className="panel" style={{ padding: "16px" }}>
           <div
             style={{
               display: "flex",
@@ -435,7 +435,7 @@ export function CustomerDetails({
       </div>
 
       {/* 4. Order History Table */}
-      <div className="panel" style={{ overflow: "hidden", padding: "24px" }}>
+      <div className="panel" style={{ overflow: "hidden", padding: "16px" }}>
         <div
           style={{
             display: "flex",

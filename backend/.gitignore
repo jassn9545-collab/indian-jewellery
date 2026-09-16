@@ -144,3 +144,5 @@ dist
 
 # Prisma generated client
 node_modules/.prisma/
+
+.local-runtime/

@@ -1,0 +1,56 @@
+// Prisma schema — MySQL
+// Docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model AdminWorkspace {
+  id String @id @db.VarChar(32)
+  data Json
+  version Int @default(0)
+  updatedAt DateTime @updatedAt
+}
+
+model AdminMedia {
+  id String @id @db.VarChar(36)
+  mime String @db.VarChar(64)
+  data Bytes @db.LongBlob
+}
+
+model User {
+  id           Int       @id @default(autoincrement())
+  name         String    @db.VarChar(150)
+  email        String    @unique @db.VarChar(255)
+  password     String    @db.VarChar(255)
+  number       String    @default("") @db.VarChar(20)
+  dob          String?   @db.VarChar(30)
+  country      String?   @db.VarChar(100)
+
+  /// 0 = in-active, 1 = active  (see USER_STATUS in src/config/constants.ts)
+  status       Int       @default(1) @db.SmallInt
+  /// 1 = admin, 2 = user  (see USER_TYPE in src/config/constants.ts)
+  type         Int       @default(2) @db.SmallInt
+
+  linkHash     Int?
+  /// 0 = not verified, 1 = verified
+  isVerified   Int       @default(0) @db.SmallInt
+  /// 0 = not subscribed, 1 = subscribed
+  isSubscribed Int       @default(0) @db.SmallInt
+
+  refreshToken String?   @db.Text
+  isDeleted    Boolean   @default(false)
+
+  createdAt    DateTime  @default(now()) @db.DateTime(3)
+  updatedAt    DateTime  @updatedAt @db.DateTime(3)
+
+  @@index([number])
+  @@index([isDeleted])
+  @@map("users")
+}
+

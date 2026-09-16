@@ -103,7 +103,7 @@ export function OrderDetails({ order, onUpdate, onToast }: OrderDetailsProps) {
   return (
     <div className="order-details-layout">
       {/* Top Header */}
-      <div className="page-heading" style={{ marginBottom: "20px" }}>
+      <div className="page-heading" style={{ marginBottom: "16px" }}>
         <div
           style={{
             display: "flex",
@@ -155,11 +155,11 @@ export function OrderDetails({ order, onUpdate, onToast }: OrderDetailsProps) {
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(360px, 1fr))",
-          gap: "20px",
+          gap: "16px",
         }}
       >
         {/* 1. Order Information */}
-        <div className="panel" style={{ padding: "24px" }}>
+        <div className="panel" style={{ padding: "16px" }}>
           <div
             style={{
               display: "flex",
@@ -226,7 +226,7 @@ export function OrderDetails({ order, onUpdate, onToast }: OrderDetailsProps) {
         </div>
 
         {/* 2. Customer Details */}
-        <div className="panel" style={{ padding: "24px" }}>
+        <div className="panel" style={{ padding: "16px" }}>
           <div
             style={{
               display: "flex",
@@ -319,7 +319,7 @@ export function OrderDetails({ order, onUpdate, onToast }: OrderDetailsProps) {
         </div>
 
         {/* 3. Payment Details */}
-        <div className="panel" style={{ padding: "24px" }}>
+        <div className="panel" style={{ padding: "16px" }}>
           <div
             style={{
               display: "flex",
@@ -389,7 +389,7 @@ export function OrderDetails({ order, onUpdate, onToast }: OrderDetailsProps) {
         </div>
 
         {/* 4. Shipping Details */}
-        <div className="panel" style={{ padding: "24px" }}>
+        <div className="panel" style={{ padding: "16px" }}>
           <div
             style={{
               display: "flex",
@@ -460,7 +460,7 @@ export function OrderDetails({ order, onUpdate, onToast }: OrderDetailsProps) {
         {/* 5. Product Details (spans 2 columns on desktop) */}
         <div
           className="panel"
-          style={{ padding: "24px", gridColumn: "1 / -1" }}
+          style={{ padding: "16px", gridColumn: "1 / -1" }}
         >
           <div
             style={{
@@ -621,7 +621,7 @@ export function OrderDetails({ order, onUpdate, onToast }: OrderDetailsProps) {
         {/* 6. Order Timeline */}
         <div
           className="panel"
-          style={{ padding: "24px", gridColumn: "1 / -1" }}
+          style={{ padding: "16px", gridColumn: "1 / -1" }}
         >
           <div
             style={{
@@ -644,7 +644,7 @@ export function OrderDetails({ order, onUpdate, onToast }: OrderDetailsProps) {
               paddingLeft: "24px",
               display: "flex",
               flexDirection: "column",
-              gap: "20px",
+              gap: "16px",
             }}
           >
             {/* Timeline vertical line */}
