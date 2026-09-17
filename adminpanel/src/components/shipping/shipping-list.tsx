@@ -141,7 +141,7 @@ export function ShippingList({ orders, loading }: ShippingListProps) {
   }
 
   return (
-    <div className="list-panel">
+    <div className="list-panel list-page">
       {/* Top Page Heading */}
       <div className="page-heading">
         <div>
@@ -154,11 +154,7 @@ export function ShippingList({ orders, loading }: ShippingListProps) {
 
       {/* Top 5 Summary Cards */}
       <div
-        className="stat-grid"
-        style={{
-          gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-          marginBottom: "16px",
-        }}
+        className="stat-grid list-summary"
       >
         <div className="stat-card">
           <div className="stat-label">
@@ -207,10 +203,9 @@ export function ShippingList({ orders, loading }: ShippingListProps) {
       </div>
 
       {/* Filters Toolbar */}
-      <div className="panel" style={{ marginBottom: "16px" }}>
+      <div className="panel list-filters">
         <div
           className="filters"
-          style={{ flexWrap: "wrap", gap: "12px", padding: "16px 20px" }}
         >
           <div className="search-input" style={{ flex: "1 1 260px" }}>
             <Search size={16} />
@@ -229,7 +224,7 @@ export function ShippingList({ orders, loading }: ShippingListProps) {
           <div
             style={{
               display: "flex",
-              gap: "10px",
+              gap: "12px",
               flexWrap: "wrap",
               flex: "2 1 400px",
             }}
@@ -292,8 +287,8 @@ export function ShippingList({ orders, loading }: ShippingListProps) {
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
-                  gap: "6px",
-                  fontSize: "12px",
+                  gap: "8px",
+                  fontSize: "var(--type-small)",
                 }}
               >
                 <FilterX size={14} />
@@ -307,8 +302,7 @@ export function ShippingList({ orders, loading }: ShippingListProps) {
       {/* Shipping Table */}
       {filteredShipments.length === 0 ? (
         <div
-          className="panel empty-panel"
-          style={{ padding: "48px 24px", textAlign: "center" }}
+          className="panel empty-panel list-results"
         >
           <Truck
             size={40}
@@ -330,8 +324,8 @@ export function ShippingList({ orders, loading }: ShippingListProps) {
           </button>
         </div>
       ) : (
-        <div className="panel" style={{ overflow: "hidden" }}>
-          <div className="table-container" style={{ overflowX: "auto" }}>
+        <div className="panel list-results">
+          <div className="table-scroll">
             <table>
               <thead>
                 <tr>
@@ -352,7 +346,7 @@ export function ShippingList({ orders, loading }: ShippingListProps) {
                   const firstItem = shipment.items[0];
                   return (
                     <tr key={shipment.orderId}>
-                      <td style={{ fontFamily: "monospace", fontWeight: 600 }}>
+                      <td style={{ fontFamily: "var(--font-body)", fontVariantNumeric: "tabular-nums", fontWeight: 600 }}>
                         <Link
                           href={`/admin/orders/${shipment.orderId}`}
                           style={{
@@ -365,7 +359,7 @@ export function ShippingList({ orders, loading }: ShippingListProps) {
                       </td>
                       <td>
                         <div>
-                          <div style={{ fontWeight: 600, fontSize: "13px" }}>
+                          <div style={{ fontWeight: 600, fontSize: "var(--type-small)" }}>
                             {shipment.customerName}
                           </div>
                           <small className="muted">
@@ -404,7 +398,7 @@ export function ShippingList({ orders, loading }: ShippingListProps) {
                             />
                           )}
                           <div>
-                            <div style={{ fontWeight: 500, fontSize: "12px" }}>
+                            <div style={{ fontWeight: 500, fontSize: "var(--type-small)" }}>
                               {firstItem?.name || "Product"}
                             </div>
                             {shipment.items.length > 1 && (
@@ -416,11 +410,11 @@ export function ShippingList({ orders, loading }: ShippingListProps) {
                         </div>
                       </td>
                       <td>
-                        <span style={{ fontSize: "12.5px" }}>
+                        <span style={{ fontSize: "var(--type-small)" }}>
                           {shipment.courier}
                         </span>
                       </td>
-                      <td style={{ fontFamily: "monospace", fontSize: "12px" }}>
+                      <td style={{ fontFamily: "var(--font-body)", fontVariantNumeric: "tabular-nums", fontSize: "var(--type-small)" }}>
                         {shipment.trackingNumber !== "—" ? (
                           <span
                             style={{
@@ -442,7 +436,7 @@ export function ShippingList({ orders, loading }: ShippingListProps) {
                       <td>
                         <span
                           style={{
-                            fontSize: "12px",
+                            fontSize: "var(--type-small)",
                             color: "var(--color-text-secondary)",
                           }}
                         >
@@ -454,7 +448,7 @@ export function ShippingList({ orders, loading }: ShippingListProps) {
                       <td>
                         <span
                           style={{
-                            fontSize: "12px",
+                            fontSize: "var(--type-small)",
                             color: shipment.actualDelivery
                               ? "var(--color-success)"
                               : "var(--color-text-secondary)",
@@ -469,7 +463,7 @@ export function ShippingList({ orders, loading }: ShippingListProps) {
                       <td>
                         <span
                           style={{
-                            fontSize: "12px",
+                            fontSize: "var(--type-small)",
                             color: "var(--color-text-secondary)",
                           }}
                         >
@@ -483,7 +477,7 @@ export function ShippingList({ orders, loading }: ShippingListProps) {
                           style={{
                             minHeight: "28px",
                             padding: "4px 10px",
-                            fontSize: "11px",
+                            fontSize: "var(--type-label)",
                             display: "inline-flex",
                             alignItems: "center",
                             gap: "4px",
@@ -503,15 +497,8 @@ export function ShippingList({ orders, loading }: ShippingListProps) {
           {/* Pagination */}
           <div
             className="pagination"
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              padding: "12px 20px",
-              borderTop: "1px solid var(--color-border)",
-            }}
           >
-            <span className="muted" style={{ fontSize: "12px" }}>
+            <span className="muted" style={{ fontSize: "var(--type-small)" }}>
               Showing {(currentPage - 1) * pageSize + 1} to{" "}
               {Math.min(currentPage * pageSize, filteredShipments.length)} of{" "}
               {filteredShipments.length} packages
@@ -528,7 +515,7 @@ export function ShippingList({ orders, loading }: ShippingListProps) {
                 <ChevronLeft size={16} />
               </button>
 
-              <span style={{ fontSize: "12px", padding: "0 8px" }}>
+              <span style={{ fontSize: "var(--type-small)", padding: "0 8px" }}>
                 Page {currentPage} of {totalPages}
               </span>
 

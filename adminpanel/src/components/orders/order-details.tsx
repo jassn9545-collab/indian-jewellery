@@ -93,8 +93,8 @@ export function OrderDetails({ order, onUpdate, onToast }: OrderDetailsProps) {
       );
       setModalOpen(false);
       onToast(`Order ${order.id} status updated to ${selectedStatus}`);
-    } catch (err: any) {
-      setError(err.message || "Failed to update order status");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to update order status");
     } finally {
       setSaving(false);
     }
@@ -125,7 +125,7 @@ export function OrderDetails({ order, onUpdate, onToast }: OrderDetailsProps) {
               <h1>Order {order.id}</h1>
               <OrderStatusBadge status={order.status} />
             </div>
-            <p className="muted" style={{ marginTop: "4px", fontSize: "12px" }}>
+            <p className="muted" style={{ marginTop: "4px", fontSize: "var(--type-small)" }}>
               Placed on {displayDate(order.date, true)}
             </p>
           </div>
@@ -154,7 +154,7 @@ export function OrderDetails({ order, onUpdate, onToast }: OrderDetailsProps) {
         className="order-grid-container"
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(360px, 1fr))",
+          gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 360px), 1fr))",
           gap: "16px",
         }}
       >
@@ -179,12 +179,12 @@ export function OrderDetails({ order, onUpdate, onToast }: OrderDetailsProps) {
               display: "flex",
               flexDirection: "column",
               gap: "12px",
-              fontSize: "12.5px",
+              fontSize: "var(--type-small)",
             }}
           >
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <span className="muted">Order ID</span>
-              <strong style={{ fontFamily: "monospace", fontSize: "13px" }}>
+              <strong style={{ fontFamily: "var(--font-body)", fontVariantNumeric: "tabular-nums", fontSize: "var(--type-small)" }}>
                 {order.id}
               </strong>
             </div>
@@ -246,7 +246,7 @@ export function OrderDetails({ order, onUpdate, onToast }: OrderDetailsProps) {
               display: "flex",
               flexDirection: "column",
               gap: "12px",
-              fontSize: "12.5px",
+              fontSize: "var(--type-small)",
             }}
           >
             <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -339,7 +339,7 @@ export function OrderDetails({ order, onUpdate, onToast }: OrderDetailsProps) {
               display: "flex",
               flexDirection: "column",
               gap: "12px",
-              fontSize: "12.5px",
+              fontSize: "var(--type-small)",
             }}
           >
             <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -348,7 +348,7 @@ export function OrderDetails({ order, onUpdate, onToast }: OrderDetailsProps) {
             </div>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <span className="muted">Transaction ID / Ref</span>
-              <span style={{ fontFamily: "monospace" }}>
+              <span style={{ fontFamily: "var(--font-body)", fontVariantNumeric: "tabular-nums" }}>
                 {order.payment.reference || "N/A (Cash on Delivery)"}
               </span>
             </div>
@@ -375,12 +375,12 @@ export function OrderDetails({ order, onUpdate, onToast }: OrderDetailsProps) {
                 display: "flex",
                 justifyContent: "space-between",
                 borderTop: "1px solid var(--color-border)",
-                paddingTop: "10px",
+                paddingTop: "12px",
               }}
             >
               <span className="muted">Payment Amount</span>
               <strong
-                style={{ fontSize: "14px", color: "var(--color-primary)" }}
+                style={{ fontSize: "var(--type-body)", color: "var(--color-primary)" }}
               >
                 {commerceMoney(order.payment.amount)}
               </strong>
@@ -409,7 +409,7 @@ export function OrderDetails({ order, onUpdate, onToast }: OrderDetailsProps) {
               display: "flex",
               flexDirection: "column",
               gap: "12px",
-              fontSize: "12.5px",
+              fontSize: "var(--type-small)",
             }}
           >
             <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -422,7 +422,7 @@ export function OrderDetails({ order, onUpdate, onToast }: OrderDetailsProps) {
             </div>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <span className="muted">Tracking Number</span>
-              <span style={{ fontFamily: "monospace" }}>
+              <span style={{ fontFamily: "var(--font-body)", fontVariantNumeric: "tabular-nums" }}>
                 {order.shipping.trackingNumber || "N/A"}
               </span>
             </div>
@@ -530,13 +530,13 @@ export function OrderDetails({ order, onUpdate, onToast }: OrderDetailsProps) {
                             />
                           )}
                           <div>
-                            <strong style={{ fontSize: "13px" }}>
+                            <strong style={{ fontSize: "var(--type-small)" }}>
                               {item.name}
                             </strong>
                           </div>
                         </div>
                       </td>
-                      <td style={{ fontFamily: "monospace", fontSize: "12px" }}>
+                      <td style={{ fontFamily: "var(--font-body)", fontVariantNumeric: "tabular-nums", fontSize: "var(--type-small)" }}>
                         {item.sku || "—"}
                       </td>
                       <td>{item.quantity}</td>
@@ -568,7 +568,7 @@ export function OrderDetails({ order, onUpdate, onToast }: OrderDetailsProps) {
             style={{
               display: "flex",
               justifyContent: "flex-end",
-              marginTop: "20px",
+              marginTop: "24px",
             }}
           >
             <div
@@ -577,7 +577,7 @@ export function OrderDetails({ order, onUpdate, onToast }: OrderDetailsProps) {
                 display: "flex",
                 flexDirection: "column",
                 gap: "8px",
-                fontSize: "13px",
+                fontSize: "var(--type-small)",
               }}
             >
               <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -606,7 +606,7 @@ export function OrderDetails({ order, onUpdate, onToast }: OrderDetailsProps) {
                   justifyContent: "space-between",
                   borderTop: "2px solid var(--color-border)",
                   paddingTop: "8px",
-                  fontSize: "15px",
+                  fontSize: "var(--type-product)",
                   fontWeight: 600,
                   color: "var(--color-primary)",
                 }}
@@ -688,11 +688,11 @@ export function OrderDetails({ order, onUpdate, onToast }: OrderDetailsProps) {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      gap: "10px",
+                      gap: "12px",
                     }}
                   >
                     <OrderStatusBadge status={item.status} />
-                    <span className="muted" style={{ fontSize: "11.5px" }}>
+                    <span className="muted" style={{ fontSize: "var(--type-small)" }}>
                       {displayDate(item.date, true)}
                     </span>
                   </div>
@@ -700,7 +700,7 @@ export function OrderDetails({ order, onUpdate, onToast }: OrderDetailsProps) {
                     <p
                       style={{
                         margin: "6px 0 0",
-                        fontSize: "12.5px",
+                        fontSize: "var(--type-small)",
                         color: "var(--color-text)",
                       }}
                     >
@@ -736,7 +736,7 @@ export function OrderDetails({ order, onUpdate, onToast }: OrderDetailsProps) {
                 className="form-label"
                 style={{
                   display: "block",
-                  marginBottom: "6px",
+                  marginBottom: "8px",
                   fontWeight: 500,
                 }}
               >
@@ -771,7 +771,7 @@ export function OrderDetails({ order, onUpdate, onToast }: OrderDetailsProps) {
                 className="form-label"
                 style={{
                   display: "block",
-                  marginBottom: "6px",
+                  marginBottom: "8px",
                   fontWeight: 500,
                 }}
               >
@@ -780,7 +780,7 @@ export function OrderDetails({ order, onUpdate, onToast }: OrderDetailsProps) {
               <select
                 id="shipping-status-select"
                 value={shippingStatus}
-                onChange={(e) => setShippingStatus(e.target.value as any)}
+                onChange={(e) => setShippingStatus(e.target.value as Order["shipping"]["status"])}
                 style={{ width: "100%" }}
               >
                 {shippingStatuses.map((s) => (
@@ -804,7 +804,7 @@ export function OrderDetails({ order, onUpdate, onToast }: OrderDetailsProps) {
                   className="form-label"
                   style={{
                     display: "block",
-                    marginBottom: "6px",
+                    marginBottom: "8px",
                     fontWeight: 500,
                   }}
                 >
@@ -826,7 +826,7 @@ export function OrderDetails({ order, onUpdate, onToast }: OrderDetailsProps) {
                   className="form-label"
                   style={{
                     display: "block",
-                    marginBottom: "6px",
+                    marginBottom: "8px",
                     fontWeight: 500,
                   }}
                 >
@@ -851,7 +851,7 @@ export function OrderDetails({ order, onUpdate, onToast }: OrderDetailsProps) {
                   className="form-label"
                   style={{
                     display: "block",
-                    marginBottom: "6px",
+                    marginBottom: "8px",
                     fontWeight: 500,
                   }}
                 >
@@ -874,7 +874,7 @@ export function OrderDetails({ order, onUpdate, onToast }: OrderDetailsProps) {
                 className="form-label"
                 style={{
                   display: "block",
-                  marginBottom: "6px",
+                  marginBottom: "8px",
                   fontWeight: 500,
                 }}
               >
@@ -894,7 +894,7 @@ export function OrderDetails({ order, onUpdate, onToast }: OrderDetailsProps) {
               style={{
                 display: "flex",
                 justifyContent: "flex-end",
-                gap: "10px",
+                gap: "12px",
                 marginTop: "12px",
               }}
             >

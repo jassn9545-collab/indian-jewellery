@@ -29,6 +29,10 @@ test('admin authorization, validated catalog writes, stock conflicts and persist
     admin = false; assert.equal((await request('/workspace')).status, 401); admin = true;
     assert.equal((await request('/command', {}, { 'X-Admin-Request': '' })).status, 403);
     assert.equal((await request('/workspace')).status, 200);
+    const findUser = prisma.user.findUnique;
+    prisma.user.findUnique = async () => { throw new Error('Database offline'); };
+    assert.equal((await request('/session')).status, 503);
+    prisma.user.findUnique = findUser;
     const product = row.data.catalog.products[0];
     assert.equal((await command('stock', { id: product.id, current: -1, available: product.stock })).status, 400);
     assert.equal((await command('stock', { id: product.id, current: 35, available: product.stock })).status, 200);

@@ -50,7 +50,7 @@ export function PaymentDetails({ payment }: PaymentDetailsProps) {
             Back to Payments
           </Link>
           <div>
-            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
               <h1 style={{ margin: 0 }}>Transaction {payment.id}</h1>
               <PaymentStatusBadge status={payment.status} />
             </div>
@@ -64,7 +64,7 @@ export function PaymentDetails({ payment }: PaymentDetailsProps) {
         <Link
           href={`/admin/orders/${payment.orderId}`}
           className="button"
-          style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
+          style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}
         >
           <ShoppingBag size={15} />
           View Linked Order
@@ -79,10 +79,10 @@ export function PaymentDetails({ payment }: PaymentDetailsProps) {
           marginBottom: "16px",
           display: "flex",
           alignItems: "center",
-          gap: "10px",
+          gap: "12px",
           background: "var(--color-surface-secondary)",
           borderColor: "var(--color-border)",
-          fontSize: "12.5px",
+          fontSize: "var(--type-small)",
         }}
       >
         <ShieldCheck size={18} style={{ color: "var(--color-success)" }} />
@@ -97,7 +97,7 @@ export function PaymentDetails({ payment }: PaymentDetailsProps) {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(360px, 1fr))",
+          gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 360px), 1fr))",
           gap: "16px",
           marginBottom: "16px",
         }}
@@ -124,12 +124,12 @@ export function PaymentDetails({ payment }: PaymentDetailsProps) {
               display: "flex",
               flexDirection: "column",
               gap: "12px",
-              fontSize: "13px",
+              fontSize: "var(--type-small)",
             }}
           >
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <span className="muted">Transaction Reference ID</span>
-              <strong style={{ fontFamily: "monospace", fontSize: "13px" }}>
+              <strong style={{ fontFamily: "var(--font-body)", fontVariantNumeric: "tabular-nums", fontSize: "var(--type-small)" }}>
                 {payment.id}
               </strong>
             </div>
@@ -140,7 +140,7 @@ export function PaymentDetails({ payment }: PaymentDetailsProps) {
                 href={`/admin/orders/${payment.orderId}`}
                 style={{
                   color: "var(--color-primary)",
-                  fontFamily: "monospace",
+                  fontFamily: "var(--font-body)", fontVariantNumeric: "tabular-nums",
                   fontWeight: 600,
                   textDecoration: "underline",
                 }}
@@ -176,15 +176,15 @@ export function PaymentDetails({ payment }: PaymentDetailsProps) {
                   background: "var(--color-surface-secondary)",
                   padding: "10px 12px",
                   borderRadius: "6px",
-                  fontSize: "12px",
-                  marginTop: "6px",
+                  fontSize: "var(--type-small)",
+                  marginTop: "8px",
                 }}
               >
                 <div
                   style={{
                     display: "flex",
                     alignItems: "center",
-                    gap: "6px",
+                    gap: "8px",
                     marginBottom: "4px",
                   }}
                 >
@@ -208,12 +208,12 @@ export function PaymentDetails({ payment }: PaymentDetailsProps) {
                 alignItems: "center",
               }}
             >
-              <span style={{ fontSize: "14px", fontWeight: 600 }}>
+              <span style={{ fontSize: "var(--type-body)", fontWeight: 600 }}>
                 Total Paid Amount
               </span>
               <strong
                 style={{
-                  fontSize: "20px",
+                  fontSize: "var(--type-card)",
                   color: "var(--color-primary)",
                 }}
               >
@@ -245,7 +245,7 @@ export function PaymentDetails({ payment }: PaymentDetailsProps) {
               display: "flex",
               flexDirection: "column",
               gap: "12px",
-              fontSize: "13px",
+              fontSize: "var(--type-small)",
             }}
           >
             <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -264,7 +264,7 @@ export function PaymentDetails({ payment }: PaymentDetailsProps) {
             </div>
 
             {order?.customer?.billingAddress && (
-              <div style={{ marginTop: "6px" }}>
+              <div style={{ marginTop: "8px" }}>
                 <span
                   className="muted"
                   style={{ display: "block", marginBottom: "4px" }}
@@ -277,7 +277,7 @@ export function PaymentDetails({ payment }: PaymentDetailsProps) {
                     padding: "10px 12px",
                     borderRadius: "6px",
                     lineHeight: "1.5",
-                    fontSize: "12.5px",
+                    fontSize: "var(--type-small)",
                   }}
                 >
                   {order.customer.billingAddress.line1}
@@ -337,7 +337,7 @@ export function PaymentDetails({ payment }: PaymentDetailsProps) {
                           style={{
                             display: "flex",
                             alignItems: "center",
-                            gap: "10px",
+                            gap: "12px",
                           }}
                         >
                           {item.image ? (
@@ -362,12 +362,12 @@ export function PaymentDetails({ payment }: PaymentDetailsProps) {
                               }}
                             />
                           )}
-                          <strong style={{ fontSize: "13px" }}>
+                          <strong style={{ fontSize: "var(--type-small)" }}>
                             {item.name}
                           </strong>
                         </div>
                       </td>
-                      <td style={{ fontFamily: "monospace", fontSize: "12px" }}>
+                      <td style={{ fontFamily: "var(--font-body)", fontVariantNumeric: "tabular-nums", fontSize: "var(--type-small)" }}>
                         {item.sku || "—"}
                       </td>
                       <td>{item.quantity}</td>
@@ -406,10 +406,10 @@ export function PaymentDetails({ payment }: PaymentDetailsProps) {
             <div
               style={{
                 width: "280px",
-                fontSize: "13px",
+                fontSize: "var(--type-small)",
                 display: "flex",
                 flexDirection: "column",
-                gap: "6px",
+                gap: "8px",
               }}
             >
               <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -425,8 +425,8 @@ export function PaymentDetails({ payment }: PaymentDetailsProps) {
                   display: "flex",
                   justifyContent: "space-between",
                   borderTop: "2px solid var(--color-border)",
-                  paddingTop: "6px",
-                  fontSize: "15px",
+                  paddingTop: "8px",
+                  fontSize: "var(--type-product)",
                   fontWeight: 600,
                   color: "var(--color-primary)",
                 }}
@@ -463,7 +463,7 @@ export function PaymentDetails({ payment }: PaymentDetailsProps) {
                 display: "grid",
                 gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
                 gap: "16px",
-                fontSize: "13px",
+                fontSize: "var(--type-small)",
               }}
             >
               <div>
@@ -486,7 +486,7 @@ export function PaymentDetails({ payment }: PaymentDetailsProps) {
                   Refund Amount
                 </span>
                 <strong
-                  style={{ fontSize: "16px", color: "var(--color-primary)" }}
+                  style={{ fontSize: "var(--type-body-large)", color: "var(--color-primary)" }}
                 >
                   {commerceMoney(payment.refund.amount)}
                 </strong>
@@ -509,7 +509,7 @@ export function PaymentDetails({ payment }: PaymentDetailsProps) {
                 >
                   Refund Reference ID
                 </span>
-                <span style={{ fontFamily: "monospace", fontWeight: 600 }}>
+                <span style={{ fontFamily: "var(--font-body)", fontVariantNumeric: "tabular-nums", fontWeight: 600 }}>
                   {payment.refund.referenceId}
                 </span>
               </div>

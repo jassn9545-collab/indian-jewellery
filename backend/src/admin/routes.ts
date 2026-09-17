@@ -270,6 +270,7 @@ adminRouter.post("/logout", (_req, res) => {
   res.json({ ok: true });
 });
 adminRouter.use(async (req, res, next) => {
+  let authenticated = false;
   try {
     const token = req.headers.cookie
       ?.split(";")
@@ -278,14 +279,21 @@ adminRouter.use(async (req, res, next) => {
       ?.slice(cookie.length + 1);
     const claims = jwt.verify(token || "", secret()) as jwt.JwtPayload;
     if (claims.purpose !== "admin") throw new Error();
+    authenticated = true;
     const user = await prisma.user.findUnique({
       where: { id: Number(claims.sub) },
     });
-    if (!user || user.type !== 1 || user.status !== 1 || user.isDeleted)
+    if (!user || user.type !== 1 || user.status !== 1 || user.isDeleted) {
+      authenticated = false;
       throw new Error();
+    }
     res.locals.admin = { name: user.name, email: user.email };
     next();
   } catch {
+    if (authenticated) {
+      res.status(503).json({ error: "Admin database is unavailable. Check MySQL and migrations." });
+      return;
+    }
     res.status(401).json({ error: "Please sign in to your admin account." });
   }
 });

@@ -36,13 +36,19 @@ export function Inventory({
     (p) =>
       `${p.name} ${p.sku}`.toLowerCase().includes(query.toLowerCase()) &&
       (!filter ||
-        (filter === "out"
-          ? !p.stock
-          : (p.stock || 0) > 0 && (p.stock || 0) <= threshold)),
+        (filter === "in"
+          ? (p.stock || 0) > threshold
+          : filter === "out"
+            ? !p.stock
+            : (p.stock || 0) > 0 && (p.stock || 0) <= threshold)),
   );
-  const currentPage = Math.min(page, Math.max(1, Math.ceil(rows.length / 8)));
+  const PAGE_SIZE = 10;
+  const currentPage = Math.min(
+    page,
+    Math.max(1, Math.ceil(rows.length / PAGE_SIZE)),
+  );
   return (
-    <div className="list-panel">
+    <div className="list-panel list-page">
       <div className="page-heading">
         <div>
           <h1>Inventory</h1>
@@ -82,7 +88,7 @@ export function Inventory({
           </div>
         ))}
       </div>
-      <div className="panel">
+      <div className="panel list-results">
         <div className="panel-heading inventory-toolbar">
           <SearchInput
             value={query}
@@ -95,6 +101,7 @@ export function Inventory({
           <label className="field">
             Stock status
             <select
+              aria-label="Stock status"
               value={filter}
               onChange={(event) => {
                 setFilter(event.target.value);
@@ -102,6 +109,7 @@ export function Inventory({
               }}
             >
               <option value="">All stock</option>
+              <option value="in">In stock</option>
               <option value="low">Low stock</option>
               <option value="out">Out of stock</option>
             </select>
@@ -127,7 +135,7 @@ export function Inventory({
             </thead>
             <tbody>
               {rows
-                .slice((currentPage - 1) * 8, currentPage * 8)
+                .slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE)
                 .map((product) => {
                   const stock = inventory(product, commerce.orders);
                   return (
@@ -185,7 +193,7 @@ export function Inventory({
         <Pagination
           page={currentPage}
           total={rows.length}
-          size={8}
+          size={PAGE_SIZE}
           onChange={setPage}
         />
       </div>

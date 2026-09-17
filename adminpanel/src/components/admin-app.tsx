@@ -2,7 +2,13 @@
 "use client";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Fragment, useEffect, useState, type FormEvent } from "react";
+import {
+  Fragment,
+  useEffect,
+  useState,
+  type FormEvent,
+  type ReactNode,
+} from "react";
 import {
   LayoutDashboard,
   Diamond,
@@ -45,16 +51,14 @@ import {
   type OrderUpdate,
   type ReturnStatus,
 } from "@/lib/commerce";
-import {
-  authService,
-  commerceRepository,
-  type Session,
-} from "@/lib/storage";
+import { authService, commerceRepository, type Session } from "@/lib/storage";
 import { ConfirmModal, ErrorState, LoadingState, Modal } from "./ui";
 import { Dashboard } from "./dashboard";
-import { Inventory, Analytics, StoreSettings } from './operations';
-import type { Settings, RemoteWorkspace } from '@/lib/storage';
+import { Inventory, Analytics, StoreSettings } from "./operations";
+import type { Settings, RemoteWorkspace } from "@/lib/storage";
 import { EntryList, EntryPreview } from "./entry-list";
+import { RibbonList } from "./ribbon-list";
+import { LocalBrandList } from "./local-brand-list";
 import { EntryForm } from "./entry-form";
 import { OrdersList } from "./orders/orders-list";
 import { OrderDetails } from "./orders/order-details";
@@ -84,7 +88,7 @@ const icons = {
   play: Play,
   message: MessageSquare,
 };
-export function AdminApp() {
+export function AdminApp({ children }: { children?: ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
   const parts = pathname.split("/").filter(Boolean).slice(1);
@@ -94,14 +98,18 @@ export function AdminApp() {
   const [ready, setReady] = useState(false);
   const [db, setDb] = useState<Database | null>(null);
   const [commerce, setCommerce] = useState<CommerceData | null>(null);
-  const [settings, setSettings] = useState<Settings>({ storeName: 'Indian Jewellery', contactEmail: '', lowStockThreshold: 10 });
+  const [settings, setSettings] = useState<Settings>({
+    storeName: "Indian Jewellery",
+    contactEmail: "",
+    lowStockThreshold: 10,
+  });
   function savedWorkspace(ws: RemoteWorkspace) {
     setDb(ws.catalog);
     setCommerce(ws.commerce);
     if (ws.settings) setSettings(ws.settings);
-    setToast('Changes saved successfully');
-    const channel = new BroadcastChannel('ij-admin-catalog');
-    channel.postMessage('updated');
+    setToast("Changes saved successfully");
+    const channel = new BroadcastChannel("ij-admin-catalog");
+    channel.postMessage("updated");
     channel.close();
   }
   const [error, setError] = useState("");
@@ -162,7 +170,8 @@ export function AdminApp() {
   useEffect(() => {
     const channel = new BroadcastChannel("ij-admin-catalog");
     channel.onmessage = () =>
-      commerceRepository.load()
+      commerceRepository
+        .load()
         .then((ws) => {
           setDb(ws.catalog);
           setCommerce(ws.commerce);
@@ -173,7 +182,11 @@ export function AdminApp() {
   }, []);
   async function save(moduleKey: Module, rows: Entry[], message: string) {
     if (!db) return;
-    const ws = await commerceRepository.saveCatalog(moduleKey, rows, db[moduleKey]);
+    const ws = await commerceRepository.saveCatalog(
+      moduleKey,
+      rows,
+      db[moduleKey],
+    );
     setDb(ws.catalog);
     setCommerce(ws.commerce);
     setToast(message);
@@ -221,6 +234,10 @@ export function AdminApp() {
     channel.close();
   }
   if (!ready) return <LoadingState />;
+  if (error)
+    return (
+      <ErrorState message={error} retry={() => window.location.reload()} />
+    );
   if (isAuth)
     return (
       <AuthPage
@@ -231,10 +248,6 @@ export function AdminApp() {
         }}
         key={section}
       />
-    );
-  if (error)
-    return (
-      <ErrorState message={error} retry={() => window.location.reload()} />
     );
   if (!session || !db) return <LoadingState />;
   const moduleKey = modules.find((m) => m[0] === section)?.[0];
@@ -520,7 +533,13 @@ export function AdminApp() {
   }
   let content;
   if (section === "dashboard" && parts.length <= 1)
-    content = <Dashboard db={db} name={session.name} threshold={settings.lowStockThreshold} />;
+    content = (
+      <Dashboard
+        db={db}
+        name={session.name}
+        threshold={settings.lowStockThreshold}
+      />
+    );
   else if (moduleKey) {
     const action = parts[1];
     const id = parts[2];
@@ -540,14 +559,27 @@ export function AdminApp() {
         />
       );
     else if (!action && parts.length === 1)
-      content = (
-        <EntryList
-          key={pathname}
-          module={moduleKey}
-          db={db}
-          onChange={(rows, message) => save(moduleKey, rows, message)}
-        />
-      );
+      content =
+        moduleKey === "ribbons" ? (
+          <RibbonList
+            key={pathname}
+            db={db}
+            onChange={(rows, message) => save("ribbons", rows, message)}
+          />
+        ) : moduleKey === "local-brand" ? (
+          <LocalBrandList
+            key={pathname}
+            db={db}
+            onChange={(rows, message) => save("local-brand", rows, message)}
+          />
+        ) : (
+          <EntryList
+            key={pathname}
+            module={moduleKey}
+            db={db}
+            onChange={(rows, message) => save(moduleKey, rows, message)}
+          />
+        );
     else if (
       (action === "add" && parts.length === 2) ||
       (action === "edit" && existing && parts.length === 3)
@@ -617,10 +649,7 @@ export function AdminApp() {
         );
       } else {
         content = (
-          <div
-            className="panel empty-panel"
-            style={{ padding: "48px 24px", textAlign: "center" }}
-          >
+          <div className="panel empty-panel">
             <ShoppingBag
               size={42}
               style={{
@@ -630,7 +659,8 @@ export function AdminApp() {
             />
             <h3>Order not found</h3>
             <p className="muted" style={{ margin: "8px auto 20px" }}>
-              Order &quot;{parts[1]}&quot; could not be located in the store catalog.
+              Order &quot;{parts[1]}&quot; could not be located in the store
+              catalog.
             </p>
             <Link href="/admin/orders" className="button">
               Back to All Orders
@@ -672,10 +702,7 @@ export function AdminApp() {
         );
       } else {
         content = (
-          <div
-            className="panel empty-panel"
-            style={{ padding: "48px 24px", textAlign: "center" }}
-          >
+          <div className="panel empty-panel">
             <Users
               size={42}
               style={{
@@ -685,7 +712,8 @@ export function AdminApp() {
             />
             <h3>Customer not found</h3>
             <p className="muted" style={{ margin: "8px auto 20px" }}>
-              Customer &quot;{parts[1]}&quot; could not be located in the store records.
+              Customer &quot;{parts[1]}&quot; could not be located in the store
+              records.
             </p>
             <Link href="/admin/customers" className="button">
               Back to Customers
@@ -714,10 +742,7 @@ export function AdminApp() {
         content = <PaymentDetails payment={payment} />;
       } else {
         content = (
-          <div
-            className="panel empty-panel"
-            style={{ padding: "48px 24px", textAlign: "center" }}
-          >
+          <div className="panel empty-panel">
             <CreditCard
               size={42}
               style={{
@@ -727,8 +752,8 @@ export function AdminApp() {
             />
             <h3>Transaction not found</h3>
             <p className="muted" style={{ margin: "8px auto 20px" }}>
-              Payment transaction &quot;{parts[1]}&quot; could not be located in the
-              records.
+              Payment transaction &quot;{parts[1]}&quot; could not be located in
+              the records.
             </p>
             <Link href="/admin/payments" className="button">
               Back to Payments
@@ -757,10 +782,7 @@ export function AdminApp() {
         content = <ShippingDetails shipment={shipment} />;
       } else {
         content = (
-          <div
-            className="panel empty-panel"
-            style={{ padding: "48px 24px", textAlign: "center" }}
-          >
+          <div className="panel empty-panel">
             <Truck
               size={42}
               style={{
@@ -770,8 +792,8 @@ export function AdminApp() {
             />
             <h3>Shipment not found</h3>
             <p className="muted" style={{ margin: "8px auto 20px" }}>
-              Shipment for &quot;{parts[1]}&quot; could not be located in the tracking
-              records.
+              Shipment for &quot;{parts[1]}&quot; could not be located in the
+              tracking records.
             </p>
             <Link href="/admin/shipping" className="button">
               Back to Shipping
@@ -780,11 +802,18 @@ export function AdminApp() {
         );
       }
     }
-  } else if (section === 'inventory' && commerce) {
-    content = <Inventory db={db} commerce={commerce} threshold={settings.lowStockThreshold} onSaved={savedWorkspace} />;
-  } else if (section === 'analytics' && commerce) {
+  } else if (section === "inventory" && commerce) {
+    content = (
+      <Inventory
+        db={db}
+        commerce={commerce}
+        threshold={settings.lowStockThreshold}
+        onSaved={savedWorkspace}
+      />
+    );
+  } else if (section === "analytics" && commerce) {
     content = <Analytics db={db} commerce={commerce} />;
-  } else if (section === 'settings') {
+  } else if (section === "settings") {
     content = <StoreSettings settings={settings} onSaved={savedWorkspace} />;
   } else if (["inventory", "analytics"].includes(section)) {
     content = <LoadingState />;
@@ -884,7 +913,8 @@ export function AdminApp() {
               </>
             )}
           </nav>
-          {content}
+          {children}
+          <Fragment key={pathname}>{content}</Fragment>
           <footer className="workspace-footer">
             <span>Indian Jewellery · Made with care</span>
             <span>{settings.storeName}</span>

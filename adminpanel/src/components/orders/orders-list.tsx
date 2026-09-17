@@ -125,7 +125,7 @@ export function OrdersList({ orders, loading }: OrdersListProps) {
   }
 
   return (
-    <div className="list-panel">
+    <div className="list-panel list-page">
       <div className="page-heading">
         <div>
           <h1>All Orders</h1>
@@ -137,10 +137,9 @@ export function OrdersList({ orders, loading }: OrdersListProps) {
       </div>
 
       {/* Filters Toolbar */}
-      <div className="panel" style={{ marginBottom: "16px" }}>
+      <div className="panel list-filters">
         <div
           className="filters"
-          style={{ flexWrap: "wrap", gap: "12px", padding: "16px 20px" }}
         >
           <div className="search-input" style={{ flex: "1 1 260px" }}>
             <Search size={16} />
@@ -159,7 +158,7 @@ export function OrdersList({ orders, loading }: OrdersListProps) {
           <div
             style={{
               display: "flex",
-              gap: "10px",
+              gap: "12px",
               flexWrap: "wrap",
               flex: "2 1 400px",
             }}
@@ -237,7 +236,7 @@ export function OrdersList({ orders, loading }: OrdersListProps) {
                 style={{
                   minHeight: "36px",
                   padding: "6px 14px",
-                  fontSize: "11px",
+                  fontSize: "var(--type-label)",
                 }}
                 onClick={resetFilters}
               >
@@ -252,8 +251,7 @@ export function OrdersList({ orders, loading }: OrdersListProps) {
       {/* Orders Table */}
       {paginatedOrders.length === 0 ? (
         <div
-          className="panel empty-panel"
-          style={{ padding: "48px 24px", textAlign: "center" }}
+          className="panel empty-panel list-results"
         >
           <ShoppingBag
             size={42}
@@ -276,8 +274,8 @@ export function OrdersList({ orders, loading }: OrdersListProps) {
           </button>
         </div>
       ) : (
-        <div className="panel" style={{ overflow: "hidden" }}>
-          <div className="table-wrapper" style={{ overflowX: "auto" }}>
+        <div className="panel list-results">
+          <div className="table-scroll">
             <table className="data-table">
               <thead>
                 <tr>
@@ -331,7 +329,7 @@ export function OrdersList({ orders, loading }: OrdersListProps) {
                           style={{
                             display: "flex",
                             alignItems: "center",
-                            gap: "10px",
+                            gap: "12px",
                           }}
                         >
                           {firstItem?.image ? (
@@ -357,7 +355,7 @@ export function OrdersList({ orders, loading }: OrdersListProps) {
                             />
                           )}
                           <div>
-                            <div style={{ fontWeight: 500, fontSize: "12px" }}>
+                            <div style={{ fontWeight: 500, fontSize: "var(--type-small)" }}>
                               {firstItem?.name || "Product"}
                             </div>
                             {order.items.length > 1 && (
@@ -384,7 +382,7 @@ export function OrdersList({ orders, loading }: OrdersListProps) {
                       <td>
                         <span
                           style={{
-                            fontSize: "11.5px",
+                            fontSize: "var(--type-small)",
                             color: "var(--color-text-secondary)",
                           }}
                         >
@@ -398,7 +396,7 @@ export function OrdersList({ orders, loading }: OrdersListProps) {
                       <td>
                         <span
                           style={{
-                            fontSize: "11.5px",
+                            fontSize: "var(--type-small)",
                             color: "var(--color-text-secondary)",
                           }}
                         >
@@ -412,7 +410,7 @@ export function OrdersList({ orders, loading }: OrdersListProps) {
                           style={{
                             minHeight: "30px",
                             padding: "4px 12px",
-                            fontSize: "11px",
+                            fontSize: "var(--type-label)",
                             display: "inline-flex",
                             alignItems: "center",
                             gap: "5px",
@@ -432,13 +430,8 @@ export function OrdersList({ orders, loading }: OrdersListProps) {
           {/* Pagination */}
           <div
             className="pagination"
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
           >
-            <span className="muted" style={{ fontSize: "12px" }}>
+            <span className="muted" style={{ fontSize: "var(--type-small)" }}>
               Showing {(currentPage - 1) * pageSize + 1} to{" "}
               {Math.min(currentPage * pageSize, filteredOrders.length)} of{" "}
               {filteredOrders.length} orders
@@ -455,7 +448,7 @@ export function OrdersList({ orders, loading }: OrdersListProps) {
                 <ChevronLeft size={16} />
               </button>
 
-              <span style={{ fontSize: "12px", padding: "0 8px" }}>
+              <span style={{ fontSize: "var(--type-small)", padding: "0 8px" }}>
                 Page {currentPage} of {totalPages}
               </span>
 

@@ -1,6 +1,12 @@
 import { test, expect } from '@playwright/test';
 import { seedDatabase, modules } from '../src/lib/admin-data';
 
+test('login shows a retryable connection error when the backend is offline', async ({ page }) => {
+  await page.route('**/admin-api/session', route => route.fulfill({ status: 503, json: { error: 'Database offline' } }));
+  await page.goto('/admin/login');
+  await expect(page.getByText('Admin server is unavailable. Start the Express backend and check MySQL.')).toBeVisible();
+});
+
 test('first administrator signup submits credentials and opens the dashboard', async ({ page }) => {
   let signedIn = false;
   const session = { name: 'First Admin', email: 'first@example.test' };
@@ -26,6 +32,7 @@ test('first administrator signup submits credentials and opens the dashboard', a
 });
 
 test('API-backed sections, inventory adjustment, settings persistence and compact responsive layout', async ({ page }) => {
+  test.setTimeout(120000); // Visits every admin section, including cold development compilations.
   let workspace = { catalog: seedDatabase(), commerce: { version: 1, orders: [], returns: [], customers: [] }, revision: 0, settings: { storeName: 'Test Jewellery', contactEmail: '', lowStockThreshold: 10 } };
   await page.route('**/admin-api/**', async route => {
     const path = new URL(route.request().url()).pathname;

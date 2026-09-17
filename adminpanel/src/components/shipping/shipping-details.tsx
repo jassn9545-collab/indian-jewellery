@@ -59,7 +59,7 @@ export function ShippingDetails({ shipment }: ShippingDetailsProps) {
             Back to Shipping
           </Link>
           <div>
-            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
               <h1 style={{ margin: 0 }}>Shipment #{shipment.orderId}</h1>
               <ShippingBadge status={shipment.status} />
             </div>
@@ -72,7 +72,7 @@ export function ShippingDetails({ shipment }: ShippingDetailsProps) {
         <Link
           href={`/admin/orders/${shipment.orderId}`}
           className="button"
-          style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
+          style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}
         >
           <ShoppingBag size={15} />
           View Full Order
@@ -83,7 +83,7 @@ export function ShippingDetails({ shipment }: ShippingDetailsProps) {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(360px, 1fr))",
+          gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 360px), 1fr))",
           gap: "16px",
           marginBottom: "16px",
         }}
@@ -110,7 +110,7 @@ export function ShippingDetails({ shipment }: ShippingDetailsProps) {
               display: "flex",
               flexDirection: "column",
               gap: "12px",
-              fontSize: "13px",
+              fontSize: "var(--type-small)",
             }}
           >
             <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -125,7 +125,7 @@ export function ShippingDetails({ shipment }: ShippingDetailsProps) {
 
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <span className="muted">Tracking Number</span>
-              <strong style={{ fontFamily: "monospace", fontSize: "13px" }}>
+              <strong style={{ fontFamily: "var(--font-body)", fontVariantNumeric: "tabular-nums", fontSize: "var(--type-small)" }}>
                 {shipment.trackingNumber}
               </strong>
             </div>
@@ -196,8 +196,8 @@ export function ShippingDetails({ shipment }: ShippingDetailsProps) {
             style={{
               display: "flex",
               flexDirection: "column",
-              gap: "14px",
-              fontSize: "13px",
+              gap: "16px",
+              fontSize: "var(--type-small)",
             }}
           >
             <div>
@@ -207,7 +207,7 @@ export function ShippingDetails({ shipment }: ShippingDetailsProps) {
               >
                 Recipient Name:
               </span>
-              <strong style={{ fontSize: "15px" }}>
+              <strong style={{ fontSize: "var(--type-product)" }}>
                 {shipment.customerName}
               </strong>
             </div>
@@ -225,7 +225,7 @@ export function ShippingDetails({ shipment }: ShippingDetailsProps) {
             <div>
               <span
                 className="muted"
-                style={{ display: "block", marginBottom: "6px" }}
+                style={{ display: "block", marginBottom: "8px" }}
               >
                 Complete Shipping Address:
               </span>
@@ -293,7 +293,7 @@ export function ShippingDetails({ shipment }: ShippingDetailsProps) {
                         style={{
                           display: "flex",
                           alignItems: "center",
-                          gap: "10px",
+                          gap: "12px",
                         }}
                       >
                         {item.image ? (
@@ -318,12 +318,12 @@ export function ShippingDetails({ shipment }: ShippingDetailsProps) {
                             }}
                           />
                         )}
-                        <strong style={{ fontSize: "13px" }}>
+                        <strong style={{ fontSize: "var(--type-small)" }}>
                           {item.name}
                         </strong>
                       </div>
                     </td>
-                    <td style={{ fontFamily: "monospace", fontSize: "12px" }}>
+                    <td style={{ fontFamily: "var(--font-body)", fontVariantNumeric: "tabular-nums", fontSize: "var(--type-small)" }}>
                       {item.sku || "—"}
                     </td>
                     <td>{item.quantity}</td>
@@ -415,15 +415,15 @@ export function ShippingDetails({ shipment }: ShippingDetailsProps) {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      gap: "10px",
+                      gap: "12px",
                       flexWrap: "wrap",
                     }}
                   >
-                    <strong style={{ fontSize: "14px" }}>{event.status}</strong>
+                    <strong style={{ fontSize: "var(--type-body)" }}>{event.status}</strong>
                     <span
                       className="muted"
                       style={{
-                        fontSize: "12px",
+                        fontSize: "var(--type-small)",
                         display: "inline-flex",
                         alignItems: "center",
                         gap: "4px",
@@ -438,7 +438,7 @@ export function ShippingDetails({ shipment }: ShippingDetailsProps) {
                     <p
                       style={{
                         margin: "2px 0 0",
-                        fontSize: "12.5px",
+                        fontSize: "var(--type-small)",
                         color: "var(--color-text-secondary)",
                         lineHeight: "1.4",
                       }}

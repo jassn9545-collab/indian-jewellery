@@ -142,7 +142,7 @@ export function PaymentsList({ orders, loading }: PaymentsListProps) {
   }
 
   return (
-    <div className="list-panel">
+    <div className="list-panel list-page">
       {/* Top Page Heading */}
       <div className="page-heading">
         <div>
@@ -155,11 +155,7 @@ export function PaymentsList({ orders, loading }: PaymentsListProps) {
 
       {/* Top 5 Summary Cards */}
       <div
-        className="stat-grid"
-        style={{
-          gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-          marginBottom: "16px",
-        }}
+        className="stat-grid list-summary"
       >
         <div className="stat-card">
           <div className="stat-label">
@@ -202,7 +198,7 @@ export function PaymentsList({ orders, loading }: PaymentsListProps) {
             <span>Total Payment Amount</span>
             <IndianRupee size={18} />
           </div>
-          <div className="stat-value" style={{ fontSize: "22px" }}>
+          <div className="stat-value" style={{ fontSize: "var(--type-card)" }}>
             {summary.totalAmount}
           </div>
           <small className="muted">Net settled revenue</small>
@@ -210,10 +206,9 @@ export function PaymentsList({ orders, loading }: PaymentsListProps) {
       </div>
 
       {/* Filters Toolbar */}
-      <div className="panel" style={{ marginBottom: "16px" }}>
+      <div className="panel list-filters">
         <div
           className="filters"
-          style={{ flexWrap: "wrap", gap: "12px", padding: "16px 20px" }}
         >
           <div className="search-input" style={{ flex: "1 1 260px" }}>
             <Search size={16} />
@@ -232,7 +227,7 @@ export function PaymentsList({ orders, loading }: PaymentsListProps) {
           <div
             style={{
               display: "flex",
-              gap: "10px",
+              gap: "12px",
               flexWrap: "wrap",
               flex: "2 1 400px",
             }}
@@ -295,8 +290,8 @@ export function PaymentsList({ orders, loading }: PaymentsListProps) {
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
-                  gap: "6px",
-                  fontSize: "12px",
+                  gap: "8px",
+                  fontSize: "var(--type-small)",
                 }}
               >
                 <FilterX size={14} />
@@ -310,8 +305,7 @@ export function PaymentsList({ orders, loading }: PaymentsListProps) {
       {/* Payments Table */}
       {filteredPayments.length === 0 ? (
         <div
-          className="panel empty-panel"
-          style={{ padding: "48px 24px", textAlign: "center" }}
+          className="panel empty-panel list-results"
         >
           <CreditCard
             size={40}
@@ -333,8 +327,8 @@ export function PaymentsList({ orders, loading }: PaymentsListProps) {
           </button>
         </div>
       ) : (
-        <div className="panel" style={{ overflow: "hidden" }}>
-          <div className="table-container" style={{ overflowX: "auto" }}>
+        <div className="panel list-results">
+          <div className="table-scroll">
             <table>
               <thead>
                 <tr>
@@ -351,10 +345,10 @@ export function PaymentsList({ orders, loading }: PaymentsListProps) {
               <tbody>
                 {paginatedPayments.map((payment) => (
                   <tr key={payment.id}>
-                    <td style={{ fontFamily: "monospace", fontSize: "12.5px" }}>
+                    <td style={{ fontFamily: "var(--font-body)", fontVariantNumeric: "tabular-nums", fontSize: "var(--type-small)" }}>
                       <strong>{payment.id}</strong>
                     </td>
-                    <td style={{ fontFamily: "monospace", fontWeight: 600 }}>
+                    <td style={{ fontFamily: "var(--font-body)", fontVariantNumeric: "tabular-nums", fontWeight: 600 }}>
                       <Link
                         href={`/admin/orders/${payment.orderId}`}
                         style={{
@@ -367,7 +361,7 @@ export function PaymentsList({ orders, loading }: PaymentsListProps) {
                     </td>
                     <td>
                       <div>
-                        <div style={{ fontWeight: 600, fontSize: "13px" }}>
+                        <div style={{ fontWeight: 600, fontSize: "var(--type-small)" }}>
                           {payment.customerName}
                         </div>
                         <small className="muted">{payment.customerEmail}</small>
@@ -378,8 +372,8 @@ export function PaymentsList({ orders, loading }: PaymentsListProps) {
                         style={{
                           display: "inline-flex",
                           alignItems: "center",
-                          gap: "6px",
-                          fontSize: "12.5px",
+                          gap: "8px",
+                          fontSize: "var(--type-small)",
                         }}
                       >
                         <CreditCard size={14} className="muted" />
@@ -395,7 +389,7 @@ export function PaymentsList({ orders, loading }: PaymentsListProps) {
                     <td>
                       <span
                         style={{
-                          fontSize: "12px",
+                          fontSize: "var(--type-small)",
                           color: "var(--color-text-secondary)",
                         }}
                       >
@@ -409,7 +403,7 @@ export function PaymentsList({ orders, loading }: PaymentsListProps) {
                         style={{
                           minHeight: "28px",
                           padding: "4px 10px",
-                          fontSize: "11px",
+                          fontSize: "var(--type-label)",
                           display: "inline-flex",
                           alignItems: "center",
                           gap: "4px",
@@ -428,15 +422,8 @@ export function PaymentsList({ orders, loading }: PaymentsListProps) {
           {/* Pagination */}
           <div
             className="pagination"
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              padding: "12px 20px",
-              borderTop: "1px solid var(--color-border)",
-            }}
           >
-            <span className="muted" style={{ fontSize: "12px" }}>
+            <span className="muted" style={{ fontSize: "var(--type-small)" }}>
               Showing {(currentPage - 1) * pageSize + 1} to{" "}
               {Math.min(currentPage * pageSize, filteredPayments.length)} of{" "}
               {filteredPayments.length} transactions
@@ -453,7 +440,7 @@ export function PaymentsList({ orders, loading }: PaymentsListProps) {
                 <ChevronLeft size={16} />
               </button>
 
-              <span style={{ fontSize: "12px", padding: "0 8px" }}>
+              <span style={{ fontSize: "var(--type-small)", padding: "0 8px" }}>
                 Page {currentPage} of {totalPages}
               </span>
 

@@ -119,8 +119,8 @@ export function ReturnsList({
       );
       onToast(`Return ${activeReturn.id} marked as ${selectedStatus}`);
       setActiveReturn(null);
-    } catch (err: any) {
-      setError(err.message || "Failed to update return request status.");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to update return request status.");
     } finally {
       setSaving(false);
     }
@@ -133,8 +133,8 @@ export function ReturnsList({
     try {
       await onUpdateStatus(returnItem.id, nextStatus);
       onToast(`Return ${returnItem.id} updated to ${nextStatus}`);
-    } catch (err: any) {
-      onToast(err.message || "Failed to update status");
+    } catch (err) {
+      onToast(err instanceof Error ? err.message : "Failed to update status");
     }
   }
 
@@ -147,7 +147,7 @@ export function ReturnsList({
   }
 
   return (
-    <div className="list-panel">
+    <div className="list-panel list-page">
       <div className="page-heading">
         <div>
           <h1>Return & Refund Requests</h1>
@@ -158,10 +158,9 @@ export function ReturnsList({
       </div>
 
       {/* Filters Toolbar */}
-      <div className="panel" style={{ marginBottom: "16px" }}>
+      <div className="panel list-filters">
         <div
           className="filters"
-          style={{ flexWrap: "wrap", gap: "12px", padding: "16px 20px" }}
         >
           <div className="search-input" style={{ flex: "1 1 260px" }}>
             <Search size={16} />
@@ -180,7 +179,7 @@ export function ReturnsList({
           <div
             style={{
               display: "flex",
-              gap: "10px",
+              gap: "12px",
               flexWrap: "wrap",
               flex: "1 1 300px",
             }}
@@ -222,7 +221,7 @@ export function ReturnsList({
                 style={{
                   minHeight: "36px",
                   padding: "6px 14px",
-                  fontSize: "11px",
+                  fontSize: "var(--type-label)",
                 }}
                 onClick={resetFilters}
               >
@@ -237,8 +236,7 @@ export function ReturnsList({
       {/* Table */}
       {paginatedReturns.length === 0 ? (
         <div
-          className="panel empty-panel"
-          style={{ padding: "48px 24px", textAlign: "center" }}
+          className="panel empty-panel list-results"
         >
           <RotateCcw
             size={42}
@@ -261,8 +259,8 @@ export function ReturnsList({
           </button>
         </div>
       ) : (
-        <div className="panel" style={{ overflow: "hidden" }}>
-          <div className="table-wrapper" style={{ overflowX: "auto" }}>
+        <div className="panel list-results">
+          <div className="table-scroll">
             <table className="data-table">
               <thead>
                 <tr>
@@ -283,7 +281,7 @@ export function ReturnsList({
                     <td>
                       <strong
                         style={{
-                          fontFamily: "monospace",
+                          fontFamily: "var(--font-body)", fontVariantNumeric: "tabular-nums",
                           color: "var(--color-primary)",
                         }}
                       >
@@ -294,7 +292,7 @@ export function ReturnsList({
                       <Link
                         href={`/admin/orders/${ret.orderId}`}
                         className="table-link"
-                        style={{ fontFamily: "monospace", fontWeight: 500 }}
+                        style={{ fontFamily: "var(--font-body)", fontVariantNumeric: "tabular-nums", fontWeight: 500 }}
                       >
                         {ret.orderId}
                       </Link>
@@ -312,7 +310,7 @@ export function ReturnsList({
                         style={{
                           display: "flex",
                           alignItems: "center",
-                          gap: "10px",
+                          gap: "12px",
                         }}
                       >
                         {ret.product.image ? (
@@ -338,7 +336,7 @@ export function ReturnsList({
                           />
                         )}
                         <div>
-                          <div style={{ fontWeight: 500, fontSize: "12px" }}>
+                          <div style={{ fontWeight: 500, fontSize: "var(--type-small)" }}>
                             {ret.product.name}
                           </div>
                           <small className="muted">{ret.product.sku}</small>
@@ -346,7 +344,7 @@ export function ReturnsList({
                       </div>
                     </td>
                     <td>{ret.quantity}</td>
-                    <td style={{ maxWidth: "220px", fontSize: "12px" }}>
+                    <td style={{ maxWidth: "220px", fontSize: "var(--type-small)" }}>
                       <span
                         title={ret.reason}
                         style={{
@@ -365,7 +363,7 @@ export function ReturnsList({
                     <td>
                       <span
                         style={{
-                          fontSize: "11.5px",
+                          fontSize: "var(--type-small)",
                           color: "var(--color-text-secondary)",
                         }}
                       >
@@ -373,7 +371,7 @@ export function ReturnsList({
                       </span>
                     </td>
                     <td style={{ textAlign: "right" }}>
-                      <div style={{ display: "inline-flex", gap: "6px" }}>
+                      <div style={{ display: "inline-flex", gap: "8px" }}>
                         {ret.status === "Requested" && (
                           <>
                             <button
@@ -382,7 +380,7 @@ export function ReturnsList({
                               style={{
                                 minHeight: "28px",
                                 padding: "2px 8px",
-                                fontSize: "10.5px",
+                                fontSize: "var(--type-badge)",
                                 background: "var(--color-success)",
                                 borderColor: "var(--color-success)",
                               }}
@@ -397,7 +395,7 @@ export function ReturnsList({
                               style={{
                                 minHeight: "28px",
                                 padding: "2px 8px",
-                                fontSize: "10.5px",
+                                fontSize: "var(--type-badge)",
                                 color: "var(--color-error)",
                                 borderColor: "var(--color-border)",
                               }}
@@ -414,7 +412,7 @@ export function ReturnsList({
                           style={{
                             minHeight: "28px",
                             padding: "2px 10px",
-                            fontSize: "10.5px",
+                            fontSize: "var(--type-badge)",
                           }}
                           onClick={() => {
                             setActiveReturn(ret);
@@ -437,13 +435,8 @@ export function ReturnsList({
           {/* Pagination */}
           <div
             className="pagination"
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
           >
-            <span className="muted" style={{ fontSize: "12px" }}>
+            <span className="muted" style={{ fontSize: "var(--type-small)" }}>
               Showing {(currentPage - 1) * pageSize + 1} to{" "}
               {Math.min(currentPage * pageSize, filteredReturns.length)} of{" "}
               {filteredReturns.length} requests
@@ -460,7 +453,7 @@ export function ReturnsList({
                 <ChevronLeft size={16} />
               </button>
 
-              <span style={{ fontSize: "12px", padding: "0 8px" }}>
+              <span style={{ fontSize: "var(--type-small)", padding: "0 8px" }}>
                 Page {currentPage} of {totalPages}
               </span>
 
@@ -501,8 +494,8 @@ export function ReturnsList({
                 borderRadius: "8px",
                 display: "grid",
                 gridTemplateColumns: "1fr 1fr",
-                gap: "10px",
-                fontSize: "12.5px",
+                gap: "12px",
+                fontSize: "var(--type-small)",
               }}
             >
               <div>
@@ -540,7 +533,7 @@ export function ReturnsList({
               </div>
               <div style={{ gridColumn: "1 / -1" }}>
                 <span className="muted">Reason:</span>{" "}
-                <em>"{activeReturn.reason}"</em>
+                <em>&ldquo;{activeReturn.reason}&rdquo;</em>
               </div>
             </div>
 
@@ -550,7 +543,7 @@ export function ReturnsList({
                 className="form-label"
                 style={{
                   display: "block",
-                  marginBottom: "6px",
+                  marginBottom: "8px",
                   fontWeight: 500,
                 }}
               >
@@ -578,7 +571,7 @@ export function ReturnsList({
                 className="form-label"
                 style={{
                   display: "block",
-                  marginBottom: "6px",
+                  marginBottom: "8px",
                   fontWeight: 500,
                 }}
               >
@@ -598,8 +591,8 @@ export function ReturnsList({
               style={{
                 display: "flex",
                 justifyContent: "flex-end",
-                gap: "10px",
-                marginTop: "10px",
+                gap: "12px",
+                marginTop: "12px",
               }}
             >
               <button

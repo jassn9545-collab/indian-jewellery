@@ -74,8 +74,8 @@ export function CustomerDetails({
       });
       onToast(`Customer ${name} updated successfully`);
       setEditModalOpen(false);
-    } catch (err: any) {
-      setError(err.message || "Failed to update customer");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to update customer");
     } finally {
       setSaving(false);
     }
@@ -102,7 +102,7 @@ export function CustomerDetails({
             Back to Customers
           </Link>
           <div>
-            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
               <h1 style={{ margin: 0 }}>{customer.name}</h1>
               <CustomerStatusBadge status={customer.status} />
             </div>
@@ -123,7 +123,7 @@ export function CustomerDetails({
             setError("");
             setEditModalOpen(true);
           }}
-          style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
+          style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}
         >
           <Edit2 size={15} />
           Edit Customer
@@ -134,7 +134,7 @@ export function CustomerDetails({
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))",
+          gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 340px), 1fr))",
           gap: "16px",
           marginBottom: "16px",
         }}
@@ -186,7 +186,7 @@ export function CustomerDetails({
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  fontSize: "18px",
+                  fontSize: "var(--type-card)",
                   fontWeight: 600,
                   border: "2px solid var(--color-border)",
                 }}
@@ -195,10 +195,10 @@ export function CustomerDetails({
               </div>
             )}
             <div>
-              <strong style={{ fontSize: "16px", display: "block" }}>
+              <strong style={{ fontSize: "var(--type-body-large)", display: "block" }}>
                 {customer.name}
               </strong>
-              <span className="muted" style={{ fontSize: "12.5px" }}>
+              <span className="muted" style={{ fontSize: "var(--type-small)" }}>
                 Member since {displayDate(customer.joinedDate)}
               </span>
             </div>
@@ -210,7 +210,7 @@ export function CustomerDetails({
               display: "flex",
               flexDirection: "column",
               gap: "12px",
-              fontSize: "13px",
+              fontSize: "var(--type-small)",
             }}
           >
             <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -263,12 +263,12 @@ export function CustomerDetails({
               <span
                 className="muted"
                 style={{
-                  fontSize: "12px",
+                  fontSize: "var(--type-small)",
                   fontWeight: 600,
                   textTransform: "uppercase",
                   letterSpacing: "0.5px",
                   display: "block",
-                  marginBottom: "6px",
+                  marginBottom: "8px",
                 }}
               >
                 Shipping Address
@@ -278,7 +278,7 @@ export function CustomerDetails({
                   background: "var(--color-surface-secondary)",
                   padding: "12px 14px",
                   borderRadius: "6px",
-                  fontSize: "13px",
+                  fontSize: "var(--type-small)",
                   lineHeight: "1.5",
                   border: "1px solid var(--color-border)",
                 }}
@@ -300,12 +300,12 @@ export function CustomerDetails({
               <span
                 className="muted"
                 style={{
-                  fontSize: "12px",
+                  fontSize: "var(--type-small)",
                   fontWeight: 600,
                   textTransform: "uppercase",
                   letterSpacing: "0.5px",
                   display: "block",
-                  marginBottom: "6px",
+                  marginBottom: "8px",
                 }}
               >
                 Billing Address
@@ -315,7 +315,7 @@ export function CustomerDetails({
                   background: "var(--color-surface-secondary)",
                   padding: "12px 14px",
                   borderRadius: "6px",
-                  fontSize: "13px",
+                  fontSize: "var(--type-small)",
                   lineHeight: "1.5",
                   border: "1px solid var(--color-border)",
                 }}
@@ -354,7 +354,7 @@ export function CustomerDetails({
             style={{
               display: "grid",
               gridTemplateColumns: "1fr 1fr",
-              gap: "14px",
+              gap: "16px",
               marginBottom: "16px",
             }}
           >
@@ -369,12 +369,12 @@ export function CustomerDetails({
             >
               <span
                 className="muted"
-                style={{ fontSize: "11px", display: "block" }}
+                style={{ fontSize: "var(--type-label)", display: "block" }}
               >
                 Total Orders
               </span>
               <strong
-                style={{ fontSize: "22px", color: "var(--color-primary)" }}
+                style={{ fontSize: "var(--type-card)", color: "var(--color-primary)" }}
               >
                 {stats.totalOrders}
               </strong>
@@ -391,12 +391,12 @@ export function CustomerDetails({
             >
               <span
                 className="muted"
-                style={{ fontSize: "11px", display: "block" }}
+                style={{ fontSize: "var(--type-label)", display: "block" }}
               >
                 Total Spent
               </span>
               <strong
-                style={{ fontSize: "20px", color: "var(--color-primary)" }}
+                style={{ fontSize: "var(--type-card)", color: "var(--color-primary)" }}
               >
                 {commerceMoney(stats.totalSpent)}
               </strong>
@@ -408,8 +408,8 @@ export function CustomerDetails({
             style={{
               display: "flex",
               flexDirection: "column",
-              gap: "10px",
-              fontSize: "13px",
+              gap: "12px",
+              fontSize: "var(--type-small)",
             }}
           >
             <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -484,7 +484,7 @@ export function CustomerDetails({
                   const firstItem = order.items[0];
                   return (
                     <tr key={order.id}>
-                      <td style={{ fontFamily: "monospace", fontWeight: 600 }}>
+                      <td style={{ fontFamily: "var(--font-body)", fontVariantNumeric: "tabular-nums", fontWeight: 600 }}>
                         <Link
                           href={`/admin/orders/${order.id}`}
                           style={{
@@ -526,7 +526,7 @@ export function CustomerDetails({
                             />
                           )}
                           <div>
-                            <div style={{ fontWeight: 500, fontSize: "12px" }}>
+                            <div style={{ fontWeight: 500, fontSize: "var(--type-small)" }}>
                               {firstItem?.name || "Product"}
                             </div>
                             {order.items.length > 1 && (
@@ -550,7 +550,7 @@ export function CustomerDetails({
                       <td>
                         <span
                           style={{
-                            fontSize: "12px",
+                            fontSize: "var(--type-small)",
                             color: "var(--color-text-secondary)",
                           }}
                         >
@@ -564,7 +564,7 @@ export function CustomerDetails({
                           style={{
                             minHeight: "28px",
                             padding: "3px 10px",
-                            fontSize: "11px",
+                            fontSize: "var(--type-label)",
                             display: "inline-flex",
                             alignItems: "center",
                             gap: "4px",
@@ -605,7 +605,7 @@ export function CustomerDetails({
                 className="form-label"
                 style={{
                   display: "block",
-                  marginBottom: "6px",
+                  marginBottom: "8px",
                   fontWeight: 500,
                 }}
               >
@@ -627,7 +627,7 @@ export function CustomerDetails({
                 className="form-label"
                 style={{
                   display: "block",
-                  marginBottom: "6px",
+                  marginBottom: "8px",
                   fontWeight: 500,
                 }}
               >
@@ -649,7 +649,7 @@ export function CustomerDetails({
                 className="form-label"
                 style={{
                   display: "block",
-                  marginBottom: "6px",
+                  marginBottom: "8px",
                   fontWeight: 500,
                 }}
               >
@@ -673,8 +673,8 @@ export function CustomerDetails({
               style={{
                 display: "flex",
                 justifyContent: "flex-end",
-                gap: "10px",
-                marginTop: "10px",
+                gap: "12px",
+                marginTop: "12px",
               }}
             >
               <button

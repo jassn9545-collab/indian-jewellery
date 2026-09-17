@@ -184,14 +184,100 @@ export function EntryForm({
       setBusy(false);
     }
   }
+  const renderField = (field: Field) => {
+    const label = `${field.label}${field.required ? " *" : ""}`;
+    if (["image", "video", "gallery"].includes(field.type || ""))
+      return (
+        <div
+          className={`field ${module === "products" ? "" : "full"}`}
+          key={field.key}
+        >
+          <span className="field-label">{label}</span>
+          <ImageUploader
+            onBusyChange={(value) =>
+              setUploads((current) => ({
+                ...current,
+                [field.key]: value,
+              }))
+            }
+            value={
+              field.type === "gallery"
+                ? entry.gallery || []
+                : entry[field.key]
+                  ? [String(entry[field.key])]
+                  : []
+            }
+            onChange={(urls) =>
+              set(field.key, field.type === "gallery" ? urls : urls[0] || "")
+            }
+            multiple={field.type === "gallery"}
+            video={field.type === "video"}
+          />
+        </div>
+      );
+    if (field.type === "checkbox")
+      return (
+        <label key={field.key} className="checkbox-field full">
+          <input
+            type="checkbox"
+            checked={Boolean(entry[field.key])}
+            onChange={(e) => set(field.key, e.target.checked)}
+          />
+          {label}
+        </label>
+      );
+    return (
+      <label
+        className={`field ${field.type === "textarea" ? "full" : ""}`}
+        key={field.key}
+      >
+        {label}
+        {field.type === "textarea" ? (
+          <textarea
+            required={field.required}
+            rows={4}
+            value={String(entry[field.key] ?? "")}
+            onChange={(e) => set(field.key, e.target.value)}
+          />
+        ) : (
+          <input
+            required={field.required}
+            type={field.type === "number" ? "number" : "text"}
+            min={field.key === "rating" || field.key === "displayOrder" ? 1 : 0}
+            max={field.key === "rating" ? 5 : undefined}
+            step={
+              field.key === "price" || field.key === "salePrice" ? "0.01" : 1
+            }
+            value={String(entry[field.key] ?? "")}
+            onChange={(e) =>
+              set(
+                field.key,
+                field.type === "number"
+                  ? e.target.value === ""
+                    ? undefined
+                    : Number(e.target.value)
+                  : e.target.value,
+              )
+            }
+          />
+        )}
+      </label>
+    );
+  };
   return (
     <>
-      <Link className="back-link" href={`/admin/${module}`}>
-        <ArrowLeft size={16} /> Back to {title.toLowerCase()}
-      </Link>
-      <div className="page-heading">
+      {module !== "products" && (
+        <Link className="back-link" href={`/admin/${module}`}>
+          <ArrowLeft size={16} /> Back to {title.toLowerCase()}
+        </Link>
+      )}
+      <div
+        className={`page-heading ${module === "products" ? "product-editor-heading" : ""}`}
+      >
         <div>
-          <div className="eyebrow">CURATE YOUR STORE</div>
+          {module !== "products" && (
+            <div className="eyebrow">CURATE YOUR STORE</div>
+          )}
           <h1>
             {existing ? "Edit" : "Add"}{" "}
             {title === "Products"
@@ -202,157 +288,109 @@ export function EntryForm({
           </h1>
           <p>Thoughtful details make all the difference.</p>
         </div>
+        {module === "products" && (
+          <Link
+            className="back-link button secondary"
+            href={`/admin/${module}`}
+          >
+            <ArrowLeft size={16} /> Back to {title.toLowerCase()}
+          </Link>
+        )}
       </div>
-      <form onSubmit={submit} className="editor-layout">
-        <div className="panel form-panel">
-          <h2>{productRef ? "Product & section details" : "Details"}</h2>
-          <div className="form-grid">
-            {productRef && (
-              <div className="field full">
-                <span className="field-label">
-                  Select existing product{module !== "pure-silver" && " *"}
-                </span>
-                <ProductSelector
-                  db={db}
-                  value={entry.productId || ""}
-                  onChange={(id) =>
-                    setEntry((e) => ({
-                      ...e,
-                      productId: id || undefined,
-                      categoryId: undefined,
-                    }))
-                  }
-                />
-              </div>
-            )}
-            {(module === "products" || module === "pure-silver") && (
-              <label className="field full">
-                {module === "pure-silver"
-                  ? "Or select a category"
-                  : "Category *"}
-                <select
-                  required={module === "products"}
-                  value={entry.categoryId || ""}
-                  onChange={(e) =>
-                    setEntry((p) => ({
-                      ...p,
-                      categoryId: e.target.value || undefined,
-                      ...(module === "pure-silver"
-                        ? { productId: undefined }
-                        : {}),
-                    }))
-                  }
-                >
-                  <option value="">Choose a category</option>
-                  {db.categories.map((c) => (
-                    <option key={c.id} value={c.id}>
-                      {c.name}
-                    </option>
-                  ))}
-                </select>
-              </label>
-            )}
-            {fields[module].map((field) => {
-              const label = `${field.label}${field.required ? " *" : ""}`;
-              if (["image", "video", "gallery"].includes(field.type || ""))
-                return (
-                  <div className="field full" key={field.key}>
-                    <span className="field-label">{label}</span>
-                    <ImageUploader
-                      onBusyChange={(value) =>
-                        setUploads((current) => ({
-                          ...current,
-                          [field.key]: value,
-                        }))
-                      }
-                      value={
-                        field.type === "gallery"
-                          ? entry.gallery || []
-                          : entry[field.key]
-                            ? [String(entry[field.key])]
-                            : []
-                      }
-                      onChange={(urls) =>
-                        set(
-                          field.key,
-                          field.type === "gallery" ? urls : urls[0] || "",
-                        )
-                      }
-                      multiple={field.type === "gallery"}
-                      video={field.type === "video"}
-                    />
-                  </div>
-                );
-              if (field.type === "checkbox")
-                return (
-                  <label key={field.key} className="checkbox-field full">
-                    <input
-                      type="checkbox"
-                      checked={Boolean(entry[field.key])}
-                      onChange={(e) => set(field.key, e.target.checked)}
-                    />
-                    {label}
-                  </label>
-                );
-              return (
-                <label
-                  className={`field ${field.type === "textarea" ? "full" : ""}`}
-                  key={field.key}
-                >
-                  {label}
-                  {field.type === "textarea" ? (
-                    <textarea
-                      required={field.required}
-                      rows={4}
-                      value={String(entry[field.key] ?? "")}
-                      onChange={(e) => set(field.key, e.target.value)}
-                    />
-                  ) : (
-                    <input
-                      required={field.required}
-                      type={field.type === "number" ? "number" : "text"}
-                      min={
-                        field.key === "rating" || field.key === "displayOrder"
-                          ? 1
-                          : 0
-                      }
-                      max={field.key === "rating" ? 5 : undefined}
-                      step={
-                        field.key === "price" || field.key === "salePrice"
-                          ? "0.01"
-                          : 1
-                      }
-                      value={String(entry[field.key] ?? "")}
-                      onChange={(e) =>
-                        set(
-                          field.key,
-                          field.type === "number"
-                            ? e.target.value === ""
-                              ? undefined
-                              : Number(e.target.value)
-                            : e.target.value,
-                        )
-                      }
-                    />
-                  )}
+      <form
+        onSubmit={submit}
+        className={`editor-layout ${module === "products" ? "product-editor" : ""}`}
+      >
+        <div className="editor-main">
+          <div className="panel form-panel">
+            <h2>
+              {productRef
+                ? "Product & section details"
+                : module === "products"
+                  ? "Product Details"
+                  : "Details"}
+            </h2>
+            <div className="form-grid">
+              {productRef && (
+                <div className="field full">
+                  <span className="field-label">
+                    Select existing product{module !== "pure-silver" && " *"}
+                  </span>
+                  <ProductSelector
+                    db={db}
+                    value={entry.productId || ""}
+                    onChange={(id) =>
+                      setEntry((e) => ({
+                        ...e,
+                        productId: id || undefined,
+                        categoryId: undefined,
+                      }))
+                    }
+                  />
+                </div>
+              )}
+              {(module === "products" || module === "pure-silver") && (
+                <label className="field full">
+                  {module === "pure-silver"
+                    ? "Or select a category"
+                    : "Category *"}
+                  <select
+                    required={module === "products"}
+                    value={entry.categoryId || ""}
+                    onChange={(e) =>
+                      setEntry((p) => ({
+                        ...p,
+                        categoryId: e.target.value || undefined,
+                        ...(module === "pure-silver"
+                          ? { productId: undefined }
+                          : {}),
+                      }))
+                    }
+                  >
+                    <option value="">Choose a category</option>
+                    {db.categories.map((c) => (
+                      <option key={c.id} value={c.id}>
+                        {c.name}
+                      </option>
+                    ))}
+                  </select>
                 </label>
-              );
-            })}
-            {module === "products" && (
-              <div className="field">
-                <span className="field-label">Discount (calculated)</span>
-                <output className="computed-field">
-                  {entry.price && entry.salePrice !== undefined
-                    ? Math.max(
-                        0,
-                        Math.round((1 - entry.salePrice / entry.price) * 100),
-                      )
-                    : 0}
-                  %
-                </output>
-              </div>
-            )}
+              )}
+              {fields[module]
+                .filter(
+                  (field) =>
+                    module !== "products" ||
+                    !["image", "hoverImage", "gallery"].includes(field.key),
+                )
+                .map(renderField)}
+              {module === "products" && (
+                <div className="field">
+                  <span className="field-label">Discount (calculated)</span>
+                  <output className="computed-field">
+                    {entry.price && entry.salePrice !== undefined
+                      ? Math.max(
+                          0,
+                          Math.round((1 - entry.salePrice / entry.price) * 100),
+                        )
+                      : 0}
+                    %
+                  </output>
+                </div>
+              )}
+            </div>
           </div>
+          {module === "products" && (
+            <section className="panel form-panel">
+              <h2>Product Images</h2>
+              <div className="form-grid">
+                {fields.products
+                  .filter((field) =>
+                    ["image", "hoverImage"].includes(field.key),
+                  )
+                  .map(renderField)}
+              </div>
+            </section>
+          )}
         </div>
         <aside className="editor-aside">
           <div className="panel form-panel">
@@ -388,7 +426,9 @@ export function EntryForm({
                   ? "Saving…"
                   : existing
                     ? "Save changes"
-                    : "Save item"}
+                    : module === "products"
+                      ? "Save product"
+                      : "Save item"}
             </button>
             <Link
               className="button secondary full-button"
@@ -397,6 +437,14 @@ export function EntryForm({
               Cancel
             </Link>
           </div>
+          {module === "products" && (
+            <section className="panel form-panel">
+              <h2>Gallery Images</h2>
+              {fields.products
+                .filter((field) => field.key === "gallery")
+                .map(renderField)}
+            </section>
+          )}
           {selected && (
             <div className="panel form-panel">
               <h2>Linked product</h2>
@@ -405,7 +453,7 @@ export function EntryForm({
                 alt={selected.name}
                 className="linked-image"
               />
-              <h3>{selected.name}</h3>
+              <h3 className="product-title">{selected.name}</h3>
               <p>{money(selected.salePrice)}</p>
               <small>
                 Product details update automatically from your catalog.

@@ -1,6 +1,8 @@
 ﻿# MySQL admin setup
 
-The admin uses Next.js on port 3001 and Express on port 5000. All `/admin-api` requests are proxied by Next.js. Storefront checkout and public APIs are not connected by this change.
+The admin uses Next.js on port 3001 and Express on the configured backend `PORT`. All `/admin-api` requests are proxied by Next.js. Storefront checkout and public APIs are not connected by this change.
+
+For local development, run `npm run dev` from `adminpanel/`. This starts the existing bundled MySQL installation when available, applies pending migrations, starts Express using `backend/.env`, and starts Next.js. It reuses services already running. `ADMIN_API_ORIGIN` must match backend `PORT` (this workspace uses 7000). No database is initialized or reset. For an external MySQL installation, start that service yourself first. Use `npm run dev:web` to run only Next.js when managing the backend separately.
 
 1. Install backend dependencies with `npm install` (Node.js 22 or newer).
 2. Configure local `backend/.env` using `.env.example`. Use a **MySQL** connection URL and a random `ADMIN_SESSION_SECRET` of at least 32 characters. Existing PostgreSQL credentials are not compatible. Do not overwrite or reset an existing database.

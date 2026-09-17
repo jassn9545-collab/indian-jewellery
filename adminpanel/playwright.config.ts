@@ -13,7 +13,7 @@ export default defineConfig({
     trace: "retain-on-failure",
   },
   webServer: {
-    command: "npm.cmd run dev",
+    command: "npm.cmd run dev:web",
     url: "http://localhost:3001/admin/login",
     reuseExistingServer: true,
   },

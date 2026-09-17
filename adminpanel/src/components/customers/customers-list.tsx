@@ -206,8 +206,8 @@ export function CustomersList({
       });
       onToast(`Customer ${editName} updated successfully`);
       setEditingCustomer(null);
-    } catch (err: any) {
-      setEditError(err.message || "Failed to update customer");
+    } catch (err) {
+      setEditError(err instanceof Error ? err.message : "Failed to update customer");
     } finally {
       setSavingEdit(false);
     }
@@ -220,8 +220,8 @@ export function CustomersList({
       await onDeleteCustomer(deletingCustomer.id);
       onToast(`Customer ${deletingCustomer.name} deleted successfully`);
       setDeletingCustomer(null);
-    } catch (err: any) {
-      onToast(err.message || "Failed to delete customer");
+    } catch (err) {
+      onToast(err instanceof Error ? err.message : "Failed to delete customer");
     } finally {
       setDeleting(false);
     }
@@ -236,7 +236,7 @@ export function CustomersList({
   }
 
   return (
-    <div className="list-panel">
+    <div className="list-panel list-page">
       {/* Top Page Heading */}
       <div className="page-heading">
         <div>
@@ -249,11 +249,7 @@ export function CustomersList({
 
       {/* Top 4 Summary Cards */}
       <div
-        className="stat-grid"
-        style={{
-          gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-          marginBottom: "16px",
-        }}
+        className="stat-grid list-summary"
       >
         <div className="stat-card">
           <div className="stat-label">
@@ -287,7 +283,7 @@ export function CustomersList({
             <span>Total Spent</span>
             <IndianRupee size={18} />
           </div>
-          <div className="stat-value" style={{ fontSize: "24px" }}>
+          <div className="stat-value" style={{ fontSize: "var(--type-section)" }}>
             {summary.totalSpent}
           </div>
           <small className="muted">Cumulative customer revenue</small>
@@ -295,10 +291,9 @@ export function CustomersList({
       </div>
 
       {/* Search and Filters Toolbar */}
-      <div className="panel" style={{ marginBottom: "16px" }}>
+      <div className="panel list-filters">
         <div
           className="filters"
-          style={{ flexWrap: "wrap", gap: "12px", padding: "16px 20px" }}
         >
           <div className="search-input" style={{ flex: "1 1 260px" }}>
             <Search size={16} />
@@ -317,7 +312,7 @@ export function CustomersList({
           <div
             style={{
               display: "flex",
-              gap: "10px",
+              gap: "12px",
               flexWrap: "wrap",
               flex: "1 1 300px",
             }}
@@ -361,8 +356,8 @@ export function CustomersList({
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
-                  gap: "6px",
-                  fontSize: "12px",
+                  gap: "8px",
+                  fontSize: "var(--type-small)",
                 }}
               >
                 <FilterX size={14} />
@@ -376,8 +371,7 @@ export function CustomersList({
       {/* Customers Table */}
       {filteredCustomers.length === 0 ? (
         <div
-          className="panel empty-panel"
-          style={{ padding: "48px 24px", textAlign: "center" }}
+          className="panel empty-panel list-results"
         >
           <Users
             size={40}
@@ -399,8 +393,8 @@ export function CustomersList({
           </button>
         </div>
       ) : (
-        <div className="panel" style={{ overflow: "hidden" }}>
-          <div className="table-container" style={{ overflowX: "auto" }}>
+        <div className="panel list-results">
+          <div className="table-scroll">
             <table>
               <thead>
                 <tr>
@@ -433,7 +427,7 @@ export function CustomersList({
                           style={{
                             display: "flex",
                             alignItems: "center",
-                            gap: "10px",
+                            gap: "12px",
                           }}
                         >
                           {customer.avatar ? (
@@ -460,7 +454,7 @@ export function CustomersList({
                                 alignItems: "center",
                                 justifyContent: "center",
                                 fontWeight: 600,
-                                fontSize: "12px",
+                                fontSize: "var(--type-small)",
                                 border: "1px solid var(--color-border)",
                               }}
                             >
@@ -468,7 +462,7 @@ export function CustomersList({
                             </div>
                           )}
                           <div>
-                            <div style={{ fontWeight: 600, fontSize: "13px" }}>
+                            <div style={{ fontWeight: 600, fontSize: "var(--type-small)" }}>
                               {customer.name}
                             </div>
                             <small className="muted">{customer.email}</small>
@@ -483,7 +477,7 @@ export function CustomersList({
                             padding: "2px 8px",
                             borderRadius: "12px",
                             background: "var(--color-surface-secondary)",
-                            fontSize: "12px",
+                            fontSize: "var(--type-small)",
                             fontWeight: 600,
                           }}
                         >
@@ -500,7 +494,7 @@ export function CustomersList({
                       <td>
                         <span
                           style={{
-                            fontSize: "12px",
+                            fontSize: "var(--type-small)",
                             color: "var(--color-text-secondary)",
                           }}
                         >
@@ -512,7 +506,7 @@ export function CustomersList({
                           style={{
                             display: "inline-flex",
                             alignItems: "center",
-                            gap: "6px",
+                            gap: "8px",
                           }}
                         >
                           <Link
@@ -521,7 +515,7 @@ export function CustomersList({
                             style={{
                               minHeight: "28px",
                               padding: "4px 8px",
-                              fontSize: "11px",
+                              fontSize: "var(--type-label)",
                               display: "inline-flex",
                               alignItems: "center",
                               gap: "4px",
@@ -537,7 +531,7 @@ export function CustomersList({
                             style={{
                               minHeight: "28px",
                               padding: "4px 8px",
-                              fontSize: "11px",
+                              fontSize: "var(--type-label)",
                               display: "inline-flex",
                               alignItems: "center",
                               gap: "4px",
@@ -554,7 +548,7 @@ export function CustomersList({
                             style={{
                               minHeight: "28px",
                               padding: "4px 8px",
-                              fontSize: "11px",
+                              fontSize: "var(--type-label)",
                               color: "var(--color-error)",
                               borderColor: "var(--color-border)",
                               display: "inline-flex",
@@ -579,15 +573,8 @@ export function CustomersList({
           {/* Pagination */}
           <div
             className="pagination"
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              padding: "12px 20px",
-              borderTop: "1px solid var(--color-border)",
-            }}
           >
-            <span className="muted" style={{ fontSize: "12px" }}>
+            <span className="muted" style={{ fontSize: "var(--type-small)" }}>
               Showing {(currentPage - 1) * pageSize + 1} to{" "}
               {Math.min(currentPage * pageSize, filteredCustomers.length)} of{" "}
               {filteredCustomers.length} customers
@@ -604,7 +591,7 @@ export function CustomersList({
                 <ChevronLeft size={16} />
               </button>
 
-              <span style={{ fontSize: "12px", padding: "0 8px" }}>
+              <span style={{ fontSize: "var(--type-small)", padding: "0 8px" }}>
                 Page {currentPage} of {totalPages}
               </span>
 
@@ -644,7 +631,7 @@ export function CustomersList({
                 className="form-label"
                 style={{
                   display: "block",
-                  marginBottom: "6px",
+                  marginBottom: "8px",
                   fontWeight: 500,
                 }}
               >
@@ -666,7 +653,7 @@ export function CustomersList({
                 className="form-label"
                 style={{
                   display: "block",
-                  marginBottom: "6px",
+                  marginBottom: "8px",
                   fontWeight: 500,
                 }}
               >
@@ -688,7 +675,7 @@ export function CustomersList({
                 className="form-label"
                 style={{
                   display: "block",
-                  marginBottom: "6px",
+                  marginBottom: "8px",
                   fontWeight: 500,
                 }}
               >
@@ -714,8 +701,8 @@ export function CustomersList({
               style={{
                 display: "flex",
                 justifyContent: "flex-end",
-                gap: "10px",
-                marginTop: "10px",
+                gap: "12px",
+                marginTop: "12px",
               }}
             >
               <button

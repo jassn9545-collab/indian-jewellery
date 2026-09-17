@@ -93,8 +93,15 @@ export function EntryList({
           (!verified || Boolean(e.verified) === (verified === "yes"))))
     );
   });
-  const currentPage = Math.min(page, Math.max(1, Math.ceil(rows.length / 8)));
-  const visible = rows.slice((currentPage - 1) * 8, currentPage * 8);
+  const PAGE_SIZE = 10;
+  const currentPage = Math.min(
+    page,
+    Math.max(1, Math.ceil(rows.length / PAGE_SIZE)),
+  );
+  const visible = rows.slice(
+    (currentPage - 1) * PAGE_SIZE,
+    currentPage * PAGE_SIZE,
+  );
   async function change(next: Entry[], message: string) {
     setBusy(true);
     setError("");
@@ -123,14 +130,16 @@ export function EntryList({
           ? ["Customer", "Rating", "Review", "Verified", "Status", "Actions"]
           : module === "ribbons"
             ? ["Announcement", "Link", "Status", "Actions"]
-            : [
-                "Item",
-                ...(["royally-crafted", "best-sellers"].includes(module)
-                  ? ["Original price", "Sale price", "Discount", "Order"]
-                  : ["Details"]),
-                "Status",
-                "Actions",
-              ];
+            : module === "local-brand"
+              ? ["Title", "Description", "Link", "Status", "Actions"]
+              : [
+                  "Item",
+                  ...(["royally-crafted", "best-sellers"].includes(module)
+                    ? ["Original price", "Sale price", "Discount", "Order"]
+                    : ["Details"]),
+                  "Status",
+                  "Actions",
+                ];
   return (
     <>
       <div className="page-heading">
@@ -339,6 +348,17 @@ export function EntryList({
                       </>
                     ) : module === "ribbons" ? (
                       <td className="muted">{e.link}</td>
+                    ) : module === "local-brand" ? (
+                      <>
+                        <td className="details-cell muted">
+                          {e.description
+                            ? e.description.length > 60
+                              ? e.description.slice(0, 60) + "…"
+                              : e.description
+                            : "—"}
+                        </td>
+                        <td className="muted">{e.link || "—"}</td>
+                      </>
                     ) : ordered ? (
                       <>
                         <td className="muted">{money(display.price)}</td>
@@ -467,7 +487,7 @@ export function EntryList({
         <Pagination
           page={currentPage}
           total={rows.length}
-          size={8}
+          size={PAGE_SIZE}
           onChange={setPage}
         />
       </section>

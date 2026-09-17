@@ -1,4 +1,4 @@
-import { AdminApp } from "@/components/admin-app";
 export default function AdminPage() {
-  return <AdminApp />;
+  // The shared admin layout owns the workspace and renders the selected section.
+  return null;
 }
